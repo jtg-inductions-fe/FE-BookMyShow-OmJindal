@@ -1,1 +1,13 @@
-export const NotFoundPage = () => <div>Not Found</div>;
+import { ErrorComponent } from '@/components';
+import { NOTFOUND_IMAGE, ROUTES } from '@/constants';
+
+export const NotFoundPage = () => (
+  <ErrorComponent
+    imgUrl={NOTFOUND_IMAGE}
+    imgAltText="Not found"
+    heading="Page not found"
+    description="Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us."
+    buttonText="Go Home"
+    to={ROUTES.HOME}
+  />
+);
