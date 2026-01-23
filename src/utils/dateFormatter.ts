@@ -7,4 +7,10 @@ import dayjs from 'dayjs';
  * @param {string} format - The desired output format string, following Day.js format tokens (e.g., 'YYYY-MM-DD', 'MM/DD/YYYY HH:mm', 'dddd, MMMM D, YYYY').
  * @returns {string} The formatted date string.
  */
-export const dateFormatter = (val: string, format: string): string => dayjs(val).format(format);
+export const dateFormatter = (val: string, format: string): string => {
+  const date = dayjs(val);
+  if (!date.isValid()) {
+    throw new Error(`Invalid date string: ${val}`);
+  }
+  return date.format(format);
+};

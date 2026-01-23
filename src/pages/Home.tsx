@@ -1,5 +1,6 @@
 import { Button } from '@/components';
 import { Typography } from '@/components';
+import { dateFormatter, numberFormatter } from '@/utils';
 
 export const Home = () => (
   <div>
@@ -13,5 +14,7 @@ export const Home = () => (
       This is heading 2
     </Typography>
     <Typography>This is a paragraph</Typography>
+    <Typography>{numberFormatter(11111)}</Typography>
+    <Typography>{dateFormatter('2023-01-31', 'D MMM, YYYY')}</Typography>
   </div>
 );

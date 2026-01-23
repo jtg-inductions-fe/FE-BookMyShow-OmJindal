@@ -1,4 +1,3 @@
-import path from 'path';
 import type { PluginOption } from 'vite';
 import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
@@ -12,11 +11,6 @@ const basePlugins: PluginOption[] = [react(), tsconfigPaths(), tailwindcss()];
 /* Common Config for both PROD and DEV mode */
 const commonConfig: UserConfig = {
   plugins: basePlugins,
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
   /* Customizing build folder structure */
   build: {
     /* 
@@ -42,7 +36,7 @@ const commonConfig: UserConfig = {
 export default defineConfig(({ mode }): UserConfig => {
   /* Load environment variables based on the mode */
   const env = loadEnv(mode, process.cwd(), '');
-  const PORT = parseInt(env.PORT) || 3000;
+  const PORT = Number(env.PORT) || 3000;
 
   /* Production-specific configuration */
   if (mode === 'production') {
@@ -79,7 +73,7 @@ export default defineConfig(({ mode }): UserConfig => {
           },
         },
       },
-      server: {
+      preview: {
         strictPort: true,
         port: PORT,
       },

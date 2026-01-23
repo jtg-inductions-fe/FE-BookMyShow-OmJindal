@@ -22,7 +22,7 @@ interface TypographyProps extends HTMLAttributes<HTMLElement> {
 }
 
 export function Typography({ variant = 'p', as, className, children, ...props }: TypographyProps) {
-  const Component = as || 'p';
+  const Component = as || variant;
 
   return (
     <Component className={cn(variantClasses[variant], className)} {...props}>

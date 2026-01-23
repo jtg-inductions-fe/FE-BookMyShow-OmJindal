@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router';
 
-import { Header } from '@/containers';
-import { Footer } from '@/containers';
+import { Footer, Header } from '@/containers';
 
 export const MainLayout = () => (
   <div className="flex min-h-screen flex-col">
