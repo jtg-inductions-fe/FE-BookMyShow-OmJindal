@@ -4,7 +4,8 @@
 
 ### Prerequisites
 
-- **Node.js**: Version 24+. You can download and install it from nodejs.org.
+- **Node.js**: Version 24+. You can download and install it from [nodejs.org](https://nodejs.org/).
+
 - **npm**: Node.js package manager, which comes bundled with Node.js.
 
 ### Installing
@@ -35,7 +36,7 @@ To set up the project on your local environment, follow these steps:
 
    > **_Tip:_** If you don't have nvm installed, you can install it by following the instructions on [nvm-sh/nvm](https://github.com/nvm-sh/nvm).
 
-   Alternatively, you can update Node.js directly by downloading the latest version from the official website: nodejs.org.
+   Alternatively, you can update Node.js directly by downloading the latest version from the official website: [nodejs.org](https://nodejs.org/).
 
 3. **Install the necessary dependencies using npm**
 
@@ -49,7 +50,7 @@ To set up the project on your local environment, follow these steps:
    npm run dev
    ```
 
-   The app will typically be available at http://localhost:3000, but check the terminal output for the exact URL.
+   The app will typically be available at [http://localhost:3000](http://localhost:3000), but check the terminal output for the exact URL.
 
    > **_NOTE:_** : If you want to change the server's port number, you can do so by creating a **.env file** at the root level of the project and update the PORT field (check **.env.template** for reference)
 

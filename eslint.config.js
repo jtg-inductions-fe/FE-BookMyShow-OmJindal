@@ -47,7 +47,7 @@ export default defineConfig([
             ['^\\w'],
             ['^@react-redux'],
             [
-              '^@(?:|assets|components|constants|containers|features|layouts|lib|pages|routes|services|store|types|utils)',
+              '^@(?:|assets|components|constants|containers|features|hooks|layouts|pages|routes|services|store|types|utils)',
             ],
             ['^\\./', '^\\.\\./'],
           ],

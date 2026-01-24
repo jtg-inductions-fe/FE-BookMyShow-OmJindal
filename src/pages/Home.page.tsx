@@ -1,8 +1,7 @@
-import { Button } from '@/components';
-import { Typography } from '@/components';
-import { dateFormatter, numberFormatter } from '@/utils';
+import { Button, Typography } from '@/components';
+import { amountFormatter, dateFormatter, timeFormatter } from '@/utils';
 
-export const Home = () => (
+export const HomePage = () => (
   <div>
     <Button variant="default">Home Page</Button>
     <Button variant="destructive">Home Page</Button>
@@ -14,7 +13,8 @@ export const Home = () => (
       This is heading 2
     </Typography>
     <Typography>This is a paragraph</Typography>
-    <Typography>{numberFormatter(11111)}</Typography>
-    <Typography>{dateFormatter('2023-01-31', 'D MMM, YYYY')}</Typography>
+    <Typography>{amountFormatter(11111)}</Typography>
+    <Typography>{dateFormatter('2023-01-31')}</Typography>
+    <Typography>{timeFormatter('2026-01-01T06:30:00Z')}</Typography>
   </div>
 );
