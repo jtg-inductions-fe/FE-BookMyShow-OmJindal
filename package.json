@@ -14,7 +14,8 @@
     "lint:fix": "eslint . --fix",
     "prettier:fix": "npx prettier --write ./",
     "format": "npm run prettier:fix && npm run lint:fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",

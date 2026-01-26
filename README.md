@@ -4,7 +4,7 @@
 
 ### Prerequisites
 
-- **Node.js**: Version 24+. You can download and install it from [nodejs.org](https://nodejs.org/).
+- **Node.js**: Version 20.19+. You can download and install it from [nodejs.org](https://nodejs.org/).
 
 - **npm**: Node.js package manager, which comes bundled with Node.js.
 
@@ -21,7 +21,7 @@ To set up the project on your local environment, follow these steps:
    cd <project-folder>
    ```
 
-2. **nvm (Node Version Manager)**: If the required Node version 24+ is already installed and active, you can skip this step else you can use nvm (Node Version Manager). Here's how to use it:
+2. **nvm (Node Version Manager)**: If the required Node version 20.19+ is already installed and active, you can skip this step else you can use nvm (Node Version Manager). Here's how to use it:
    - **Switch Node Version**: If the required Node version is already installed, run:
 
    ```bash
