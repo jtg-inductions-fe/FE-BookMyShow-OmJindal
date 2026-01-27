@@ -14,4 +14,4 @@ export const amountFormatter = (
   num: number,
   locale: Intl.LocalesArgument = DEFAULT_LOCALE,
   options: Intl.NumberFormatOptions = DEFAULT_AMOUNT_FORMATTER_OPTIONS,
-) => new Intl.NumberFormat(locale, options).format(num);
+): string => new Intl.NumberFormat(locale, options).format(num);

@@ -14,7 +14,7 @@ export const dateFormatter = (
   date: string,
   locale: Intl.LocalesArgument = DEFAULT_LOCALE,
   options: Intl.DateTimeFormatOptions = DEFAULT_DATE_FORMATTER_OPTIONS,
-) => {
+): string => {
   const dateObj = new Date(date);
   if (isNaN(dateObj.getTime())) {
     return '';
