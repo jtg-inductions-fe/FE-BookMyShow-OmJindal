@@ -1,6 +1,6 @@
 import type { To } from 'react-router';
 
-export interface ErrorComponentProps {
+export type ErrorComponentProps = {
   /**
    *  Source URL of the Image.
    */
@@ -25,4 +25,4 @@ export interface ErrorComponentProps {
    * Route to be navigated to
    */
   to?: To;
-}
+};
