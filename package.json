@@ -3,16 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "engines": {
-    "node": ">=20.19"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prettier:fix": "npx prettier --write ./",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "format": "npm run prettier:fix && npm run lint:fix",
     "prepare": "husky",
     "lint-staged": "lint-staged"
@@ -62,7 +60,7 @@
     "*.{ts,tsx}": [
       "eslint --fix"
     ],
-    "*.{js,jsx,ts,tsx,json,css,md}": [
+    "*.{js,jsx,ts,tsx,json,css,md,html}": [
       "prettier --write"
     ]
   }

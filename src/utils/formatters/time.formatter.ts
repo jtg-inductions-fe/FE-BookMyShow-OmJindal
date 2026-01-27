@@ -19,5 +19,5 @@ export const timeFormatter = (
   if (isNaN(dateObj.getTime())) {
     return '';
   }
-  return new Intl.DateTimeFormat(locale, options).format(dateObj).toUpperCase();
+  return new Intl.DateTimeFormat(locale, options).format(dateObj).toLocaleUpperCase(locale);
 };

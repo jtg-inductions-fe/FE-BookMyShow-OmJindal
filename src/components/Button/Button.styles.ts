@@ -11,7 +11,7 @@ export const buttonVariants = cva(
       variant: {
         default: 'bg-gradient-to-r from-purple to-pink text-white hover:opacity-85',
         destructive: 'bg-error text-white hover:bg-error/85',
-        secondary: 'bg-grey-bg text-primary border border-grey-border',
+        secondary: 'bg-grey-bg text-primary border border-grey-border hover:bg-grey-bg/85',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
