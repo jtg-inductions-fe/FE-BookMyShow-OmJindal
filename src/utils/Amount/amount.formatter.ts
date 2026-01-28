@@ -10,5 +10,11 @@ import type { AmountFormatTypes } from './amount.types';
  * amountFormatter(1000);
  * // Returns "₹1,000.00"
  */
-export const amountFormatter = (num: number, format: AmountFormatTypes = 'INR'): string =>
-  new Intl.NumberFormat(AmountConfig[format].locale, AmountConfig[format].options).format(num);
+export const amountFormatter = (num: number, format: AmountFormatTypes = 'INR'): string => {
+  if (!Number.isFinite(num)) {
+    return '';
+  }
+  return new Intl.NumberFormat(AmountConfig[format].locale, AmountConfig[format].options).format(
+    num,
+  );
+};

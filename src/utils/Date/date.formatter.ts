@@ -8,7 +8,7 @@ import type { DateFormatTypes } from './date.types';
  * @returns A formatted date string.
  * @example
  * dateFormatter('2026-01-24');
- * // Returns "24 Jan, 2026"
+ * // Returns "24 Jan 2026"
  */
 export const dateFormatter = (date: string, format: DateFormatTypes = 'DDMMYY'): string => {
   const dateObj = new Date(date);

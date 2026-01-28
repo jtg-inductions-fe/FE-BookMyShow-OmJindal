@@ -1,7 +1,7 @@
 import type { AmountConfigTypes, AmountFormatTypes } from './amount.types';
 
 /**
- * Maps amount formats to their respective date
+ * Maps amount formats to their respective amount
  * configuration object.
  */
 export const AmountConfig = {
