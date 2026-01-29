@@ -1,0 +1,94 @@
+import { defineConfig, loadEnv, type PluginOption, type UserConfig } from 'vite';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import tsconfigPaths from 'vite-tsconfig-paths';
+
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+
+const basePlugins: PluginOption[] = [react(), tsconfigPaths(), tailwindcss()];
+
+/* Common Config for both PROD and DEV mode */
+const commonConfig: UserConfig = {
+  plugins: basePlugins,
+  /* Customizing build folder structure */
+  build: {
+    /* 
+        Imported or referenced assets that are smaller than 4KiB threshold will be inlined as base64 URLs to avoid extra http requests.
+        Set to 0 to disable inlining altogether
+        */
+    assetsInlineLimit: 0,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'js/[name]-[hash].js',
+        assetFileNames: ({ names }) => {
+          if (/\.(webp|jpe?g|png)$/.test(names[0] ?? '')) {
+            return 'assets/images/[name]-[hash][extname]';
+          }
+          if (/\.(woff2|ttf)$/.test(names[0] ?? '')) return 'assets/fonts/[name]-[hash][extname]';
+          return '[name]-[hash][extname]';
+        },
+      },
+    },
+  },
+};
+
+export default defineConfig(({ mode }): UserConfig => {
+  /* Load environment variables based on the mode */
+  const env = loadEnv(mode, process.cwd(), '');
+  const PORT = Number(env.PORT) || 3000;
+
+  /* Production-specific configuration */
+  if (mode === 'production') {
+    return {
+      ...commonConfig,
+      plugins: [
+        ...basePlugins,
+        /* Image optimization for production build */
+        ViteImageOptimizer({
+          test: /\.(jpe?g|webp|png)$/i,
+          includePublic: false,
+          logStats: true,
+          jpg: {
+            quality: 90,
+          },
+          jpeg: {
+            quality: 90,
+          },
+          webp: {
+            quality: 90,
+          },
+          png: {
+            quality: 90,
+          },
+        }),
+      ],
+      build: {
+        ...commonConfig.build,
+        sourcemap: 'hidden', // Do not expose sourcemaps
+        minify: 'terser', // Terser for minification
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+        },
+      },
+      preview: {
+        strictPort: true,
+        port: PORT,
+      },
+    };
+    /* Development-specific configuration */
+  } else if (mode === 'development') {
+    return {
+      ...commonConfig,
+      build: {
+        ...commonConfig.build,
+        sourcemap: 'inline', // Include inline sourcemaps for easier debugging
+      },
+      server: {
+        strictPort: true,
+        port: PORT,
+      },
+    };
+  } else return commonConfig;
+});
