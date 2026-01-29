@@ -12,7 +12,10 @@ export const ErrorComponent = ({
   buttonText,
   to,
 }: ErrorComponentProps) => (
-  <div className="mx-auto flex flex-col items-center justify-center gap-6 px-5">
+  <section
+    className="mx-auto flex flex-col items-center justify-center gap-6 px-5"
+    aria-labelledby="heading"
+  >
     <link rel="preload" as="image" href={imgUrl} fetchPriority="high" />
 
     <div className="h-60 w-82 lg:h-105 lg:w-140">
@@ -25,7 +28,9 @@ export const ErrorComponent = ({
         fetchPriority="high"
       />
     </div>
-    <Typography variant="h1">{heading}</Typography>
+    <Typography variant="h1" id="heading">
+      {heading}
+    </Typography>
     <Typography className="text-secondary max-w-lg text-center">{description}</Typography>
     {buttonText && to && (
       <Button asChild>
@@ -34,5 +39,5 @@ export const ErrorComponent = ({
         </Link>
       </Button>
     )}
-  </div>
+  </section>
 );
