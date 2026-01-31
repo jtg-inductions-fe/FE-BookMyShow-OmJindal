@@ -1,5 +1,6 @@
+import NOTFOUND_IMAGE from '@/assets/images/404_not_found.webp';
 import { ErrorComponent } from '@/components';
-import { NOTFOUND_IMAGE, ROUTES } from '@/constants';
+import { ROUTES } from '@/constants';
 
 export const NotFoundPage = () => (
   <ErrorComponent
