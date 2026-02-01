@@ -29,17 +29,17 @@ export const Button = (props: ButtonProps) => {
   const classes = cn(buttonVariants({ variant, size, className }));
 
   if (props.asLink) {
-    const { ...rest } = props;
-    return <Link className={classes} {...rest} />;
+    const { to, ...rest } = props;
+    return <Link {...rest} to={to} className={classes} />;
   }
 
   return (
     <button
+      {...props}
       data-slot="button"
       data-variant={variant}
       data-size={size}
       className={classes}
-      {...props}
     />
   );
 };
