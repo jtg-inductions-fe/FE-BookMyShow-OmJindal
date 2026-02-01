@@ -29,8 +29,8 @@ export const Button = (props: ButtonProps) => {
   const classes = cn(buttonVariants({ variant, size, className }));
 
   if (props.asLink) {
-    const { to, ...rest } = props;
-    return <Link {...rest} to={to} className={classes} />;
+    const { asLink, to, ...rest } = props;
+    return asLink ? <Link {...rest} to={to} className={classes} /> : null;
   }
 
   return (
