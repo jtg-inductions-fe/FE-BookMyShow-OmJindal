@@ -49,6 +49,7 @@
   --color-error: var(--error);
   --color-success: var(--success);
   --font-inter: 'Inter', sans-serif;
+  --shadow-md: 0px 12px 25px rgba(0, 0, 0, 0.25);
 }
 
 :root {
@@ -68,7 +69,6 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -90,6 +90,7 @@
   --border-grey: #e5e7eb;
   --error: #e7000b;
   --success: #00c950;
+  --ring: #000000;
 }
 
 @layer base {
@@ -103,6 +104,13 @@
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
+  :focus {
+    outline: none;
+  }
+  a:focus-visible,
+  button:focus-visible {
+    @apply ring-2 ring-black ring-offset-1;
+  }
 }
 
 @font-face {
@@ -111,4 +119,15 @@
   font-display: swap;
   font-style: normal;
   src: url('./assets/fonts/Inter.woff2') format('woff2');
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
