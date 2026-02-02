@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@/components';
 import { ROUTES } from '@/constants';
-import { setAuthenticated, setUser } from '@/features';
+import { setAuthenticated } from '@/features';
 import { useSignupMutation } from '@/services';
 import { useAppDispatch } from '@/store';
 import { validateEmail, validateName, validatePassword } from '@/utils';
@@ -72,12 +72,11 @@ export const SignUp = () => {
         confirm_password: form.confirmPassword,
       }).unwrap();
 
-      const { access, refresh, user } = response;
+      const { access, refresh } = response;
 
       localStorage.setItem('refreshToken', refresh);
 
       dispatch(setAuthenticated(access));
-      dispatch(setUser(user));
 
       void navigate(ROUTES.HOME);
     } catch (error) {
@@ -111,12 +110,7 @@ export const SignUp = () => {
     <Card>
       <CardHeader>
         <div className="rounded-full h-15 max-w-15">
-          <img
-            src="/moviebook.svg"
-            alt="Company Logo"
-            aria-hidden="true"
-            className="w-full h-full"
-          />
+          <img src="/moviebook.svg" alt="" aria-hidden="true" className="w-full h-full" />
         </div>
         <Typography as="h1" variant="h2">
           Create Account

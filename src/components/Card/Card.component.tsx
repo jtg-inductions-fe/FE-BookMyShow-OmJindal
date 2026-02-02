@@ -37,7 +37,7 @@ export const CardHeader = ({ className, ...props }: ComponentProps<'div'>) => (
  * Holds the main body of the card.
  */
 export const CardContent = ({ className, ...props }: ComponentProps<'div'>) => (
-  <div data-slot="card-content" className={cn('', className)} {...props} />
+  <div data-slot="card-content" className={className} {...props} />
 );
 
 /**

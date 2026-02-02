@@ -14,10 +14,6 @@ export type SignUpResponse = {
    * when the current access token expires.
    */
   refresh: string;
-  /**
-   * The user data
-   */
-  user: Pick<User, 'name' | 'email'>;
 };
 
 /**

@@ -7,13 +7,14 @@
  * - Must contain only English alphabets and spaces
  */
 export const validateName = (name: string): string | undefined => {
-  if (!name.trim()) {
+  const trimmed = name.trim();
+  if (!trimmed) {
     return 'Name is required';
   }
-  if (name.length < 2) {
+  if (trimmed.length < 2) {
     return 'Name must be at least 2 characters';
   }
-  if (!/^[a-zA-Z\s]*$/.test(name)) {
+  if (!/^[a-zA-Z\s]*$/.test(trimmed)) {
     return 'Name must contain only english alphabets.';
   }
   return undefined;
@@ -26,10 +27,11 @@ export const validateName = (name: string): string | undefined => {
  * - Must match a standard email format
  */
 export const validateEmail = (email: string): string | undefined => {
-  if (!email.trim()) {
+  const trimmed = email.trim();
+  if (!trimmed) {
     return 'Email is required';
   }
-  if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+  if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(trimmed)) {
     return 'Invalid email address';
   }
   return undefined;

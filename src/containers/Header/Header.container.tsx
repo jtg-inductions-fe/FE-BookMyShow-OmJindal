@@ -16,6 +16,7 @@ export const Header = () => {
 
   const handleClick = () => {
     dispatch(logout());
+    localStorage.removeItem('refreshToken');
   };
 
   return (
@@ -27,12 +28,7 @@ export const Header = () => {
           aria-label="Navigate to home"
         >
           <div className="h-10 w-10">
-            <img
-              src="/moviebook.svg"
-              alt="company logo"
-              className="h-full w-full"
-              aria-hidden="true"
-            />
+            <img src="/moviebook.svg" alt="" className="h-full w-full" aria-hidden="true" />
           </div>
           <Typography className="text-primary" variant="h3" as="span">
             Movie Book

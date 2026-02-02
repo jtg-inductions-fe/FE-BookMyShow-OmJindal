@@ -16,6 +16,6 @@ export const ProtectedRoute = () => {
   if (isAuthenticated) {
     return <Outlet />;
   } else {
-    <Navigate to={ROUTES.SIGNIN} state={{ from: location }} />;
+    return <Navigate to={ROUTES.SIGNIN} state={{ from: location }} />;
   }
 };

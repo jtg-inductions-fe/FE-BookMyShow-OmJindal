@@ -23,8 +23,11 @@ export const AvatarDropdown = ({ handleClick, user }: AvatarDropdownProps) => (
     <DropdownMenuTrigger asChild>
       <Button size="icon" className="rounded-full">
         <Avatar>
-          <AvatarImage src={user?.profilePicture as string} alt="shadcn" />
-          <AvatarFallback>{user?.name.toUpperCase().at(0)}</AvatarFallback>
+          <AvatarImage
+            src={user?.profilePicture as string}
+            alt={user?.name ? `${user.name} avatar` : 'User avatar'}
+          />
+          <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase() ?? '?'}</AvatarFallback>
         </Avatar>
       </Button>
     </DropdownMenuTrigger>
