@@ -1,4 +1,5 @@
-import { Button, Typography } from '@/components';
+import { Button } from '@/components/Button';
+import { Typography } from '@/components/Typography';
 
 import type { ErrorComponentProps } from './Error.types';
 

@@ -20,11 +20,12 @@ export function Typography({
   variant = 'primary',
   className,
   children,
+  ...props
 }: TypographyProps) {
   const Component = tag;
 
   return (
-    <Component className={cn(TypographyVariants({ variant, size }), className)}>
+    <Component className={cn(TypographyVariants({ variant, size }), className)} {...props}>
       {children}
     </Component>
   );
