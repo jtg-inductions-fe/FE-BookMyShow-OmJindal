@@ -17,10 +17,12 @@ export const ErrorComponent = ({
     <div className="h-60 w-82 lg:h-105 lg:w-140">
       <img src={imgUrl} alt={imgAltText} className="h-full w-full" />
     </div>
-    <Typography variant="h1" id="heading">
+    <Typography tag="h1" id="heading">
       {heading}
     </Typography>
-    <Typography className="text-secondary">{description}</Typography>
+    <Typography tag="p" variant="secondary">
+      {description}
+    </Typography>
     {buttonText && to && (
       <Button asLink to={to}>
         {buttonText}

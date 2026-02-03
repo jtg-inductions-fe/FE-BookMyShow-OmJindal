@@ -1,31 +1,31 @@
 import { cn } from '@/utils';
 
-import { typographyClasses } from './Typography.styles';
+import { TypographyVariants } from './Typography.styles';
 import type { TypographyProps } from './Typography.types';
 
 /**
- * A polymorphic Typography component that provides a consistent design system
+ * A polymorphic Typography component that provides a consistent styles
  * for text elements while maintaining semantic HTML structure.
  * @example
- * <Typography variant="h1">Main Title</Typography>
+ * <Typography tag="h1">Main Title</Typography>
  * // Renders an <h1> tag with h1 styling
  * @example
- * <Typography variant="h3" as="p">Subtitle text</Typography>
+ * <Typography size="h3" tag="p">Subtitle text</Typography>
  * // Renders a <p> tag that visually looks like an h3
  * @param props - {@link TypographyProps}
  */
-export const Typography = ({
-  variant = 'p',
-  as,
+export function Typography({
+  tag = 'p',
+  size = tag,
+  variant = 'primary',
   className,
   children,
-  ...props
-}: TypographyProps) => {
-  const Component = as || variant;
+}: TypographyProps) {
+  const Component = tag;
 
   return (
-    <Component className={cn(typographyClasses[variant], className)} {...props}>
+    <Component className={cn(TypographyVariants({ variant, size }), className)}>
       {children}
     </Component>
   );
-};
+}
