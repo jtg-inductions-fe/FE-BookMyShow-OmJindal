@@ -16,7 +16,7 @@ export const ErrorComponent = ({
     aria-labelledby="heading"
   >
     <div className="h-60 w-82 lg:h-105 lg:w-140">
-      <img src={imgUrl} alt={imgAltText} className="h-full w-full" />
+      <img src={imgUrl} alt={imgAltText} className="h-full w-full object-contain" />
     </div>
     <Typography tag="h1" id="heading">
       {heading}
