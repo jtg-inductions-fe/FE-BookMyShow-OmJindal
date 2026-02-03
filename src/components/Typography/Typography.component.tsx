@@ -14,14 +14,14 @@ import type { TypographyProps } from './Typography.types';
  * // Renders a <p> tag that visually looks like an h3
  * @param props - {@link TypographyProps}
  */
-export function Typography({
+export const Typography = ({
   tag = 'p',
   size = tag,
   variant = 'primary',
   className,
   children,
   ...props
-}: TypographyProps) {
+}: TypographyProps) => {
   const Component = tag;
 
   return (
@@ -29,4 +29,4 @@ export function Typography({
       {children}
     </Component>
   );
-}
+};
