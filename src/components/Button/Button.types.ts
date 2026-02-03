@@ -1,18 +1,21 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
+import type { LinkProps } from 'react-router';
 
 import { buttonVariants } from './Button.styles';
 
 /**
  * Props for the Button component.
- * Combines native button attributes, CVA variants, and the Radix asChild pattern.
+ *
+ * It can render either as a native HTML `button` or
+ * a React Router `Link` when `asLink:true`
  */
-export type ButtonProps = ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants> & {
-    /**
-     * If true, the button will render as immediate child.
-     * Useful for nesting components like Links inside the button styling.
-     * @default false
-     */
-    asChild?: boolean;
-  };
+export type ButtonProps = VariantProps<typeof buttonVariants> &
+  (
+    | ({
+        asLink: true;
+      } & LinkProps)
+    | ({
+        asLink?: false;
+      } & ComponentProps<'button'>)
+  );

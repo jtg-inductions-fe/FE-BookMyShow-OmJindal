@@ -1,46 +1,45 @@
+import { Link } from 'react-router';
+
 import { cn } from '@/utils';
-import { Slot } from '@radix-ui/react-slot';
 
 import { buttonVariants } from './Button.styles';
 import type { ButtonProps } from './Button.types';
 
 /**
- * A highly customizable Button component that supports various visual states,
- * sizes, and polymorphic rendering via the `asChild` prop.
+ * A polymorphic Button component that can render either a native `<button>`
+ * or a React Router `<Link>` based on the `asLink` prop.
+ *
  * @example
- * // Standard usage
+ * // Standard button usage
  * <Button onClick={() => console.log('Clicked')}>
- * Click Me
+ *   Click Me
  * </Button>
+ *
  * @example
- * // Using asChild to render a Link from a routing library
- * <Button asChild variant="secondary">
- * <Link to="/dashboard">Go to Dashboard</Link>
+ * // Render as a React Router Link
+ * <Button asLink to="/dashboard">
+ *   Go to Dashboard
  * </Button>
+ *
  * @param props - {@link ButtonProps}
  */
-const Button = ({
-  className,
-  variant = 'default',
-  size = 'default',
-  asChild = false,
-  ...props
-}: ButtonProps) => {
-  /**
-   * If asChild is true, we use the Radix Slot component to clone the child.
-   * and pass the button classes/props to it. Otherwise, we render a standard 'button'.
-   */
-  const Comp = asChild ? Slot : 'button';
+export const Button = (props: ButtonProps) => {
+  const { variant = 'default', size = 'default', className } = props;
+
+  const classes = cn(buttonVariants({ variant, size, className }));
+
+  if (props.asLink) {
+    const { asLink, to, ...rest } = props;
+    return asLink ? <Link {...rest} to={to} className={classes} /> : null;
+  }
 
   return (
-    <Comp
+    <button
+      {...props}
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
+      className={classes}
     />
   );
 };
-
-export { Button };
