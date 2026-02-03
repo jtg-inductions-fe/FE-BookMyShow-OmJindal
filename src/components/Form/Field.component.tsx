@@ -2,7 +2,7 @@ import { type ComponentProps, useMemo } from 'react';
 
 import type { VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/utils/index';
+import { cn } from '@/utils';
 
 import { fieldVariants } from './Form.styles';
 import { Label } from './Label.component';

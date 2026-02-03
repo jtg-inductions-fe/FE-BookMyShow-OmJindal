@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 
 import { Root } from '@radix-ui/react-label';
 
-import { cn } from '@/utils/index';
+import { cn } from '@/utils';
 
 /**
  * Label component.

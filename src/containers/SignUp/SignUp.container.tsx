@@ -110,12 +110,19 @@ export const SignUp = () => {
     <Card>
       <CardHeader>
         <div className="rounded-full h-15 max-w-15">
-          <img src="/moviebook.svg" alt="" aria-hidden="true" className="w-full h-full" />
+          <img
+            src="/moviebook.svg"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-contain"
+          />
         </div>
-        <Typography as="h1" variant="h2">
+        <Typography tag="h1" variant="h2">
           Create Account
         </Typography>
-        <Typography className="text-secondary">Join us to book your favorite movies</Typography>
+        <Typography color="secondary" tag="p">
+          Join us to book your favorite movies
+        </Typography>
       </CardHeader>
       <CardContent>
         <SignUpForm
@@ -131,7 +138,7 @@ export const SignUp = () => {
         />
       </CardContent>
       <CardFooter>
-        <Typography variant="h6" as="p">
+        <Typography tag="p" variant="h6">
           Already have an account?
         </Typography>
         <NavigationLink to={ROUTES.SIGNIN}>Sign In</NavigationLink>

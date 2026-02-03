@@ -49,33 +49,27 @@ export type SignUpFormProps = {
    * Handles input field value changes.
    */
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-
   /**
    * Handles form submission.
    */
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
-
   /**
    * Validation errors mapped to form fields.
    */
   errors: FormErrors;
-
   /**
    * Current form state.
    */
   form: SignupForm;
-
   /**
    * Indicates whether signup request is in progress.
    */
   isLoading: boolean;
-
   /**
    * Toggles password visibility.
    */
   showPassword: boolean;
   setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
-
   /**
    * Toggles confirm password visibility.
    */

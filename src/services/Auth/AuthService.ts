@@ -1,6 +1,5 @@
-import { api } from '@/services';
-
 import type { SignUpRequest, SignUpResponse } from './AuthService.types';
+import { api } from '../Api';
 
 /**
  * Authentication-related API endpoints.

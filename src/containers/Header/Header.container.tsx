@@ -28,9 +28,14 @@ export const Header = () => {
           aria-label="Navigate to home"
         >
           <div className="h-10 w-10">
-            <img src="/moviebook.svg" alt="" className="h-full w-full" aria-hidden="true" />
+            <img
+              src="/moviebook.svg"
+              alt=""
+              className="h-full w-full object-contain"
+              aria-hidden="true"
+            />
           </div>
-          <Typography className="text-primary" variant="h3" as="span">
+          <Typography className="text-primary" tag="span" variant="h3">
             Movie Book
           </Typography>
         </Link>

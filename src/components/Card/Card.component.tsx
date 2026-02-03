@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 
-import { cn } from '@/utils/index';
+import { cn } from '@/utils';
 
 /**
  * Base Card container component.
