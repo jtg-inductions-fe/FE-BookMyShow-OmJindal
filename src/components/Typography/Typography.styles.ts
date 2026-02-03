@@ -5,12 +5,12 @@ import { cva } from 'class-variance-authority';
  */
 export const TypographyVariants = cva('font-inter', {
   variants: {
-    variant: {
+    color: {
       default: 'text-white',
       primary: 'text-primary',
       secondary: 'text-secondary',
     },
-    size: {
+    variant: {
       h1: 'text-3xl font-bold lg:text-5xl ',
       h2: 'text-3xl font-bold',
       h3: 'text-2xl font-semibold',
@@ -23,7 +23,7 @@ export const TypographyVariants = cva('font-inter', {
     },
   },
   defaultVariants: {
-    variant: 'primary',
-    size: 'p',
+    color: 'primary',
+    variant: 'p',
   },
 });

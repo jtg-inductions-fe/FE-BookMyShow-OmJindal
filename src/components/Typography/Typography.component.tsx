@@ -10,14 +10,14 @@ import type { TypographyProps } from './Typography.types';
  * <Typography tag="h1">Main Title</Typography>
  * // Renders an <h1> tag with h1 styling
  * @example
- * <Typography size="h3" tag="p">Subtitle text</Typography>
+ * <Typography variant="h3" tag="p">Subtitle text</Typography>
  * // Renders a <p> tag that visually looks like an h3
  * @param props - {@link TypographyProps}
  */
 export const Typography = ({
   tag = 'p',
-  size = tag,
-  variant = 'primary',
+  variant = tag,
+  color = 'primary',
   className,
   children,
   ...props
@@ -25,7 +25,7 @@ export const Typography = ({
   const Component = tag;
 
   return (
-    <Component className={cn(TypographyVariants({ variant, size }), className)} {...props}>
+    <Component className={cn(TypographyVariants({ color, variant }), className)} {...props}>
       {children}
     </Component>
   );

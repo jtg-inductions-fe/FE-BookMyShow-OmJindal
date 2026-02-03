@@ -21,7 +21,7 @@ export const ErrorComponent = ({
     <Typography tag="h1" id="heading">
       {heading}
     </Typography>
-    <Typography tag="p" variant="secondary">
+    <Typography tag="p" color="secondary">
       {description}
     </Typography>
     {buttonText && to && (
