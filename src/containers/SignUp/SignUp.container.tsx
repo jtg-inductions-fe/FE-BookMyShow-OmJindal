@@ -131,7 +131,7 @@ export const SignUp = () => {
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           errors={errors}
-          form={form}
+          formData={form}
           isLoading={isLoading}
           showPassword={showPassword}
           setShowPassword={setShowPassword}

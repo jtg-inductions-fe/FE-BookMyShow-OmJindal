@@ -66,7 +66,7 @@ export type SignUpFormProps = {
   /**
    * Current form state.
    */
-  form: SignupForm;
+  formData: SignupForm;
   /**
    * Indicates whether signup request is in progress.
    */

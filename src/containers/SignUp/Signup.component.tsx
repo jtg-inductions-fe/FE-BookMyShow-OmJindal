@@ -18,7 +18,7 @@ export const SignUpForm = ({
   handleChange,
   handleSubmit,
   errors,
-  form,
+  formData,
   isLoading,
   showPassword,
   setShowPassword,
@@ -40,7 +40,7 @@ export const SignUpForm = ({
           name="name"
           placeholder="Enter your name"
           onChange={handleChange}
-          value={form.name}
+          value={formData.name}
           disabled={isLoading}
           autoComplete="name"
           aria-invalid={Boolean(errors.name)}
@@ -55,7 +55,7 @@ export const SignUpForm = ({
           name="email"
           placeholder="Enter your email"
           onChange={handleChange}
-          value={form.email}
+          value={formData.email}
           type="email"
           disabled={isLoading}
           autoComplete="email"
@@ -72,7 +72,7 @@ export const SignUpForm = ({
             name="password"
             placeholder="Create your password"
             onChange={handleChange}
-            value={form.password}
+            value={formData.password}
             type={showPassword ? 'text' : 'password'}
             disabled={isLoading}
             autoComplete="new-password"
@@ -98,7 +98,7 @@ export const SignUpForm = ({
             name="confirmPassword"
             placeholder="Re-enter your password"
             onChange={handleChange}
-            value={form.confirmPassword}
+            value={formData.confirmPassword}
             type={showConfirmPassword ? 'text' : 'password'}
             disabled={isLoading}
             autoComplete="new-password"
