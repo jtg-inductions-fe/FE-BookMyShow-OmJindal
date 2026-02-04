@@ -1,6 +1,6 @@
 import type { User } from '@/types';
 
 export type AvatarDropdownProps = {
-  user: User | null;
+  user?: User;
   handleClick: () => void;
 };

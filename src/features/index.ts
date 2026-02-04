@@ -1,1 +1,1 @@
-export { setAuthenticated, logout, setUser, authReducer } from './Auth';
+export { setAuthenticated, logout, authReducer } from './Auth';

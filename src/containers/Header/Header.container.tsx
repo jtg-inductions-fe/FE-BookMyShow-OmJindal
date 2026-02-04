@@ -9,7 +9,6 @@ import { AvatarDropdown } from './Header.component';
 
 export const Header = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  const user = useAppSelector((state) => state.auth.user);
 
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -42,7 +41,7 @@ export const Header = () => {
         <div className="flex flex-row items-center gap-3">
           <div className="text-primary">Movies</div>
           {isAuthenticated ? (
-            <AvatarDropdown handleClick={handleClick} user={user} />
+            <AvatarDropdown handleClick={handleClick} />
           ) : (
             location.pathname !== ROUTES.SIGNIN &&
             location.pathname !== ROUTES.SIGNUP && (

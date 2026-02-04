@@ -17,7 +17,6 @@ import type { AvatarDropdownProps } from './Header.types';
  * AvatarDropdown renders the authenticated user's avatar
  * with a dropdown menu for profile and logout.
  */
-
 export const AvatarDropdown = ({ handleClick, user }: AvatarDropdownProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>

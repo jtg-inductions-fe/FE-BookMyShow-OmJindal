@@ -1,13 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-import type { User } from '@/types';
-
 import type { AuthState } from './AuthSlice.types';
 
 const initialState: AuthState = {
   isAuthenticated: Boolean(localStorage.getItem('refreshToken')),
   accessToken: null,
-  user: null,
 };
 
 /**
@@ -26,22 +23,15 @@ export const authSlice = createSlice({
       state.accessToken = action.payload;
     },
     /**
-     * Updates the user's profile information.
-     */
-    setUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
-    },
-    /**
      * Clears authentication state and removes
      * refresh token from storage.
      */
     logout: (state) => {
       state.isAuthenticated = false;
       state.accessToken = null;
-      state.user = null;
     },
   },
 });
 
-export const { setAuthenticated, setUser, logout } = authSlice.actions;
+export const { setAuthenticated, logout } = authSlice.actions;
 export default authSlice.reducer;
