@@ -16,7 +16,7 @@ import { useSignupMutation } from '@/services';
 import { useAppDispatch } from '@/store';
 import { validateEmail, validateName, validatePassword } from '@/utils';
 
-import { SignUpForm } from './Signup.component';
+import { SignUpForm as SignUpFormComponent } from './Signup.component';
 import type { FormErrors, QueryError, SignupForm } from './SignUp.types';
 
 export const SignUp = () => {
@@ -127,7 +127,7 @@ export const SignUp = () => {
         </Typography>
       </CardHeader>
       <CardContent>
-        <SignUpForm
+        <SignUpFormComponent
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           errors={errors}

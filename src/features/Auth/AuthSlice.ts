@@ -23,8 +23,7 @@ export const authSlice = createSlice({
       state.accessToken = action.payload;
     },
     /**
-     * Clears authentication state and removes
-     * refresh token from storage.
+     * Clears authentication state.
      */
     logout: (state) => {
       state.isAuthenticated = false;
