@@ -25,12 +25,18 @@ export type SignupForm = {
  *
  * Each key corresponds to signup form fields.
  */
-export type FormErrors = Partial<Record<keyof SignupForm, string>>;
+export type FormErrors = Partial<Record<keyof SignupForm, string>> & {
+  detail?: string;
+};
 
 /**
  * Represents validation errors returned by the backend API.
  */
 export type QueryError = {
+  /**
+   * Errors related to the name field.
+   */
+  name?: string[];
   /**
    * Errors related to the email field.
    */

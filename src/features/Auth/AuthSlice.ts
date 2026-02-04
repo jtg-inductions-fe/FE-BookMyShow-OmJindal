@@ -5,7 +5,7 @@ import type { User } from '@/types';
 import type { AuthState } from './AuthSlice.types';
 
 const initialState: AuthState = {
-  isAuthenticated: localStorage.getItem('refreshToken') ? true : false,
+  isAuthenticated: Boolean(localStorage.getItem('refreshToken')),
   accessToken: null,
   user: null,
 };

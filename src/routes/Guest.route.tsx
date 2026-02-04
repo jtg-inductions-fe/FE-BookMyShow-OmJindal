@@ -13,7 +13,7 @@ export const GuestRoute = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
-    return <Navigate to={ROUTES.HOME} />;
+    return <Navigate to={ROUTES.HOME} replace />;
   } else {
     return <Outlet />;
   }

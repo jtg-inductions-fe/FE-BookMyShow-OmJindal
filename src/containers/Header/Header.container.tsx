@@ -35,7 +35,7 @@ export const Header = () => {
               aria-hidden="true"
             />
           </div>
-          <Typography className="text-primary" tag="span" variant="h3">
+          <Typography tag="span" variant="h3">
             Movie Book
           </Typography>
         </Link>
@@ -44,8 +44,8 @@ export const Header = () => {
           {isAuthenticated ? (
             <AvatarDropdown handleClick={handleClick} user={user} />
           ) : (
-            location.pathname != ROUTES.SIGNIN &&
-            location.pathname != ROUTES.SIGNUP && (
+            location.pathname !== ROUTES.SIGNIN &&
+            location.pathname !== ROUTES.SIGNUP && (
               <Button size="sm" to={ROUTES.SIGNIN} asLink>
                 Sign In
               </Button>

@@ -113,7 +113,9 @@ export const SignUpForm = ({
             {showConfirmPassword ? <Eye /> : <EyeOffIcon />}
           </InputGroupAddon>
         </InputGroup>
-        <FieldError>{errors.confirmPassword ?? <span aria-hidden="true">&nbsp;</span>}</FieldError>
+        <FieldError>
+          {errors.confirmPassword ?? errors.detail ?? <span aria-hidden="true">&nbsp;</span>}
+        </FieldError>
       </Field>
     </FieldGroup>
 

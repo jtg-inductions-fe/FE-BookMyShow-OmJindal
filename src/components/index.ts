@@ -8,7 +8,7 @@ export {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './DropDownMenu';
+} from './DropdownMenu';
 export { ErrorComponent } from './Error';
 export {
   Input,

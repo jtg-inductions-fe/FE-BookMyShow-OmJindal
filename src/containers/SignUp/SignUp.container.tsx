@@ -48,7 +48,7 @@ export const SignUp = () => {
     if (passwordError) err.password = passwordError;
 
     if (!data.confirmPassword) {
-      err.confirmPassword = 'Password is required';
+      err.confirmPassword = 'Confirm password is required';
     } else if (data.confirmPassword !== data.password) {
       err.confirmPassword = 'Passwords do not match';
     }
@@ -73,26 +73,28 @@ export const SignUp = () => {
       }).unwrap();
 
       const { access, refresh } = response;
-
       localStorage.setItem('refreshToken', refresh);
-
       dispatch(setAuthenticated(access));
 
       void navigate(ROUTES.HOME);
     } catch (error) {
-      if (!error || typeof error !== 'object' || !('data' in error)) return;
+      if (!error || typeof error !== 'object' || !('data' in error)) {
+        setErrors({ detail: 'An unexpected error occurred. Please try again.' });
+        return;
+      }
 
       const data = error.data as QueryError;
-
       const err: FormErrors = {};
 
       if (data?.email?.length) {
         err.email = data.email[0];
       }
-
       if (data?.password?.length) {
         err.password = data.password[0];
         err.confirmPassword = data.password[0];
+      }
+      if (data?.name?.length) {
+        err.name = data.name[0];
       }
 
       setErrors(err);

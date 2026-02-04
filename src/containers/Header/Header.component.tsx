@@ -24,7 +24,7 @@ export const AvatarDropdown = ({ handleClick, user }: AvatarDropdownProps) => (
       <Button size="icon" className="rounded-full">
         <Avatar>
           <AvatarImage
-            src={user?.profilePicture as string}
+            src={typeof user?.profilePicture === 'string' ? user.profilePicture : undefined}
             alt={user?.name ? `${user.name} avatar` : 'User avatar'}
           />
           <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase() ?? '?'}</AvatarFallback>
