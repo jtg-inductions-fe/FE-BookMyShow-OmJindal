@@ -1,27 +1,33 @@
 import { useState } from 'react';
 
+import { Eye, EyeOffIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 import {
+  Button,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
   NavigationLink,
   Typography,
 } from '@/components';
-import { ROUTES } from '@/constants';
-import { setAuthenticated } from '@/features';
+import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { useSignupMutation } from '@/services';
-import { useAppDispatch } from '@/store';
-import { validateEmail, validateName, validatePassword } from '@/utils';
 
-import { SignUpForm as SignUpFormComponent } from './Signup.component';
+import { validateSignUpForm } from './Signup.helper';
 import type { FormErrors, QueryError, SignupForm } from './SignUp.types';
 
 export const SignUp = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [signup, { isLoading }] = useSignupMutation();
 
   const [form, setForm] = useState<SignupForm>({
@@ -36,26 +42,6 @@ export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const validateSignUpForm = (data: SignupForm): FormErrors => {
-    const err: FormErrors = {};
-
-    const nameError = validateName(data.name);
-    const emailError = validateEmail(data.email);
-    const passwordError = validatePassword(data.password);
-
-    if (nameError) err.name = nameError;
-    if (emailError) err.email = emailError;
-    if (passwordError) err.password = passwordError;
-
-    if (!data.confirmPassword) {
-      err.confirmPassword = 'Confirm password is required';
-    } else if (data.confirmPassword !== data.password) {
-      err.confirmPassword = 'Passwords do not match';
-    }
-
-    return err;
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -65,21 +51,17 @@ export const SignUp = () => {
     if (Object.keys(validationError).length > 0) return;
 
     try {
-      const response = await signup({
+      await signup({
         name: form.name,
         email: form.email,
         password: form.password,
         confirm_password: form.confirmPassword,
       }).unwrap();
 
-      const { access, refresh } = response;
-      localStorage.setItem('refreshToken', refresh);
-      dispatch(setAuthenticated(access));
-
       void navigate(ROUTES.HOME);
     } catch (error) {
       if (!error || typeof error !== 'object' || !('data' in error)) {
-        setErrors({ detail: 'An unexpected error occurred. Please try again.' });
+        setErrors({ detail: ERROR_MESSAGES.UNEXPECTED_ERROR });
         return;
       }
 
@@ -127,17 +109,104 @@ export const SignUp = () => {
         </Typography>
       </CardHeader>
       <CardContent>
-        <SignUpFormComponent
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          errors={errors}
-          formData={form}
-          isLoading={isLoading}
-          showPassword={showPassword}
-          setShowPassword={setShowPassword}
-          showConfirmPassword={showConfirmPassword}
-          setShowConfirmPassword={setShowConfirmPassword}
-        />
+        <form
+          className="flex flex-col gap-4"
+          noValidate
+          onSubmit={(e) => {
+            void handleSubmit(e);
+          }}
+        >
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="name">Full name</FieldLabel>
+              <Input
+                id="name"
+                name="name"
+                placeholder="Enter your name"
+                onChange={handleChange}
+                value={form.name}
+                disabled={isLoading}
+                autoComplete="name"
+                aria-invalid={Boolean(errors.name)}
+              />
+              <FieldError>{errors.name ?? <span aria-hidden="true"> </span>}</FieldError>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <Input
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                onChange={handleChange}
+                value={form.email}
+                type="email"
+                disabled={isLoading}
+                autoComplete="email"
+                aria-invalid={Boolean(errors.email)}
+              />
+              <FieldError>{errors.email ?? <span aria-hidden="true"> </span>}</FieldError>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  id="password"
+                  name="password"
+                  placeholder="Create your password"
+                  onChange={handleChange}
+                  value={form.password}
+                  type={showPassword ? 'text' : 'password'}
+                  disabled={isLoading}
+                  autoComplete="new-password"
+                  aria-invalid={Boolean(errors.password)}
+                />
+                <InputGroupAddon
+                  align="inline-end"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="cursor-pointer"
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? <Eye /> : <EyeOffIcon />}
+                </InputGroupAddon>
+              </InputGroup>
+              <FieldError>{errors.password ?? <span aria-hidden="true"> </span>}</FieldError>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Re-enter your password"
+                  onChange={handleChange}
+                  value={form.confirmPassword}
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  disabled={isLoading}
+                  autoComplete="new-password"
+                  aria-invalid={Boolean(errors.confirmPassword)}
+                />
+                <InputGroupAddon
+                  align="inline-end"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  className="cursor-pointer"
+                  aria-label="Toggle confirm password visibility"
+                >
+                  {showConfirmPassword ? <Eye /> : <EyeOffIcon />}
+                </InputGroupAddon>
+              </InputGroup>
+              <FieldError>
+                {errors.confirmPassword ?? errors.detail ?? <span aria-hidden="true"> </span>}
+              </FieldError>
+            </Field>
+          </FieldGroup>
+
+          <Button type="submit" size="sm" disabled={isLoading}>
+            Sign Up
+          </Button>
+        </form>
       </CardContent>
       <CardFooter>
         <Typography tag="p" variant="h6">

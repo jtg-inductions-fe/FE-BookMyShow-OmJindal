@@ -1,11 +1,22 @@
 import { Link, useLocation } from 'react-router';
 
-import { Button, Typography } from '@/components';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  Typography,
+} from '@/components';
 import { ROUTES } from '@/constants';
 import { logout } from '@/features';
 import { useAppDispatch, useAppSelector } from '@/store';
-
-import { AvatarDropdown } from './Header.component';
+import type { User } from '@/types';
 
 export const Header = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
@@ -15,8 +26,14 @@ export const Header = () => {
 
   const handleClick = () => {
     dispatch(logout());
-    localStorage.removeItem('refreshToken');
   };
+
+  const user: User = {
+    name: 'Om Jindal',
+    email: 'om@gmail.com',
+  };
+
+  const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
 
   return (
     <header className="bg-white text-white w-full sticky top-0 z-1">
@@ -41,10 +58,34 @@ export const Header = () => {
         <div className="flex flex-row items-center gap-3">
           <div className="text-primary">Movies</div>
           {isAuthenticated ? (
-            <AvatarDropdown handleClick={handleClick} />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" className="rounded-full">
+                  <Avatar>
+                    <AvatarImage
+                      src={
+                        typeof user?.profilePicture === 'string' ? user.profilePicture : undefined
+                      }
+                      alt={user?.name ? `${user.name} avatar` : 'User avatar'}
+                    />
+                    <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase() ?? '?'}</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-32">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem variant="destructive" onClick={handleClick}>
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            location.pathname !== ROUTES.SIGNIN &&
-            location.pathname !== ROUTES.SIGNUP && (
+            !isAuthRoute && (
               <Button size="sm" to={ROUTES.SIGNIN} asLink>
                 Sign In
               </Button>

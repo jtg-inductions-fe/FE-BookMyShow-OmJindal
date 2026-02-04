@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react';
 
 import { cn } from '@/utils';
 
-import { inputGroupAddonVariants } from './Form.styles';
+import { inputGroupAddonVariants } from './Input.styles';
 
 /**
  * Base input component.

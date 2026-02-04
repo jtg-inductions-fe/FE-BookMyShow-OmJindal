@@ -30,7 +30,7 @@ export const Button = (props: ButtonProps) => {
 
   if (props.asLink) {
     const { asLink, to, ...rest } = props;
-    return asLink ? <Link {...rest} to={to} className={classes} /> : null;
+    return <Link {...rest} to={to} data-link={asLink} className={classes} />;
   }
 
   return (

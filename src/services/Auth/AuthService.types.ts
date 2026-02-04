@@ -9,11 +9,6 @@ export type SignUpResponse = {
    * Sent in the Authorization header as a Bearer token.
    */
   access: string;
-  /**
-   * Long-lived JWT used to obtain a new access token
-   * when the current access token expires.
-   */
-  refresh: string;
 };
 
 /**

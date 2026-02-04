@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { AuthState } from './AuthSlice.types';
 
 const initialState: AuthState = {
-  isAuthenticated: Boolean(localStorage.getItem('refreshToken')),
+  isAuthenticated: false,
   accessToken: null,
 };
 

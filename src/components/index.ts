@@ -15,7 +15,6 @@ export {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-  Label,
   FieldGroup,
   Field,
   FieldLabel,
