@@ -12,7 +12,7 @@ export const authApi = api.injectEndpoints({
      * Registers a new user account.
      *
      * Sends user credentials to the backend and returns
-     * JWT tokens and user details upon successful registration.
+     * JWT tokens upon successful registration.
      */
     signup: builder.mutation<SignUpResponse, SignUpRequest>({
       query: (data) => ({
@@ -21,8 +21,12 @@ export const authApi = api.injectEndpoints({
         body: data,
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        const { data } = await queryFulfilled;
-        dispatch(setAuthenticated(data.access));
+        try {
+          const { data } = await queryFulfilled;
+          if (data?.access) {
+            dispatch(setAuthenticated(data.access));
+          }
+        } catch {}
       },
     }),
   }),

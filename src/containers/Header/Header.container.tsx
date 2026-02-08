@@ -36,7 +36,7 @@ export const Header = () => {
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
 
   return (
-    <header className="bg-white text-white w-full sticky top-0 z-1">
+    <header className="bg-white w-full sticky top-0 z-1">
       <div className="flex flex-row justify-between items-center h-18 w-full px-2 max-w-480 mx-auto">
         <Link
           to={ROUTES.HOME}

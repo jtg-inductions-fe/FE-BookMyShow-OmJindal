@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from '@/constants';
 import { validateEmail, validateName, validatePassword } from '@/utils';
 
 import type { FormErrors, SignupForm } from './SignUp.types';
@@ -17,9 +18,9 @@ export const validateSignUpForm = (data: SignupForm): FormErrors => {
   if (passwordError) err.password = passwordError;
 
   if (!data.confirmPassword) {
-    err.confirmPassword = 'Confirm password is required';
+    err.confirmPassword = ERROR_MESSAGES.CONFIRM_PASSWORD.REQUIRED;
   } else if (data.confirmPassword !== data.password) {
-    err.confirmPassword = 'Passwords do not match';
+    err.confirmPassword = ERROR_MESSAGES.CONFIRM_PASSWORD.MISMATCH;
   }
 
   return err;

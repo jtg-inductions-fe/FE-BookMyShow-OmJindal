@@ -8,4 +8,4 @@ export const VALIDATION_PARAMETERS = {
   PASSWORD: {
     MIN_LENGTH: 8,
   },
-};
+} as const;
