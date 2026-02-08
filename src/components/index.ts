@@ -1,14 +1,6 @@
 export { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 export { Button } from './Button';
 export { Card, CardHeader, CardContent, CardFooter } from './Card';
-export {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from './DropdownMenu';
 export { ErrorComponent } from './Error';
 export {
   Input,
@@ -22,6 +14,10 @@ export {
   FieldError,
 } from './Form';
 export { NavigationLink } from './NavigationLink';
+export { Separator } from './Separator';
+export { Sheet, SheetTrigger, SheetContent, SheetFooter } from './Sheet';
 export { Typography } from './Typography';
 export { Spinner } from './Spinner';
 export { Toaster } from './Sonner';
+export { Popover, PopoverTrigger, PopoverContent } from './Popover';
+export { Profile } from './Profile';
