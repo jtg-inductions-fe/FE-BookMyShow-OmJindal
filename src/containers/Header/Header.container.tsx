@@ -14,17 +14,20 @@ import {
   Typography,
 } from '@/components';
 import { ROUTES } from '@/constants';
-import { logout } from '@/features';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { useLogoutMutation, useProfileQuery } from '@/services';
+import { useAppSelector } from '@/store';
 
 export const Header = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-
   const location = useLocation();
-  const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    dispatch(logout());
+  const { data: user } = useProfileQuery(undefined, { skip: !isAuthenticated });
+  const [logout, { isLoading }] = useLogoutMutation();
+
+  const handleClick = async () => {
+    try {
+      await logout().unwrap();
+    } catch {}
   };
 
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
@@ -56,7 +59,7 @@ export const Header = () => {
               <DropdownMenuTrigger asChild>
                 <Button size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage src="" alt="" />
+                    <AvatarImage src={user?.profilePicture as string} alt="User Avatar" />
                     <AvatarFallback>OJ</AvatarFallback>
                   </Avatar>
                 </Button>
@@ -67,7 +70,13 @@ export const Header = () => {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem variant="destructive" onClick={handleClick}>
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onClick={() => {
+                      void handleClick();
+                    }}
+                    disabled={isLoading}
+                  >
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
