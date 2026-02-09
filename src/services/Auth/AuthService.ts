@@ -1,3 +1,4 @@
+import { API_URLS } from '@/constants';
 import { setAuthenticated } from '@/features';
 
 import type { SignUpRequest, SignUpResponse } from './AuthService.types';
@@ -16,17 +17,14 @@ export const authApi = api.injectEndpoints({
      */
     signup: builder.mutation<SignUpResponse, SignUpRequest>({
       query: (data) => ({
-        url: '/user/',
+        url: API_URLS.USER.SIGNUP,
         method: 'POST',
         body: data,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          if (data?.access) {
-            dispatch(setAuthenticated(data.access));
-          }
-        } catch {}
+      onQueryStarted(_, { dispatch, queryFulfilled }) {
+        void queryFulfilled.then((response) => {
+          dispatch(setAuthenticated(response.data.access));
+        });
       },
     }),
   }),

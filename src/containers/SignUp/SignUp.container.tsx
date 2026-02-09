@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
 
 import { Eye, EyeOffIcon } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import {
   Button,
@@ -22,12 +22,17 @@ import {
 } from '@/components';
 import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { useSignupMutation } from '@/services';
+import type { ApiError } from '@/types';
 
 import { validateSignUpForm } from './Signup.helper';
 import type { FormErrors, QueryError, SignupForm } from './SignUp.types';
 
 export const SignUp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as { from?: string };
+  const to = state?.from || ROUTES.HOME;
+
   const [signup, { isLoading }] = useSignupMutation();
 
   const [form, setForm] = useState<SignupForm>({
@@ -36,53 +41,51 @@ export const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-
   const [errors, setErrors] = useState<FormErrors>({});
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const validationError = validateSignUpForm(form);
     setErrors(validationError);
-
     if (Object.keys(validationError).length > 0) return;
 
-    try {
-      await signup({
-        name: form.name,
-        email: form.email,
-        password: form.password,
-        confirm_password: form.confirmPassword,
-      }).unwrap();
+    signup({
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      confirm_password: form.confirmPassword,
+    })
+      .unwrap()
+      .then(() => {
+        void navigate(to);
+      })
+      .catch((error: ApiError<QueryError>) => {
+        if (!error || typeof error !== 'object' || !('data' in error)) {
+          setErrors({ detail: ERROR_MESSAGES.UNEXPECTED_ERROR });
+          return;
+        }
+        const data = error.data;
+        const err: FormErrors = {};
 
-      void navigate(ROUTES.HOME);
-    } catch (error) {
-      if (!error || typeof error !== 'object' || !('data' in error)) {
-        setErrors({ detail: ERROR_MESSAGES.UNEXPECTED_ERROR });
-        return;
-      }
+        if (data?.email?.length) {
+          err.email = data.email[0];
+        }
+        if (data?.password?.length) {
+          err.password = data.password[0];
+        }
+        if (data?.name?.length) {
+          err.name = data.name[0];
+        }
 
-      const data = error.data as QueryError;
-      const err: FormErrors = {};
-
-      if (data?.email?.length) {
-        err.email = data.email[0];
-      }
-      if (data?.password?.length) {
-        err.password = data.password[0];
-      }
-      if (data?.name?.length) {
-        err.name = data.name[0];
-      }
-
-      setErrors(err);
-    }
+        setErrors(err);
+      });
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -108,13 +111,7 @@ export const SignUp = () => {
         </Typography>
       </CardHeader>
       <CardContent>
-        <form
-          className="flex flex-col gap-4"
-          noValidate
-          onSubmit={(e) => {
-            void handleSubmit(e);
-          }}
-        >
+        <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="name">Full name</FieldLabel>
@@ -197,7 +194,11 @@ export const SignUp = () => {
                 </InputGroupAddon>
               </InputGroup>
               <FieldError>
-                {errors.confirmPassword ?? errors.detail ?? <span aria-hidden="true"> </span>}
+                {errors.confirmPassword || errors.detail ? (
+                  errors.confirmPassword || errors.detail
+                ) : (
+                  <span aria-hidden="true"> </span>
+                )}
               </FieldError>
             </Field>
           </FieldGroup>

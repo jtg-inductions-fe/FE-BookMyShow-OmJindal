@@ -16,7 +16,6 @@ import {
 import { ROUTES } from '@/constants';
 import { logout } from '@/features';
 import { useAppDispatch, useAppSelector } from '@/store';
-import type { User } from '@/types';
 
 export const Header = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
@@ -26,11 +25,6 @@ export const Header = () => {
 
   const handleClick = () => {
     dispatch(logout());
-  };
-
-  const user: User = {
-    name: 'Om Jindal',
-    email: 'om@gmail.com',
   };
 
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
@@ -62,13 +56,8 @@ export const Header = () => {
               <DropdownMenuTrigger asChild>
                 <Button size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage
-                      src={
-                        typeof user?.profilePicture === 'string' ? user.profilePicture : undefined
-                      }
-                      alt={user?.name ? `${user.name} avatar` : 'User avatar'}
-                    />
-                    <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase() ?? '?'}</AvatarFallback>
+                    <AvatarImage src="" alt="" />
+                    <AvatarFallback>OJ</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
