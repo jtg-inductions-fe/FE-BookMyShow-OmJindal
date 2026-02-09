@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
 
 import { Eye, EyeOffIcon } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import {
   Button,
@@ -20,14 +20,19 @@ import {
   NavigationLink,
   Typography,
 } from '@/components';
-import { ROUTES } from '@/constants';
+import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { useSigninMutation } from '@/services';
+import type { ApiError, LocationState } from '@/types';
 
-import { validateSignInForm } from './Signin.helper';
+import { validateSignInForm } from './SignIn.helper';
 import type { FormErrors, QueryError, SignInForm } from './SignIn.types';
 
 export const SignIn = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as LocationState;
+  const to = state?.from || ROUTES.HOME;
+
   const [signin, { isLoading }] = useSigninMutation();
 
   const [form, setForm] = useState<SignInForm>({
@@ -37,33 +42,36 @@ export const SignIn = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const validationError = validateSignInForm(form);
-    setErrors(validationError);
-    if (Object.keys(validationError).length > 0) return;
 
-    try {
-      await signin({
-        email: form.email,
-        password: form.password,
-      }).unwrap();
-
-      void navigate(ROUTES.HOME);
-    } catch (error) {
-      if (!error || typeof error !== 'object' || !('data' in error)) {
-        setErrors({ detail: 'An unexpected error occurred. Please try again.' });
-        return;
-      }
-      const data = error.data as QueryError;
-      const err: FormErrors = {};
-      err.detail = data.detail;
-      setErrors(err);
+    if (Object.keys(validationError).length > 0) {
+      setErrors(validationError);
+      return;
     }
+
+    signin({
+      email: form.email,
+      password: form.password,
+    })
+      .unwrap()
+      .then(() => {
+        void navigate(to, { replace: true });
+      })
+      .catch((error: ApiError<QueryError>) => {
+        if (!error || typeof error !== 'object' || !('data' in error)) {
+          setErrors({ detail: ERROR_MESSAGES.UNEXPECTED_ERROR });
+          return;
+        }
+        setErrors({
+          detail: error.data.detail,
+        });
+      });
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -84,13 +92,7 @@ export const SignIn = () => {
         </Typography>
       </CardHeader>
       <CardContent>
-        <form
-          className="flex flex-col gap-4"
-          noValidate
-          onSubmit={(e) => {
-            void handleSubmit(e);
-          }}
-        >
+        <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -105,7 +107,7 @@ export const SignIn = () => {
                 autoComplete="email"
                 aria-invalid={Boolean(errors.detail) || Boolean(errors.email)}
               />
-              <FieldError>{errors.email ?? <span aria-hidden="true">&nbsp;</span>}</FieldError>
+              <FieldError>{errors.email || <span aria-hidden="true">&nbsp;</span>}</FieldError>
             </Field>
 
             <Field>
@@ -132,7 +134,11 @@ export const SignIn = () => {
                 </InputGroupAddon>
               </InputGroup>
               <FieldError>
-                {errors.password ?? errors.detail ?? <span aria-hidden="true">&nbsp;</span>}
+                {errors.password || errors.detail ? (
+                  errors.password || errors.detail
+                ) : (
+                  <span aria-hidden="true"> </span>
+                )}
               </FieldError>
             </Field>
           </FieldGroup>

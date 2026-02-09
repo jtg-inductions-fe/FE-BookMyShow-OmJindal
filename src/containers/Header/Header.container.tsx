@@ -24,10 +24,8 @@ export const Header = () => {
   const { data: user } = useProfileQuery(undefined, { skip: !isAuthenticated });
   const [logout, { isLoading }] = useLogoutMutation();
 
-  const handleClick = async () => {
-    try {
-      await logout().unwrap();
-    } catch {}
+  const handleClick = () => {
+    void logout();
   };
 
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
@@ -59,7 +57,7 @@ export const Header = () => {
               <DropdownMenuTrigger asChild>
                 <Button size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage src={user?.profilePicture as string} alt="User Avatar" />
+                    <AvatarImage src={user?.profilePicture} alt="User Avatar" />
                     <AvatarFallback>OJ</AvatarFallback>
                   </Avatar>
                 </Button>
@@ -72,9 +70,7 @@ export const Header = () => {
                 <DropdownMenuGroup>
                   <DropdownMenuItem
                     variant="destructive"
-                    onClick={() => {
-                      void handleClick();
-                    }}
+                    onClick={handleClick}
                     disabled={isLoading}
                   >
                     Log out

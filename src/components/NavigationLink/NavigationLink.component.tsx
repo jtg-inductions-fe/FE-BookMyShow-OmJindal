@@ -14,7 +14,11 @@ export const NavigationLink = ({
   children,
   ...props
 }: LinkProps & ComponentProps<'a'>) => (
-  <Link to={to} className={cn('text-pink font-inter font-semibold', className)} {...props}>
+  <Link
+    to={to}
+    className={cn('text-pink font-inter font-semibold hover:underline', className)}
+    {...props}
+  >
     {children}
   </Link>
 );

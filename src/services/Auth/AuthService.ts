@@ -1,8 +1,8 @@
 import { API_URLS } from '@/constants';
 import { logout, setAuthenticated } from '@/features';
-import type { User } from '@/types';
 
 import type {
+  ProfileQueryResponse,
   ProfileResponse,
   RefreshResponse,
   SignInRequest,
@@ -50,18 +50,15 @@ export const authApi = api.injectEndpoints({
      */
     signin: builder.mutation<SignInResponse, SignInRequest>({
       query: (data) => ({
-        url: '/user/login/',
+        url: API_URLS.USER.SIGNIN,
         method: 'POST',
         credentials: 'include',
         body: data,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          if (data?.access) {
-            dispatch(setAuthenticated(data.access));
-          }
-        } catch {}
+      onQueryStarted(_, { dispatch, queryFulfilled }) {
+        void queryFulfilled.then((response) => {
+          dispatch(setAuthenticated(response.data.access));
+        });
       },
       invalidatesTags: ['Profile'],
     }),
@@ -74,17 +71,14 @@ export const authApi = api.injectEndpoints({
      */
     refresh: builder.mutation<RefreshResponse, void>({
       query: () => ({
-        url: '/user/refresh/',
+        url: API_URLS.USER.REFRESH,
         method: 'POST',
         credentials: 'include',
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          if (data?.access) {
-            dispatch(setAuthenticated(data.access));
-          }
-        } catch {}
+      onQueryStarted(_, { dispatch, queryFulfilled }) {
+        void queryFulfilled.then((response) => {
+          dispatch(setAuthenticated(response.data.access));
+        });
       },
     }),
 
@@ -92,12 +86,12 @@ export const authApi = api.injectEndpoints({
      * Retrieves the authenticated user's profile from the backend
      * and normalizes the response into the frontend `User` model.
      */
-    profile: builder.query<User, void>({
+    profile: builder.query<ProfileResponse, void>({
       query: () => ({
-        url: '/user/',
+        url: API_URLS.USER.PROFILE,
         method: 'GET',
       }),
-      transformResponse: (response: ProfileResponse): User => ({
+      transformResponse: (response: ProfileQueryResponse): ProfileResponse => ({
         email: response.email,
         name: response.name,
         phoneNumber: response.phone_number,
@@ -114,15 +108,15 @@ export const authApi = api.injectEndpoints({
      */
     logout: builder.mutation<void, void>({
       query: () => ({
-        url: '/user/logout/',
+        url: API_URLS.USER.LOGOUT,
         method: 'POST',
         credentials: 'include',
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
+      onQueryStarted(_, { dispatch, queryFulfilled }) {
+        void queryFulfilled.then(() => {
           dispatch(logout());
-        } catch {}
+          dispatch(api.util.resetApiState());
+        });
       },
     }),
   }),

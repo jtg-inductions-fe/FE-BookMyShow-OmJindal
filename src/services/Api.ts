@@ -3,7 +3,7 @@ import { Mutex } from 'async-mutex';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { ERROR_MESSAGES } from '@/constants';
+import { API_URLS, ERROR_MESSAGES } from '@/constants';
 import { logout, setAuthenticated } from '@/features';
 import type { RootState } from '@/store';
 
@@ -27,7 +27,7 @@ const authEndpoints = ['profile', 'logout'];
  * List of RTK Query endpoints that does not
  * call refresh again when api returns 401.
  */
-const nonReauthEndPoints = ['signin', 'refresh'];
+const nonReauthEndpoints = ['signin', 'refresh'];
 
 /**
  * Base query configuration.
@@ -69,7 +69,7 @@ export const baseQueryWithReauth: BaseQueryFn<
     return result;
   }
 
-  if (nonReauthEndPoints.includes(api.endpoint)) {
+  if (nonReauthEndpoints.includes(api.endpoint)) {
     return result;
   }
 
@@ -78,7 +78,7 @@ export const baseQueryWithReauth: BaseQueryFn<
     try {
       const refreshResult = await baseQuery(
         {
-          url: '/user/refresh/',
+          url: API_URLS.USER.REFRESH,
           method: 'POST',
           credentials: 'include',
         },
