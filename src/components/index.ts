@@ -15,9 +15,18 @@ export {
 } from './Form';
 export { NavigationLink } from './NavigationLink';
 export { Separator } from './Separator';
-export { Sheet, SheetTrigger, SheetContent, SheetFooter } from './Sheet';
+export {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from './Sheet';
 export { Typography } from './Typography';
 export { Spinner } from './Spinner';
 export { Toaster } from './Sonner';
 export { Popover, PopoverTrigger, PopoverContent } from './Popover';
-export { Profile } from './Profile';
+export { Profile, ProfileSkeleton } from './Profile';
+export { Modal } from './Modal';
+export { Skeleton } from './Skeleton';

@@ -1,1 +1,1 @@
-export { Empty, EmptyFooter, EmptyHeader, EmptyMedia } from './Empty.component';
+export { Empty, EmptyContent, EmptyHeader, EmptyMedia } from './Empty.component';

@@ -1,16 +1,22 @@
-import type { User } from '@/types';
+import type { To } from 'react-router';
+
+import type { ProfileResponse } from '@/services';
 
 export type ProfileProps = {
   /**
    * The data of the user.
    */
-  user?: User;
+  user: ProfileResponse;
   /**
    * The function to be called on logout.
    */
-  handleLogout: () => void;
+  handleClick: () => void;
   /**
-   * Represent the disabled state of logout button.
+   * Represent the active state of profile button.
    */
-  isLoading: boolean;
+  isActive: boolean;
+  /**
+   * The route to be navigate to on click of profile button.
+   */
+  to: To;
 };

@@ -54,7 +54,7 @@ export const DialogContent = ({
     <DialogPrimitive.Content
       data-slot="dialog-content"
       className={cn(
-        'bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border shadow-lg duration-200 outline-none sm:max-w-lg',
+        'bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border shadow-lg duration-200 outline-none sm:max-w-xl',
         className,
       )}
       {...props}
@@ -78,11 +78,12 @@ export const DialogContent = ({
  */
 export const DialogTitle = ({
   className,
+  children,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>) => (
+}: ComponentProps<typeof DialogPrimitive.Title>) => (
   <DialogPrimitive.Title data-slot="dialog-title" {...props} asChild>
-    <Typography variant="h3" tag="h2" className={cn(className)}>
-      {props.children}
+    <Typography variant="h3" tag="h2" className={className}>
+      {children}
     </Typography>
   </DialogPrimitive.Title>
 );
@@ -93,7 +94,7 @@ export const DialogTitle = ({
 export const DialogDescription = ({
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Description>) => (
+}: ComponentProps<typeof DialogPrimitive.Description>) => (
   <DialogPrimitive.Description data-slot="dialog-description" {...props} asChild>
     <Typography color="secondary" className={className}>
       {props.children}

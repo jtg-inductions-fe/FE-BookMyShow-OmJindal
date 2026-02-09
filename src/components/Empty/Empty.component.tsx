@@ -1,4 +1,5 @@
 import type { VariantProps } from 'class-variance-authority';
+import type { ComponentProps } from 'react';
 
 import { cn } from '@/utils';
 
@@ -7,7 +8,7 @@ import { emptyMediaVariants } from './Empty.styles';
 /**
  * The main container of the empty component.
  */
-export const Empty = ({ className, ...props }: React.ComponentProps<'div'>) => (
+export const Empty = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     data-slot="empty"
     className={cn(
@@ -21,10 +22,10 @@ export const Empty = ({ className, ...props }: React.ComponentProps<'div'>) => (
 /**
  * The header of the empty component.
  */
-export const EmptyHeader = ({ className, ...props }: React.ComponentProps<'div'>) => (
+export const EmptyHeader = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     data-slot="empty-header"
-    className={cn('flex max-w-sm flex-col items-center gap-3 text-center', className)}
+    className={cn('flex max-w-lg flex-col items-center gap-3 text-center', className)}
     {...props}
   />
 );
@@ -36,7 +37,7 @@ export const EmptyMedia = ({
   className,
   variant = 'default',
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof emptyMediaVariants>) => (
+}: ComponentProps<'div'> & VariantProps<typeof emptyMediaVariants>) => (
   <div
     data-slot="empty-icon"
     data-variant={variant}
@@ -48,11 +49,11 @@ export const EmptyMedia = ({
 /**
  * The footer of the empty component.
  */
-export const EmptyFooter = ({ className, ...props }: React.ComponentProps<'div'>) => (
+export const EmptyContent = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     data-slot="empty-content"
     className={cn(
-      'flex flex-col sm:flex-row w-full max-w-sm min-w-0 items-center gap-4 text-balance *:w-full sm:*:w-auto',
+      'flex flex-col justify-center sm:flex-row w-full min-w-0 items-center gap-4 text-balance *:w-full sm:*:w-auto',
       className,
     )}
     {...props}

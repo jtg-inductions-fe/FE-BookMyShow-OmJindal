@@ -11,24 +11,29 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-  Profile,
+  ProfileSkeleton,
   Separator,
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetFooter,
+  SheetTitle,
   SheetTrigger,
   Typography,
 } from '@/components';
-import { SheetDescription, SheetTitle } from '@/components/Sheet';
 import { ROUTES } from '@/constants';
 import { useLogoutMutation, useProfileQuery } from '@/services';
 import { useAppSelector } from '@/store';
+
+import { ProfileContainer } from '../Profile';
 
 export const Header = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const location = useLocation();
 
-  const { data: user } = useProfileQuery(undefined, { skip: !isAuthenticated });
+  const { data: user, isLoading: isLoadingUser } = useProfileQuery(undefined, {
+    skip: !isAuthenticated,
+  });
   const [logout, { isLoading }] = useLogoutMutation();
 
   const handleLogout = () => {
@@ -79,30 +84,38 @@ export const Header = () => {
           </nav>
           {/* Pop over component */}
           {isAuthenticated ? (
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button size="icon" className="rounded-full">
-                  {/* Avatar */}
-                  <Avatar size="lg">
-                    <AvatarImage
-                      src={user?.profilePicture}
-                      alt={user?.name ? `${user.name} avatar` : 'User avatar'}
+            isLoadingUser ? (
+              <Avatar size="lg">
+                <AvatarFallback>!</AvatarFallback>
+              </Avatar>
+            ) : (
+              user && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button size="icon" className="rounded-full">
+                      {/* Avatar */}
+                      <Avatar size="lg">
+                        <AvatarImage src={user.profilePicture} alt={`${user.name} avatar`} />
+                        <AvatarFallback>{user.name.trim()?.[0]?.toUpperCase()}</AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent side="bottom" align="end" className="w-64 p-2">
+                    {/* Profile Component */}
+                    <ProfileContainer
+                      user={{
+                        name: user.name,
+                        email: user.email,
+                        phoneNumber: user.phoneNumber,
+                        profilePicture: user.profilePicture,
+                      }}
+                      handleLogout={handleLogout}
+                      isLoading={isLoading}
                     />
-                    <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent side="bottom" align="end" className="w-64 p-2">
-                {/* Profile Component */}
-                <Profile
-                  user={user}
-                  handleLogout={() => {
-                    void handleLogout();
-                  }}
-                  isLoading={isLoading}
-                />
-              </PopoverContent>
-            </Popover>
+                  </PopoverContent>
+                </Popover>
+              )
+            )
           ) : (
             !isAuthRoute && (
               <Button to={ROUTES.SIGNIN} asLink>
@@ -122,22 +135,31 @@ export const Header = () => {
           {/* The content of the sidebar */}
           <SheetContent>
             <VisuallyHidden>
-              <SheetTitle aria-hidden="true">Navigation menu</SheetTitle>
+              <SheetTitle>Navigation menu</SheetTitle>
               <SheetDescription>Browse movies, cinemas, and account options</SheetDescription>
             </VisuallyHidden>
             {/* Profile Component */}
-            {isAuthenticated && (
-              <>
-                <Profile
-                  user={user}
-                  handleLogout={() => {
-                    void handleLogout();
-                  }}
-                  isLoading={isLoading}
-                />
-                <Separator />
-              </>
-            )}
+            {isAuthenticated ? (
+              isLoadingUser ? (
+                <ProfileSkeleton />
+              ) : (
+                user && (
+                  <>
+                    <ProfileContainer
+                      user={{
+                        name: user.name,
+                        email: user.email,
+                        phoneNumber: user.phoneNumber,
+                        profilePicture: user.profilePicture,
+                      }}
+                      handleLogout={handleLogout}
+                      isLoading={isLoading}
+                    />
+                    <Separator />
+                  </>
+                )
+              )
+            ) : null}
             {/* Navigation Links */}
             <Typography>Browse</Typography>
             <nav className="w-full flex flex-col gap-4">
@@ -146,14 +168,14 @@ export const Header = () => {
                 to={ROUTES.MOVIES}
                 asLink
               >
-                Movie
+                Movies
               </Button>
               <Button
                 variant={location.pathname === ROUTES.CINEMAS ? 'purple' : 'secondary'}
                 to={ROUTES.CINEMAS}
                 asLink
               >
-                Cinema
+                Cinemas
               </Button>
             </nav>
             {/* Signin */}

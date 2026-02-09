@@ -1,7 +1,7 @@
 import type { ModalProps } from './Modal.types';
 import { Button } from '../Button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '../Dialog';
-import { Empty, EmptyFooter, EmptyHeader, EmptyMedia } from '../Empty';
+import { Empty, EmptyContent, EmptyHeader, EmptyMedia } from '../Empty';
 
 /**
  * Modal component used to display a confirmation dialog box.
@@ -17,7 +17,7 @@ export const Modal = ({
   handleConfirm,
   isLoading,
 }: ModalProps) => (
-  <Dialog open={isOpen}>
+  <Dialog open={isOpen} onOpenChange={setIsOpen}>
     <DialogContent showCloseButton={false}>
       <Empty>
         <EmptyHeader>
@@ -25,19 +25,14 @@ export const Modal = ({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{subtitle}</DialogDescription>
         </EmptyHeader>
-        <EmptyFooter>
-          <Button
-            variant={'secondary'}
-            onClick={() => {
-              setIsOpen((prev) => !prev);
-            }}
-          >
+        <EmptyContent>
+          <Button variant={'secondary'} onClick={setIsOpen} disabled={isLoading}>
             {closeModalText}
           </Button>
           <Button variant="destructive" onClick={handleConfirm} disabled={isLoading}>
             {confirmText}
           </Button>
-        </EmptyFooter>
+        </EmptyContent>
       </Empty>
     </DialogContent>
   </Dialog>

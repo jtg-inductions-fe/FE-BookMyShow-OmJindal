@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react';
+import type { ReactNode } from 'react';
 
 export type ModalProps = {
   /**
@@ -6,13 +6,13 @@ export type ModalProps = {
    */
   isOpen: boolean;
   /**
-   * Funciton to toggle the state of modal.
+   * Function to toggle the state of modal.
    */
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: () => void;
   /**
    * The icon to be displayed inside modal.
    */
-  icon: React.ReactNode;
+  icon: ReactNode;
   /**
    * The title of the modal.
    */
