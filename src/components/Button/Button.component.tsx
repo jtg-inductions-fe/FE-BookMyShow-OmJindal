@@ -36,11 +36,11 @@ export const Button = (props: ButtonProps) => {
     );
   }
 
-  const { variant = 'default', size = 'default', className } = props;
+  const { variant = 'default', size = 'default', className, ...rest } = props;
 
   return (
     <button
-      {...props}
+      {...rest}
       data-slot="button"
       data-variant={variant}
       data-size={size}
