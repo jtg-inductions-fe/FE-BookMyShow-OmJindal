@@ -45,7 +45,7 @@ export default defineConfig([
           groups: [
             ['^react$', '^react-dom'],
             ['^\\w'],
-            ['^@react-redux'],
+            ['^@react-redux', '^@reduxjs/toolkit', '^@radix-ui'],
             [
               '^@(?:|assets|components|constants|containers|features|hooks|layouts|pages|routes|services|store|types|utils)',
             ],

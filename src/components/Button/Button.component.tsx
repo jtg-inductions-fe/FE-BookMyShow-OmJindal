@@ -24,22 +24,27 @@ import type { ButtonProps } from './Button.types';
  * @param props - {@link ButtonProps}
  */
 export const Button = (props: ButtonProps) => {
-  const { variant = 'default', size = 'default', className } = props;
-
-  const classes = cn(buttonVariants({ variant, size, className }));
-
   if (props.asLink) {
-    const { asLink, to, ...rest } = props;
-    return asLink ? <Link {...rest} to={to} className={classes} /> : null;
+    const { asLink, to, variant = 'default', size = 'default', className, ...rest } = props;
+    return (
+      <Link
+        {...rest}
+        to={to}
+        data-link={asLink}
+        className={cn(buttonVariants({ variant, size, className }))}
+      />
+    );
   }
+
+  const { variant = 'default', size = 'default', className, ...rest } = props;
 
   return (
     <button
-      {...props}
+      {...rest}
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={classes}
+      className={cn(buttonVariants({ variant, size, className }))}
     />
   );
 };
