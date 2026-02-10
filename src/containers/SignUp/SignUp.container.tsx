@@ -22,7 +22,7 @@ import {
 } from '@/components';
 import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { useSignupMutation } from '@/services';
-import type { ApiError } from '@/types';
+import type { ApiError, LocationState } from '@/types';
 
 import { validateSignUpForm } from './Signup.helper';
 import type { FormErrors, QueryError, SignupForm } from './SignUp.types';
@@ -30,7 +30,7 @@ import type { FormErrors, QueryError, SignupForm } from './SignUp.types';
 export const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state as { from?: string };
+  const state = location.state as LocationState;
   const to = state?.from || ROUTES.HOME;
 
   const [signup, { isLoading }] = useSignupMutation();
@@ -61,7 +61,7 @@ export const SignUp = () => {
     })
       .unwrap()
       .then(() => {
-        void navigate(to);
+        void navigate(to, { replace: true });
       })
       .catch((error: ApiError<QueryError>) => {
         if (!error || typeof error !== 'object' || !('data' in error)) {
@@ -71,14 +71,14 @@ export const SignUp = () => {
         const data = error.data;
         const err: FormErrors = {};
 
-        if (data?.email?.length) {
-          err.email = data.email[0];
+        if (data.email?.length) {
+          err.email = data.email;
         }
-        if (data?.password?.length) {
-          err.password = data.password[0];
+        if (data.password?.length) {
+          err.password = data.password;
         }
-        if (data?.name?.length) {
-          err.name = data.name[0];
+        if (data.name) {
+          err.name = data.name;
         }
 
         setErrors(err);
@@ -125,7 +125,13 @@ export const SignUp = () => {
                 autoComplete="name"
                 aria-invalid={Boolean(errors.name)}
               />
-              <FieldError>{errors.name ?? <span aria-hidden="true"> </span>}</FieldError>
+              {errors.name && errors.name.length > 0 ? (
+                errors.name.map((nameError) => <FieldError key={nameError}>{nameError}</FieldError>)
+              ) : (
+                <FieldError>
+                  <span aria-hidden="true"> </span>
+                </FieldError>
+              )}
             </Field>
 
             <Field>
@@ -141,7 +147,15 @@ export const SignUp = () => {
                 autoComplete="email"
                 aria-invalid={Boolean(errors.email)}
               />
-              <FieldError>{errors.email ?? <span aria-hidden="true"> </span>}</FieldError>
+              {errors.email && errors.email.length > 0 ? (
+                errors.email.map((emailError) => (
+                  <FieldError key={emailError}>{emailError}</FieldError>
+                ))
+              ) : (
+                <FieldError>
+                  <span aria-hidden="true"> </span>
+                </FieldError>
+              )}
             </Field>
 
             <Field>
@@ -167,7 +181,15 @@ export const SignUp = () => {
                   {showPassword ? <Eye /> : <EyeOffIcon />}
                 </InputGroupAddon>
               </InputGroup>
-              <FieldError>{errors.password ?? <span aria-hidden="true"> </span>}</FieldError>
+              {errors.password && errors.password.length > 0 ? (
+                errors.password.map((passwordError) => (
+                  <FieldError key={passwordError}>{passwordError}</FieldError>
+                ))
+              ) : (
+                <FieldError>
+                  <span aria-hidden="true"> </span>
+                </FieldError>
+              )}
             </Field>
 
             <Field>
@@ -193,13 +215,15 @@ export const SignUp = () => {
                   {showConfirmPassword ? <Eye /> : <EyeOffIcon />}
                 </InputGroupAddon>
               </InputGroup>
-              <FieldError>
-                {errors.confirmPassword || errors.detail ? (
-                  errors.confirmPassword || errors.detail
-                ) : (
-                  <span aria-hidden="true"> </span>
-                )}
-              </FieldError>
+              {errors.confirmPassword && errors.confirmPassword.length > 0 ? (
+                errors.confirmPassword.map((confirmPasswordError) => (
+                  <FieldError key={confirmPasswordError}>{confirmPasswordError}</FieldError>
+                ))
+              ) : (
+                <FieldError>
+                  {errors.detail ? errors.detail : <span aria-hidden="true"> </span>}
+                </FieldError>
+              )}
             </Field>
           </FieldGroup>
 

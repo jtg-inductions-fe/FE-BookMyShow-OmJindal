@@ -13,14 +13,14 @@ export const validateSignUpForm = (data: SignupForm): FormErrors => {
   const emailError = validateEmail(data.email);
   const passwordError = validatePassword(data.password);
 
-  if (nameError) err.name = nameError;
-  if (emailError) err.email = emailError;
-  if (passwordError) err.password = passwordError;
+  if (nameError) err.name = [nameError];
+  if (emailError) err.email = [emailError];
+  if (passwordError) err.password = [passwordError];
 
   if (!data.confirmPassword) {
-    err.confirmPassword = ERROR_MESSAGES.CONFIRM_PASSWORD.REQUIRED;
+    err.confirmPassword = [ERROR_MESSAGES.CONFIRM_PASSWORD.REQUIRED];
   } else if (data.confirmPassword !== data.password) {
-    err.confirmPassword = ERROR_MESSAGES.CONFIRM_PASSWORD.MISMATCH;
+    err.confirmPassword = [ERROR_MESSAGES.CONFIRM_PASSWORD.MISMATCH];
   }
 
   return err;

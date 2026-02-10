@@ -24,7 +24,7 @@ export const ERROR_MESSAGES = {
     REQUIRED: 'Confirm password is required',
     MISMATCH: 'Passwords do not match',
   },
-  UNEXPECTED_ERROR: 'An unexpected error occurred. Please try again.',
+  UNEXPECTED_ERROR: 'An unexpected error occurred. Please try again after sometime.',
   MISSING_API_BASE_URL:
     'VITE_API_BASE_URL is not defined. Please check your environment variables.',
 } as const;

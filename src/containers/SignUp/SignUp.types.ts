@@ -22,11 +22,28 @@ export type SignupForm = {
 
 /**
  * Represents validation errors for the sign-up form.
- *
- * Each key corresponds to signup form fields.
  */
-export type FormErrors = Partial<Record<keyof SignupForm, string>> & {
+export type FormErrors = {
+  /**
+   * General error message not tied to a specific field
+   */
   detail?: string;
+  /**
+   * List of validation errors related to the name field
+   */
+  name?: string[];
+  /**
+   * List of validation errors related to the email field
+   */
+  email?: string[];
+  /**
+   *  List of validation errors related to the password field
+   */
+  password?: string[];
+  /**
+   * List of validation errors related to the confirmPassword field
+   */
+  confirmPassword?: string[];
 };
 
 /**
