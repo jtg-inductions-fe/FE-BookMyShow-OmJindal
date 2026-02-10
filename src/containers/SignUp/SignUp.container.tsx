@@ -50,8 +50,11 @@ export const SignUp = () => {
     event.preventDefault();
 
     const validationError = validateSignUpForm(form);
-    setErrors(validationError);
-    if (Object.keys(validationError).length > 0) return;
+
+    if (Object.keys(validationError).length > 0) {
+      setErrors(validationError);
+      return;
+    }
 
     signup({
       name: form.name,
