@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useId, useState } from 'react';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
 
 import { Eye, EyeOffIcon } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
@@ -45,8 +45,6 @@ export const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const id = useId();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -119,9 +117,9 @@ export const SignUp = () => {
         <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor={id + '-name'}>Full name</FieldLabel>
+              <FieldLabel htmlFor="name">Full name</FieldLabel>
               <Input
-                id={id + '-name'}
+                id="name"
                 name="name"
                 placeholder="Enter your name"
                 onChange={handleChange}
@@ -140,9 +138,9 @@ export const SignUp = () => {
             </Field>
 
             <Field>
-              <FieldLabel htmlFor={id + '-email'}>Email</FieldLabel>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
-                id={id + '-email'}
+                id="email"
                 name="email"
                 placeholder="Enter your email"
                 onChange={handleChange}
@@ -164,10 +162,10 @@ export const SignUp = () => {
             </Field>
 
             <Field>
-              <FieldLabel htmlFor={id + '-password'}>Password</FieldLabel>
+              <FieldLabel htmlFor="password">Password</FieldLabel>
               <InputGroup>
                 <InputGroupInput
-                  id={id + '-password'}
+                  id="password"
                   name="password"
                   placeholder="Create your password"
                   onChange={handleChange}
@@ -198,10 +196,10 @@ export const SignUp = () => {
             </Field>
 
             <Field>
-              <FieldLabel htmlFor={id + '-confirmPassword'}>Confirm Password</FieldLabel>
+              <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
               <InputGroup>
                 <InputGroupInput
-                  id={id + '-confirmPassword'}
+                  id="confirmPassword"
                   name="confirmPassword"
                   placeholder="Re-enter your password"
                   onChange={handleChange}
