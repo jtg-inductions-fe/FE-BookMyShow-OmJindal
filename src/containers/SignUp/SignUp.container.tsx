@@ -20,7 +20,7 @@ import {
   NavigationLink,
   Typography,
 } from '@/components';
-import { ERROR_MESSAGES, ROUTES } from '@/constants';
+import { ROUTES } from '@/constants';
 import { useSignupMutation } from '@/services';
 import type { ApiError, LocationState } from '@/types';
 
@@ -67,10 +67,8 @@ export const SignUp = () => {
         void navigate(to, { replace: true });
       })
       .catch((error: ApiError<QueryError>) => {
-        if (!error || typeof error !== 'object' || !('data' in error)) {
-          setErrors({ detail: ERROR_MESSAGES.UNEXPECTED_ERROR });
-          return;
-        }
+        if (!error || typeof error !== 'object' || !('data' in error)) return;
+
         const data = error.data;
         const err: FormErrors = {};
 
@@ -224,7 +222,7 @@ export const SignUp = () => {
                 ))
               ) : (
                 <FieldError>
-                  {errors.detail ? errors.detail : <span aria-hidden="true"> </span>}
+                  <span aria-hidden="true"> </span>
                 </FieldError>
               )}
             </Field>

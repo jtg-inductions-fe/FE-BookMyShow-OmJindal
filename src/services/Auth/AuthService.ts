@@ -1,5 +1,5 @@
 import { API_URLS } from '@/constants';
-import { logout, setAuthenticated } from '@/features';
+import { logout as logoutAction, setAuthenticated } from '@/features';
 
 import type {
   ProfileQueryResponse,
@@ -69,16 +69,20 @@ export const authApi = api.injectEndpoints({
      * Sends refresh token to backend and gets new refresh and
      * access token in return.
      */
-    refresh: builder.mutation<RefreshResponse, void>({
+    refresh: builder.query<RefreshResponse, void>({
       query: () => ({
         url: API_URLS.USER.REFRESH,
         method: 'POST',
         credentials: 'include',
       }),
       onQueryStarted(_, { dispatch, queryFulfilled }) {
-        void queryFulfilled.then((response) => {
-          dispatch(setAuthenticated(response.data.access));
-        });
+        void queryFulfilled
+          .then(({ data }) => {
+            dispatch(setAuthenticated(data.access));
+          })
+          .catch(() => {
+            dispatch(logoutAction());
+          });
       },
     }),
 
@@ -94,9 +98,9 @@ export const authApi = api.injectEndpoints({
       transformResponse: (response: ProfileQueryResponse): ProfileResponse => ({
         email: response.email,
         name: response.name,
-        phoneNumber: response.phone_number,
-        profilePicture: response.profile_picture,
-        cityId: response.city,
+        phoneNumber: response.phone_number ?? undefined,
+        profilePicture: response.profile_picture ?? undefined,
+        cityId: response.city ?? undefined,
       }),
       providesTags: ['Profile'],
     }),
@@ -114,7 +118,7 @@ export const authApi = api.injectEndpoints({
       }),
       onQueryStarted(_, { dispatch, queryFulfilled }) {
         void queryFulfilled.then(() => {
-          dispatch(logout());
+          dispatch(logoutAction());
           dispatch(api.util.resetApiState());
         });
       },
@@ -125,7 +129,7 @@ export const authApi = api.injectEndpoints({
 export const {
   useSignupMutation,
   useSigninMutation,
-  useRefreshMutation,
+  useRefreshQuery,
   useProfileQuery,
   useLogoutMutation,
 } = authApi;

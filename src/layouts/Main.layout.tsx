@@ -1,22 +1,11 @@
-import { useEffect } from 'react';
-
 import { Outlet } from 'react-router';
 
 import { Spinner } from '@/components';
 import { Footer, Header } from '@/containers';
-import { useRefreshMutation } from '@/services';
+import { useRefreshQuery } from '@/services';
 
 export const MainLayout = () => {
-  const [refresh, { isLoading }] = useRefreshMutation();
-
-  // Initial refresh call to set the authentication state
-  useEffect(() => {
-    const doRefresh = () => {
-      void refresh().unwrap();
-    };
-
-    doRefresh();
-  }, [refresh]);
+  const { isLoading } = useRefreshQuery();
 
   if (isLoading)
     return (

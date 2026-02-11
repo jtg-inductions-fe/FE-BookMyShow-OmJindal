@@ -23,3 +23,4 @@ export {
 export { NavigationLink } from './NavigationLink';
 export { Typography } from './Typography';
 export { Spinner } from './Spinner';
+export { Toaster } from './Sonner';

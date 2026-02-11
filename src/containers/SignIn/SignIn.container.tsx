@@ -20,7 +20,7 @@ import {
   NavigationLink,
   Typography,
 } from '@/components';
-import { ERROR_MESSAGES, ROUTES } from '@/constants';
+import { ROUTES } from '@/constants';
 import { useSigninMutation } from '@/services';
 import type { ApiError, LocationState } from '@/types';
 
@@ -61,10 +61,8 @@ export const SignIn = () => {
         void navigate(to, { replace: true });
       })
       .catch((error: ApiError<QueryError>) => {
-        if (!error || typeof error !== 'object' || !('data' in error)) {
-          setErrors({ detail: ERROR_MESSAGES.UNEXPECTED_ERROR });
-          return;
-        }
+        if (!error || typeof error !== 'object' || !('data' in error)) return;
+
         setErrors({
           detail: error.data.detail,
         });

@@ -1,3 +1,5 @@
 import { SignUp } from '@/containers';
 
-export const SignUpPage = () => <SignUp />;
+const SignUpPage = () => <SignUp />;
+
+export default SignUpPage;

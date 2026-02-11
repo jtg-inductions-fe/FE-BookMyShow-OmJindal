@@ -1,3 +1,5 @@
 import { SignIn } from '@/containers';
 
-export const SignInPage = () => <SignIn />;
+const SignInPage = () => <SignIn />;
+
+export default SignInPage;

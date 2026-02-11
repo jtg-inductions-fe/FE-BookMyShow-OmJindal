@@ -25,10 +25,6 @@ export type SignupForm = {
  */
 export type FormErrors = {
   /**
-   * General error message not tied to a specific field
-   */
-  detail?: string;
-  /**
    * List of validation errors related to the name field
    */
   name?: string[];

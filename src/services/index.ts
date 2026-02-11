@@ -2,7 +2,7 @@ export { api } from './Api';
 export {
   useSignupMutation,
   useSigninMutation,
-  useRefreshMutation,
+  useRefreshQuery,
   useProfileQuery,
   useLogoutMutation,
 } from './Auth';

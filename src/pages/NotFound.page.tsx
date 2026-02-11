@@ -2,7 +2,7 @@ import NOTFOUND_IMAGE from '@/assets/images/404_not_found.webp';
 import { ErrorComponent } from '@/components';
 import { ROUTES } from '@/constants';
 
-export const NotFoundPage = () => (
+const NotFoundPage = () => (
   <ErrorComponent
     imgUrl={NOTFOUND_IMAGE}
     imgAltText="Not found"
@@ -12,3 +12,5 @@ export const NotFoundPage = () => (
     to={ROUTES.HOME}
   />
 );
+
+export default NotFoundPage;

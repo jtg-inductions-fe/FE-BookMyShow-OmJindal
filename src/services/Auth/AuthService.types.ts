@@ -67,15 +67,15 @@ export type ProfileQueryResponse = Pick<User, 'name' | 'email'> & {
   /**
    * ID of the city associated with the user.
    */
-  city: number;
+  city: number | null;
   /**
    * User's phone number.
    */
-  phone_number: string;
+  phone_number: string | null;
   /**
    * URL of the user's profile picture.
    */
-  profile_picture: string;
+  profile_picture: string | null;
 };
 
 /**
@@ -88,5 +88,5 @@ export type ProfileResponse = Omit<User, 'profilePicture'> & {
   /**
    * The URL of the profile picture.
    */
-  profilePicture: string;
+  profilePicture?: string;
 };

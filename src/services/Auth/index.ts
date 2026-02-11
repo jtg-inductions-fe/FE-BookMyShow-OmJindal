@@ -1,7 +1,7 @@
 export {
   useSignupMutation,
   useSigninMutation,
-  useRefreshMutation,
+  useRefreshQuery,
   useProfileQuery,
   useLogoutMutation,
 } from './AuthService';

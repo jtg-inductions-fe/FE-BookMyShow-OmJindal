@@ -2,7 +2,7 @@ import ERROR_IMAGE from '@/assets/images/500_error.webp';
 import { ErrorComponent } from '@/components';
 import { ROUTES } from '@/constants';
 
-export const ErrorPage = () => (
+const ErrorPage = () => (
   <div className="w-screen h-screen flex items-center justify-center">
     <ErrorComponent
       imgUrl={ERROR_IMAGE}
@@ -14,3 +14,5 @@ export const ErrorPage = () => (
     />
   </div>
 );
+
+export default ErrorPage;

@@ -1,4 +1,5 @@
 import { Mutex } from 'async-mutex';
+import { toast } from 'sonner';
 
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -64,6 +65,16 @@ export const baseQueryWithReauth: BaseQueryFn<
   await mutex.waitForUnlock();
 
   let result = await baseQuery(args, api, extraOptions);
+
+  if (result.error) {
+    const err = result.error;
+    if (err.status === 'FETCH_ERROR') {
+      toast.error(ERROR_MESSAGES.FETCH_ERROR);
+    }
+    if (err.status === 500) {
+      toast.error(ERROR_MESSAGES.SERVER_ERROR);
+    }
+  }
 
   if (result.error?.status !== 401) {
     return result;
