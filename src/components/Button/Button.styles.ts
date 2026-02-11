@@ -16,6 +16,8 @@ export const buttonVariants = cva(
           'hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground',
         link: 'text-primary hover:underline',
         active: 'text-purple font-bold',
+        outline:
+          'bg-error/10 hover:bg-error/25 dark:bg-destructive/20 text-destructive dark:hover:bg-destructive/30',
       },
       size: {
         default: 'h-11 px-12 py-4',

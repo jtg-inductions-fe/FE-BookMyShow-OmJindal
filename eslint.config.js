@@ -8,6 +8,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import react from 'eslint-plugin-react';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import reactCompiler from 'eslint-plugin-react-compiler';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -29,6 +30,7 @@ export default defineConfig([
       'react-refresh': reactRefresh,
       'jsx-a11y': jsxA11y,
       'simple-import-sort': simpleImportSort,
+      'react-compiler': reactCompiler,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -53,7 +55,7 @@ export default defineConfig([
           ],
         },
       ],
-
+      'react-compiler/react-compiler': 'error',
       '@typescript-eslint/naming-convention': [
         'error',
         {
