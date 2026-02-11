@@ -7,4 +7,5 @@ export const REGEX = {
   PASSWORD_UPPERCASE: /[A-Z]/,
   PASSWORD_LOWERCASE: /[a-z]/,
   PASSWORD_NUMBER: /[0-9]/,
+  PHONE: /^\d*$/,
 } as const;
