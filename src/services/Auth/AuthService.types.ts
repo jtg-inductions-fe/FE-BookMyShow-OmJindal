@@ -90,3 +90,20 @@ export type ProfileResponse = Pick<User, 'name' | 'email' | 'city' | 'phoneNumbe
    */
   profilePicture?: string;
 };
+
+/**
+ * Payload sent to the backend when updating user profile.
+ *
+ * Extends basic user name.
+ * User - {@link User}
+ */
+export type EditProfileRequest = Partial<Pick<User, 'name'>> & {
+  /**
+   * The phone number of the user.
+   */
+  phone_number?: string;
+  /**
+   * The profile picture of the user.
+   */
+  profile_picture?: File;
+};

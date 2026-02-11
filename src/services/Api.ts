@@ -23,7 +23,7 @@ if (!BASE_URL) {
  * List of RTK Query endpoints that require
  * an Authorization header.
  */
-const authEndpoints = ['profile', 'logout', 'bookingHistory', 'cancelBooking'];
+const authEndpoints = ['profile', 'logout', 'bookingHistory', 'cancelBooking', 'editProfile'];
 /**
  * List of RTK Query endpoints that does not
  * call refresh again when api returns 401.

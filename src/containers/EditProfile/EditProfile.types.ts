@@ -1,0 +1,25 @@
+import type { EditProfileRequest } from '@/services';
+
+/**
+ * Represents the data of edit-profile form.
+ */
+export type EditProfileForm = Pick<EditProfileRequest, 'name'> & {
+  /**
+   * The phone number of the user.
+   */
+  phoneNumber?: string;
+  /**
+   * The profile picture of the user.
+   */
+  profilePicture?: File;
+};
+
+/**
+ * Represents validation errors for the edit-profile form.
+ */
+export type FormErrors = Partial<Record<keyof EditProfileForm, string[]>>;
+
+/**
+ * Represents validation errors returned by the backend API.
+ */
+export type QueryError = Partial<Record<keyof EditProfileRequest, string[]>>;
