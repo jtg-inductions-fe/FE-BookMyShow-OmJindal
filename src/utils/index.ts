@@ -11,3 +11,4 @@ export {
 } from './validator.utils';
 export { seatRowFormatter } from './Seat';
 export { buildFormData } from './form.util';
+export { generateMovieNavigationUrl } from './movie.utils';

@@ -11,6 +11,18 @@ export const API_URLS = {
   BOOKING: {
     BOOKING: '/bookings/',
   },
+  MOVIE: {
+    LIST: '/movies/',
+  },
+} as const;
+
+/**
+ * Constant for API's
+ */
+export const API_DEFAULTS = {
+  MOVIE: {
+    LATEST_DAYS: 15,
+  },
 } as const;
 
 /**
