@@ -79,7 +79,12 @@ export const SignIn = () => {
     <Card>
       <CardHeader>
         <div className="rounded-full h-15 max-w-15">
-          <img src="/moviebook.svg" alt="" aria-hidden="true" className="w-full h-full" />
+          <img
+            src="/moviebook.svg"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-contain"
+          />
         </div>
         <Typography tag="h1" variant="h2">
           Welcome Back

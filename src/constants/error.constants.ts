@@ -26,6 +26,6 @@ export const ERROR_MESSAGES = {
   },
   MISSING_API_BASE_URL:
     'VITE_API_BASE_URL is not defined. Please check your environment variables.',
-  FETCH_ERROR: 'Cannot reach server. Please try again after sometime.',
-  SERVER_ERROR: 'Server error occurred.',
+  FETCH_ERROR: 'Cannot reach server. Please try again after some time.',
+  SERVER_ERROR: 'Something went wrong on our end. Please try again later.',
 } as const;

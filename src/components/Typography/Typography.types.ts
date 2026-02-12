@@ -23,10 +23,6 @@ export type TypographyVariantProps = VariantProps<typeof TypographyVariants>;
 export type BaseTypographyProps = TypographyVariantProps &
   HTMLAttributes<HTMLElement> & {
     /**
-     * Determines the HTML element to be rendered.
-     */
-    tag?: TypographyTag;
-    /**
      * The content to be rendered within the typography component.
      */
     children: ReactNode;
@@ -42,5 +38,9 @@ export type TypographyProps = BaseTypographyProps &
       } & LinkProps)
     | {
         asLink?: false;
+        /**
+         * Determines the HTML element to be rendered.
+         */
+        tag?: TypographyTag;
       }
   );
