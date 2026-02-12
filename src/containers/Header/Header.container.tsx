@@ -41,9 +41,8 @@ export const Header = () => {
           <div className="h-10 w-10">
             <img
               src="/moviebook.svg"
-              alt=""
+              alt="Movie Book Logo"
               className="h-full w-full object-contain"
-              aria-hidden="true"
             />
           </div>
           <Typography tag="span" variant="h3">
@@ -58,7 +57,7 @@ export const Header = () => {
                 <Button size="icon" className="rounded-full">
                   <Avatar>
                     <AvatarImage src={user?.profilePicture} alt="User Avatar" />
-                    <AvatarFallback>OJ</AvatarFallback>
+                    <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>

@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from '@/constants';
 import { validateEmail } from '@/utils';
 
 import type { FormErrors, SignInForm } from './SignIn.types';
@@ -12,7 +13,7 @@ export const validateSignInForm = (data: SignInForm): FormErrors => {
 
   if (emailError) err.email = emailError;
 
-  if (!data.password) err.password = 'Password is required.';
+  if (!data.password) err.password = ERROR_MESSAGES.PASSWORD.REQUIRED;
 
   return err;
 };

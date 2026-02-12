@@ -17,7 +17,6 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-  NavigationLink,
   Typography,
 } from '@/components';
 import { ROUTES } from '@/constants';
@@ -105,7 +104,7 @@ export const SignIn = () => {
                 autoComplete="email"
                 aria-invalid={Boolean(errors.detail) || Boolean(errors.email)}
               />
-              <FieldError>{errors.email || <span aria-hidden="true">&nbsp;</span>}</FieldError>
+              <FieldError>{errors.email || <span aria-hidden="true"></span>}</FieldError>
             </Field>
 
             <Field>
@@ -150,7 +149,9 @@ export const SignIn = () => {
         <Typography tag="p" variant="h6">
           Don&apos;t have an account?
         </Typography>
-        <NavigationLink to={ROUTES.SIGNUP}>Sign Up</NavigationLink>
+        <Typography asLink to={ROUTES.SIGNUP} color="pink">
+          Sign Up
+        </Typography>
       </CardFooter>
     </Card>
   );

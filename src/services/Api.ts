@@ -71,7 +71,7 @@ export const baseQueryWithReauth: BaseQueryFn<
     if (err.status === 'FETCH_ERROR') {
       toast.error(ERROR_MESSAGES.FETCH_ERROR);
     }
-    if (err.status === 500) {
+    if (typeof err.status === 'number' && err.status >= 500) {
       toast.error(ERROR_MESSAGES.SERVER_ERROR);
     }
   }

@@ -20,7 +20,6 @@ export {
   FieldLabel,
   FieldError,
 } from './Form';
-export { NavigationLink } from './NavigationLink';
 export { Typography } from './Typography';
 export { Spinner } from './Spinner';
 export { Toaster } from './Sonner';
