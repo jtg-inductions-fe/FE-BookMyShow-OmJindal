@@ -1,5 +1,3 @@
-import { Link } from 'react-router';
-
 import { cn } from '@/utils';
 
 import { TypographyVariants } from './Typography.styles';
@@ -16,23 +14,18 @@ import type { TypographyProps } from './Typography.types';
  * // Renders a <p> tag that visually looks like an h3
  * @param props - {@link TypographyProps}
  */
-export const Typography = (props: TypographyProps) => {
-  if (props.asLink) {
-    const { asLink, to, variant = 'a', color = 'primary', className, ...rest } = props;
-    return (
-      <Link
-        {...rest}
-        to={to}
-        data-link={asLink}
-        className={cn(TypographyVariants({ color, variant }), className)}
-      />
-    );
-  }
-  const { tag = 'p', variant = tag, color = 'primary', className, children, ...rest } = props;
+export const Typography = ({
+  tag = 'p',
+  variant = tag,
+  color = 'primary',
+  className,
+  children,
+  ...props
+}: TypographyProps) => {
   const Component = tag;
 
   return (
-    <Component className={cn(TypographyVariants({ color, variant }), className)} {...rest}>
+    <Component className={cn(TypographyVariants({ color, variant }), className)} {...props}>
       {children}
     </Component>
   );

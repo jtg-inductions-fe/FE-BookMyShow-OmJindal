@@ -1,6 +1,5 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { LinkProps } from 'react-router';
 
 import { TypographyVariants } from './Typography.styles';
 
@@ -20,27 +19,14 @@ export type TypographyVariantProps = VariantProps<typeof TypographyVariants>;
  * Extends standard HTML attributes to ensure full compatibility with native
  * props like `className`, `aria-label`, etc.
  */
-export type BaseTypographyProps = TypographyVariantProps &
+export type TypographyProps = TypographyVariantProps &
   HTMLAttributes<HTMLElement> & {
+    /**
+     * Determines the HTML element to be rendered.
+     */
+    tag?: TypographyTag;
     /**
      * The content to be rendered within the typography component.
      */
     children: ReactNode;
   };
-
-/**
- * Props for the Typography component.
- */
-export type TypographyProps = BaseTypographyProps &
-  (
-    | ({
-        asLink: true;
-      } & LinkProps)
-    | {
-        asLink?: false;
-        /**
-         * Determines the HTML element to be rendered.
-         */
-        tag?: TypographyTag;
-      }
-  );

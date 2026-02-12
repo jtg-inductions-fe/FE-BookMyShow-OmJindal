@@ -17,6 +17,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
+  NavigationLink,
   Typography,
 } from '@/components';
 import { ROUTES } from '@/constants';
@@ -236,9 +237,9 @@ export const SignUp = () => {
         <Typography tag="p" variant="h6">
           Already have an account?
         </Typography>
-        <Typography asLink to={ROUTES.SIGNIN} color="pink">
+        <NavigationLink to={ROUTES.SIGNIN} color="pink">
           Sign In
-        </Typography>
+        </NavigationLink>
       </CardFooter>
     </Card>
   );
