@@ -12,6 +12,8 @@ export const buttonVariants = cva(
         default: 'bg-gradient-to-r from-purple to-pink text-white hover:opacity-85',
         destructive: 'bg-error text-white hover:bg-error/85',
         secondary: 'bg-grey-bg text-primary border border-grey-border hover:bg-grey-bg/85',
+        ghost:
+          'hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground',
       },
       size: {
         default: 'h-11 px-12 py-4',

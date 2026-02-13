@@ -16,6 +16,7 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
   NavigationLink,
   Typography,
@@ -127,13 +128,14 @@ export const SignIn = () => {
                   autoComplete="current-password"
                   aria-invalid={Boolean(errors.detail) || Boolean(errors.password)}
                 />
-                <InputGroupAddon
-                  align="inline-end"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="cursor-pointer"
-                  aria-label="Toggle password visibility"
-                >
-                  {showPassword ? <Eye /> : <EyeOffIcon />}
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    aria-label="Toggle password visibility"
+                    size="icon-xs"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <Eye /> : <EyeOffIcon />}
+                  </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
               <FieldError>

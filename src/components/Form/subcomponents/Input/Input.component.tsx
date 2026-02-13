@@ -1,10 +1,10 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
 
+import { Button, type ButtonProps } from '@/components/Button';
 import { cn } from '@/utils';
 
-import { inputGroupAddonVariants } from './Input.styles';
-
+import { inputGroupAddonVariants, inputGroupButtonVariants } from './Input.styles';
 /**
  * Base input component.
  *
@@ -66,9 +66,8 @@ export const InputGroupAddon = ({
   className,
   align = 'inline-start',
   ...props
-}: ComponentProps<'button'> & VariantProps<typeof inputGroupAddonVariants>) => (
-  <button
-    type="button"
+}: ComponentProps<'div'> & VariantProps<typeof inputGroupAddonVariants>) => (
+  <div
     data-slot="input-group-addon"
     data-align={align}
     className={cn(inputGroupAddonVariants({ align }), className)}
@@ -88,6 +87,28 @@ export const InputGroupInput = ({ className, ...props }: ComponentProps<'input'>
       'w-full rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 dark:bg-transparent',
       className,
     )}
+    {...props}
+  />
+);
+
+/**
+ * InputGroupButton component.
+ *
+ * A button used along with InputGroupAddon.
+ */
+export const InputGroupButton = ({
+  className,
+  type = 'button',
+  variant = 'ghost',
+  size = 'xs',
+  ...props
+}: Omit<Extract<ButtonProps, { asLink?: false }>, 'size'> &
+  VariantProps<typeof inputGroupButtonVariants>) => (
+  <Button
+    type={type}
+    data-size={size}
+    variant={variant}
+    className={cn(inputGroupButtonVariants({ size }), className)}
     {...props}
   />
 );

@@ -16,6 +16,7 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
   NavigationLink,
   Typography,
@@ -173,13 +174,14 @@ export const SignUp = () => {
                   autoComplete="new-password"
                   aria-invalid={Boolean(errors.password)}
                 />
-                <InputGroupAddon
-                  align="inline-end"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="cursor-pointer"
-                  aria-label="Toggle password visibility"
-                >
-                  {showPassword ? <Eye /> : <EyeOffIcon />}
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    aria-label="Toggle password visibility"
+                    size="icon-xs"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <Eye /> : <EyeOffIcon />}
+                  </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
               {errors.password && errors.password.length > 0 ? (
@@ -207,13 +209,14 @@ export const SignUp = () => {
                   autoComplete="new-password"
                   aria-invalid={Boolean(errors.confirmPassword)}
                 />
-                <InputGroupAddon
-                  align="inline-end"
-                  onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="cursor-pointer"
-                  aria-label="Toggle confirm password visibility"
-                >
-                  {showConfirmPassword ? <Eye /> : <EyeOffIcon />}
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    aria-label="Toggle confirm password visibility"
+                    size="icon-xs"
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  >
+                    {showConfirmPassword ? <Eye /> : <EyeOffIcon />}
+                  </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
               {errors.confirmPassword && errors.confirmPassword.length > 0 ? (

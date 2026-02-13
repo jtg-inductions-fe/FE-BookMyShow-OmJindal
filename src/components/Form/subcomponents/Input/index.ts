@@ -1,1 +1,7 @@
-export { Input, InputGroup, InputGroupAddon, InputGroupInput } from './Input.component';
+export {
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupButton,
+} from './Input.component';
