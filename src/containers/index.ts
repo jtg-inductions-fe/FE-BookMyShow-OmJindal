@@ -7,3 +7,4 @@ export { Profile } from './Profile';
 export { EditProfile } from './EditProfile';
 export { LatestMovieCarousel } from './LatestMovieCarousel';
 export { LatestMovieGrid } from './LatestMovieGrid';
+export { MovieList } from './MovieList';

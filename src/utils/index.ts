@@ -1,4 +1,4 @@
-export { dateFormatter } from './Date';
+export { dateFormatter, isValidDate } from './Date';
 export { amountFormatter } from './Amount';
 export { timeFormatter } from './Time';
 export { cn } from './tailwind.util';
