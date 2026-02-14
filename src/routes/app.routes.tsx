@@ -15,6 +15,7 @@ const NotFoundPage = lazy(() => import('@/pages/NotFound.page'));
 const ErrorPage = lazy(() => import('@/pages/Error.page'));
 const ProfilePage = lazy(() => import('@/pages/Profile.page'));
 const EditProfilePage = lazy(() => import('@/pages/EditProfile.page'));
+const MovieListPage = lazy(() => import('@/pages/MovieList.page'));
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
     ErrorBoundary: ErrorPage,
     children: [
       { index: true, Component: HomePage },
+      { path: ROUTES.MOVIES, Component: MovieListPage },
       {
         element: <GuestRoute />,
         children: [

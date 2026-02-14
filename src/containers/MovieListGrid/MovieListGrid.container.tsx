@@ -1,0 +1,60 @@
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Link } from 'react-router';
+
+import { MovieCard, MovieCardSkeleton, Typography } from '@/components';
+import { useMovieListInfiniteQuery } from '@/services';
+import { slugGenerator } from '@/utils';
+
+import type { MovieListGridProps } from './MovieListGrid.types';
+
+export const MovieListGrid = ({ filters }: MovieListGridProps) => {
+  const moviesQuery = useMovieListInfiniteQuery(filters);
+
+  const movies = moviesQuery.data?.pages.flatMap((p) => p.results) ?? [];
+
+  if (moviesQuery.isLoading) {
+    return (
+      <div className="w-full gap-10 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <MovieCardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  if (movies.length === 0) {
+    return <Typography>No movies found</Typography>;
+  }
+
+  return (
+    <div className="w-full">
+      <InfiniteScroll
+        dataLength={movies.length}
+        next={moviesQuery.fetchNextPage}
+        hasMore={moviesQuery.hasNextPage}
+        loader={null}
+      >
+        <div className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+          {movies.map((movie) => {
+            const to = `/movies/${slugGenerator(movie.name)}/${movie.id}`;
+            const genreLabel = movie.genres.join(', ');
+            const languageLabel = movie.languages.join(', ');
+            return (
+              <Link to={to} key={movie.id}>
+                <MovieCard
+                  title={movie.name}
+                  poster={movie.poster}
+                  primaryLabel={genreLabel}
+                  secondaryLabel={languageLabel}
+                />
+              </Link>
+            );
+          })}
+
+          {moviesQuery.isFetchingNextPage &&
+            Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={`loader-${i}`} />)}
+        </div>
+      </InfiniteScroll>
+    </div>
+  );
+};

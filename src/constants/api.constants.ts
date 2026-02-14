@@ -14,6 +14,15 @@ export const API_URLS = {
   MOVIE: {
     LIST: '/movies/',
   },
+  CINEMA: {
+    LIST: '/cinemas/list/',
+    LIST_PAGINATED: '/cinemas/',
+  },
+  COMMON: {
+    CITIES: '/cities/',
+    LANGUAGES: '/languages/',
+    GENRES: '/genres/',
+  },
 } as const;
 
 /**

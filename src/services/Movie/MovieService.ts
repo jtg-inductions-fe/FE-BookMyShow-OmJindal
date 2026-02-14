@@ -22,11 +22,11 @@ const movieApi = api.injectEndpoints({
         }
 
         const params = new URLSearchParams();
-        if (queryArg?.latest_days) params.append('latest_days', String(queryArg.latest_days));
-        if (queryArg?.genres?.length) params.append('genres', queryArg.genres.join(','));
-        if (queryArg?.languages?.length) params.append('languages', queryArg.languages.join(','));
-        if (queryArg?.cinemas?.length) params.append('cinemas', queryArg.cinemas.join(','));
-        if (queryArg?.date) params.append('date', queryArg.date);
+        if (queryArg.latest_days) params.append('latest_days', String(queryArg.latest_days));
+        if (queryArg.genres?.length) params.append('genres', queryArg.genres.join(','));
+        if (queryArg.languages?.length) params.append('languages', queryArg.languages.join(','));
+        if (queryArg.cinemas?.length) params.append('cinemas', queryArg.cinemas.join(','));
+        if (queryArg.date) params.append('date', queryArg.date);
 
         return {
           url: `${API_URLS.MOVIE.LIST}?${params.toString()}`,
