@@ -102,11 +102,11 @@ export const authApi = api.injectEndpoints({
         method: 'GET',
       }),
       transformResponse: (response: ProfileQueryResponse): ProfileResponse => ({
-        email: response.email,
         name: response.name,
+        email: response.email,
         phoneNumber: response.phone_number ?? undefined,
         profilePicture: response.profile_picture ?? undefined,
-        cityId: response.city ?? undefined,
+        city: response.city ?? undefined,
       }),
       providesTags: ['Profile'],
     }),

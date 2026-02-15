@@ -17,7 +17,7 @@ export type User = {
   /**
    * The id of the city user belongs to.
    */
-  cityId?: number;
+  city?: number;
   /**
    * The profile picture of the user which
    * can be a string when we store and will be

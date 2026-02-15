@@ -59,7 +59,7 @@ export type RefreshResponse = AccessTokenResponse;
 /**
  * API response for the user profile endpoint query.
  *
- * Extends basic user name and email and add backend
+ * Extends basic user details  and add backend
  * specific fields name.
  * User - {@link User}
  */
@@ -84,7 +84,7 @@ export type ProfileQueryResponse = Pick<User, 'name' | 'email'> & {
  * Extends basic user details.
  * User - {@link User}
  */
-export type ProfileResponse = Omit<User, 'profilePicture'> & {
+export type ProfileResponse = Pick<User, 'name' | 'email' | 'city' | 'phoneNumber'> & {
   /**
    * The URL of the profile picture.
    */

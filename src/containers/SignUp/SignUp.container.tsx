@@ -79,8 +79,11 @@ export const SignUp = () => {
         if (data.password?.length) {
           err.password = data.password;
         }
-        if (data.name) {
+        if (data.name?.length) {
           err.name = data.name;
+        }
+        if (data.confirmPassword?.length) {
+          err.confirmPassword = data.confirmPassword;
         }
 
         setErrors(err);

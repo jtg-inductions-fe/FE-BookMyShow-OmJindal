@@ -23,39 +23,9 @@ export type SignupForm = {
 /**
  * Represents validation errors for the sign-up form.
  */
-export type FormErrors = {
-  /**
-   * List of validation errors related to the name field
-   */
-  name?: string[];
-  /**
-   * List of validation errors related to the email field
-   */
-  email?: string[];
-  /**
-   *  List of validation errors related to the password field
-   */
-  password?: string[];
-  /**
-   * List of validation errors related to the confirmPassword field
-   */
-  confirmPassword?: string[];
-};
+export type FormErrors = Partial<Record<keyof SignupForm, string[]>>;
 
 /**
  * Represents validation errors returned by the backend API.
  */
-export type QueryError = {
-  /**
-   * Errors related to the name field.
-   */
-  name?: string[];
-  /**
-   * Errors related to the email field.
-   */
-  email?: string[];
-  /**
-   * Errors related to the password field.
-   */
-  password?: string[];
-};
+export type QueryError = FormErrors;
