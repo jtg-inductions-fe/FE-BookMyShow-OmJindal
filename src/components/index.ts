@@ -59,3 +59,4 @@ export {
 } from './ComboBox';
 export { DatePicker } from './DatePicker';
 export { ChipGroup } from './ChipGroup';
+export { SlotCard, SlotCardSkeleton } from './SlotCard';

@@ -10,12 +10,13 @@ export {
   type EditProfileRequest,
 } from './Auth';
 export { useBookingHistoryInfiniteQuery, useCancelBookingMutation } from './Booking';
-export { useMovieListInfiniteQuery } from './Movie';
+export { useMovieListInfiniteQuery, useMovieDetailQuery } from './Movie';
 export {
   useCityListPaginatedInfiniteQuery,
   useGenreListQuery,
   useLanguageListQuery,
   useCityListQuery,
+  type CityApiResponse,
 } from './Common';
 export {
   useCinemaListPaginatedInfiniteQuery,

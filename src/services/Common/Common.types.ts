@@ -12,13 +12,18 @@ export type CityListQuery = {
 };
 
 /**
+ * Structure of the city in CityList API.
+ */
+export type CityApiResponse = Pick<City, 'id' | 'name'>;
+
+/**
  * Paginated response of city List API.
  *
  * Extends city fields
  *
  * City - {@link City}
  */
-export type CityListPaginatedResponse = PageResponse<Pick<City, 'id' | 'name'>>;
+export type CityListPaginatedResponse = PageResponse<CityApiResponse>;
 
 /**
  * Response of genre List API.
