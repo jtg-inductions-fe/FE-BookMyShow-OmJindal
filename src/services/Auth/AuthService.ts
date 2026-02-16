@@ -1,4 +1,4 @@
-import { API_URLS } from '@/constants';
+import { API_TAGS, API_URLS } from '@/constants';
 import { logout as logoutAction, setAuthenticated } from '@/features';
 
 import type {
@@ -40,7 +40,7 @@ export const authApi = api.injectEndpoints({
           () => {},
         );
       },
-      invalidatesTags: ['Profile'],
+      invalidatesTags: [API_TAGS.PROFILE],
     }),
 
     /**
@@ -66,7 +66,7 @@ export const authApi = api.injectEndpoints({
           () => {},
         );
       },
-      invalidatesTags: ['Profile'],
+      invalidatesTags: [API_TAGS.PROFILE],
     }),
 
     /**
@@ -108,7 +108,7 @@ export const authApi = api.injectEndpoints({
         profilePicture: response.profile_picture ?? undefined,
         city: response.city ?? undefined,
       }),
-      providesTags: ['Profile'],
+      providesTags: [API_TAGS.PROFILE],
     }),
 
     /**

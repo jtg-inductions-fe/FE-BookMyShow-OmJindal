@@ -9,3 +9,10 @@ export const API_URLS = {
     LOGOUT: '/user/logout/',
   },
 } as const;
+
+/**
+ * Constants for API TAG's
+ */
+export const API_TAGS = {
+  PROFILE: 'Profile',
+} as const;

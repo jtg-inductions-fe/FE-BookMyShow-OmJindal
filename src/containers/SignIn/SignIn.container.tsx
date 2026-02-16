@@ -32,20 +32,26 @@ export const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState;
+  // The path to be navigated to after successfull signin
   const to = state?.from || ROUTES.HOME;
 
   const [signin, { isLoading }] = useSigninMutation();
 
+  // Form states for sign-in inputs.
   const [form, setForm] = useState<SignInForm>({
     email: '',
     password: '',
   });
+  // Validation and API error state for the form.
   const [errors, setErrors] = useState<FormErrors>({});
+  //  State to manage password visibility toggle.
   const [showPassword, setShowPassword] = useState(false);
 
+  // Handles form submission.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    // Validate form fields.
     const validationError = validateSignInForm(form);
 
     if (Object.keys(validationError).length > 0) {
@@ -53,23 +59,26 @@ export const SignIn = () => {
       return;
     }
 
+    // Trigger RTK Query signin mutation.
     signin({
       email: form.email,
       password: form.password,
     })
       .unwrap()
       .then(() => {
+        // Navigate to the previous page on success OR to Home Page.
         void navigate(to, { replace: true });
       })
       .catch((error: ApiError<QueryError>) => {
         if (!error || typeof error !== 'object' || !('data' in error)) return;
-
+        // Set API errors in local form error state.
         setErrors({
           detail: error.data.detail,
         });
       });
   };
 
+  // Handles input field changes and updates form state.
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
       ...prev,
@@ -157,9 +166,7 @@ export const SignIn = () => {
         <Typography tag="p" variant="h6">
           Don&apos;t have an account?
         </Typography>
-        <NavigationLink to={ROUTES.SIGNUP} color="pink">
-          Sign Up
-        </NavigationLink>
+        <NavigationLink to={ROUTES.SIGNUP}>Sign Up</NavigationLink>
       </CardFooter>
     </Card>
   );

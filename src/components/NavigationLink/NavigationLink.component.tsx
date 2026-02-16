@@ -14,7 +14,7 @@ export const NavigationLink = ({
   to,
   className,
   children,
-  color = 'primary',
+  color = 'tertiary',
   variant = 'a',
   ...props
 }: NavigationLinkProps) => (

@@ -9,7 +9,7 @@ export const TypographyVariants = cva('font-inter', {
       default: 'text-white',
       primary: 'text-primary',
       secondary: 'text-secondary',
-      pink: 'text-pink',
+      tertiary: 'text-pink',
     },
     variant: {
       h1: 'text-3xl font-bold lg:text-5xl ',

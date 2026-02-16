@@ -243,9 +243,7 @@ export const SignUp = () => {
         <Typography tag="p" variant="h6">
           Already have an account?
         </Typography>
-        <NavigationLink to={ROUTES.SIGNIN} color="pink">
-          Sign In
-        </NavigationLink>
+        <NavigationLink to={ROUTES.SIGNIN}>Sign In</NavigationLink>
       </CardFooter>
     </Card>
   );

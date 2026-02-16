@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { API_URLS, ERROR_MESSAGES } from '@/constants';
+import { API_TAGS, API_URLS, ERROR_MESSAGES } from '@/constants';
 import { logout, setAuthenticated } from '@/features';
 import type { RootState } from '@/store';
 
@@ -69,10 +69,10 @@ export const baseQueryWithReauth: BaseQueryFn<
   if (result.error) {
     const err = result.error;
     if (err.status === 'FETCH_ERROR') {
-      toast.error(ERROR_MESSAGES.FETCH_ERROR);
+      toast.error(ERROR_MESSAGES.FETCH_ERROR, { position: 'top-center' });
     }
     if (typeof err.status === 'number' && err.status >= 500) {
-      toast.error(ERROR_MESSAGES.SERVER_ERROR);
+      toast.error(ERROR_MESSAGES.SERVER_ERROR, { position: 'top-center' });
     }
   }
 
@@ -123,6 +123,6 @@ export const baseQueryWithReauth: BaseQueryFn<
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Profile'],
+  tagTypes: Object.values(API_TAGS),
   endpoints: () => ({}),
 });
