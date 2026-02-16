@@ -59,6 +59,8 @@ export const SignIn = () => {
       return;
     }
 
+    setErrors({});
+
     // Trigger RTK Query signin mutation.
     signin({
       email: form.email,

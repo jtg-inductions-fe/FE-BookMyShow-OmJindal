@@ -32,24 +32,30 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState;
+  // The path to be navigated to after successfull signup
   const to = state?.from || ROUTES.HOME;
 
   const [signup, { isLoading }] = useSignupMutation();
 
+  // Form states for sign-up inputs.
   const [form, setForm] = useState<SignupForm>({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
+  // Validation and API error state for the form.
   const [errors, setErrors] = useState<FormErrors>({});
-
+  //  State to manage password visibility toggle.
   const [showPassword, setShowPassword] = useState(false);
+  //  State to manage confirm-password visibility toggle.
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // Handles form submission.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    // Validate form fields.
     const validationError = validateSignUpForm(form);
 
     if (Object.keys(validationError).length > 0) {
@@ -57,6 +63,9 @@ export const SignUp = () => {
       return;
     }
 
+    setErrors({});
+
+    // Trigger RTK Query signup mutation.
     signup({
       name: form.name,
       email: form.email,
@@ -65,6 +74,7 @@ export const SignUp = () => {
     })
       .unwrap()
       .then(() => {
+        // Navigate to the previous page on success OR to Home Page.
         void navigate(to, { replace: true });
       })
       .catch((error: ApiError<QueryError>) => {
@@ -86,6 +96,7 @@ export const SignUp = () => {
           err.confirmPassword = data.confirmPassword;
         }
 
+        // Set API errors in local form error state.
         setErrors(err);
       });
   };
