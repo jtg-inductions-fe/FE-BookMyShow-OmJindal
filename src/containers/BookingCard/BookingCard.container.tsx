@@ -16,7 +16,6 @@ export const BookingCardContainer = memo(function BookingCardContainer({
   cinemaName,
   movie,
   status,
-  isFetching,
 }: BookingCardContainerProps) {
   const [showModal, setShowModal] = useState(false);
 
@@ -33,7 +32,7 @@ export const BookingCardContainer = memo(function BookingCardContainer({
   const showTimeLabel = `${dateFormatter(startTime, 'MMM DD')} at ${timeFormatter(startTime, 'HHMM A')}`;
 
   const handleCancel = () => {
-    void cancelBooking(String(id));
+    void cancelBooking(id);
   };
 
   const handleClick = () => {
@@ -56,7 +55,7 @@ export const BookingCardContainer = memo(function BookingCardContainer({
         isCancelled={isCancelled}
         isUpcoming={isUpcoming}
         handleClick={handleClick}
-        isLoading={isLoading || isFetching}
+        isLoading={isLoading}
       />
       {/* Confirm Cancel Modal */}
       <Modal

@@ -6,13 +6,13 @@ import { useBookingHistoryInfiniteQuery } from '@/services';
 import { BookingCardContainer } from '../BookingCard';
 
 export const Booking = () => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useBookingHistoryInfiniteQuery();
 
   const bookings = data?.pages.flatMap((page) => page.results) ?? [];
 
   return (
-    <section className="flex flex-col gap-5" aria-labelledby="bookingHeading">
+    <section className="space-y-5" aria-labelledby="bookingHeading">
       <Typography tag="h1" variant="h2" id="bookingHeading">
         Booking History
       </Typography>
@@ -32,11 +32,7 @@ export const Booking = () => {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
             {bookings.map((booking) => (
-              <BookingCardContainer
-                key={'booking-' + booking.id}
-                {...booking}
-                isFetching={isFetching}
-              />
+              <BookingCardContainer key={'booking-' + booking.id} {...booking} />
             ))}
 
             {isFetchingNextPage &&

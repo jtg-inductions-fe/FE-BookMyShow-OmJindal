@@ -18,5 +18,4 @@ export const API_URLS = {
  */
 export const API_TAGS = {
   PROFILE: 'Profile',
-  BOOKING: 'Booking',
 } as const;

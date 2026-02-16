@@ -1,4 +1,4 @@
-import { API_TAGS, API_URLS } from '@/constants';
+import { API_URLS } from '@/constants';
 import type { Booking, PageResponse } from '@/types';
 
 import type { BookingApiResponse } from './BookingService.types';
@@ -41,7 +41,6 @@ const bookingApi = api.injectEndpoints({
           })),
         })),
       }),
-      providesTags: [API_TAGS.BOOKING],
       infiniteQueryOptions: {
         initialPageParam: null,
         getNextPageParam: (lastPage) => lastPage.next,
@@ -52,12 +51,28 @@ const bookingApi = api.injectEndpoints({
      *
      * Invalidates Booking tag upon successful cancellation.
      */
-    cancelBooking: builder.mutation<void, string>({
+    cancelBooking: builder.mutation<void, number>({
       query: (bookingId) => ({
         url: `${API_URLS.BOOKING.BOOKING}${bookingId}/`,
         method: 'PATCH',
       }),
-      invalidatesTags: [API_TAGS.BOOKING],
+      async onQueryStarted(bookingId, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          bookingApi.util.updateQueryData('bookingHistory', undefined, (draft) => {
+            draft.pages.forEach((page) => {
+              const booking = page.results.find((b) => b.id === bookingId);
+              if (booking) {
+                booking.status = 'C';
+              }
+            });
+          }),
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
   }),
 });

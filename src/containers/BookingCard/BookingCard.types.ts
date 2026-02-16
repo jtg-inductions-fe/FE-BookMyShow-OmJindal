@@ -6,9 +6,4 @@ import type { Booking } from '@/types';
  * Extends basic Booking fields.
  * Booking - {@link Booking}
  */
-export type BookingCardContainerProps = Booking & {
-  /**
-   * Indicates whether we are fetching the bookings or not.
-   */
-  isFetching: boolean;
-};
+export type BookingCardContainerProps = Booking;

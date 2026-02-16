@@ -18,34 +18,33 @@ export const ProfileCard = () => {
       className="flex flex-col sm:flex-row p-4 sm:p-8 sm:items-center gap-5 bg-white shadow-md justify-between rounded-xl"
       aria-label="profile"
     >
-      <div className="flex flex-row gap-4 items-center">
-        <Avatar className=" h-20 w-20">
-          <AvatarImage
-            src={user?.profilePicture as string}
-            alt={user?.name ? `${user.name} avatar` : 'User avatar'}
-          />
-          <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase()}</AvatarFallback>
-        </Avatar>
-        <div>
-          <Typography tag="h2" variant="h3">
-            {user?.name}
-          </Typography>
-          <div className="flex flex-row gap-1 text-secondary items-center">
-            <MailIcon className="h-5 w-5" />
-            <Typography tag="span" variant="h5" color="secondary">
-              {user?.email}
+      {user && (
+        <div className="flex gap-4 items-center">
+          <Avatar className=" h-20 w-20">
+            <AvatarImage src={user.profilePicture} alt={`${user.name} avatar`} />
+            <AvatarFallback>{user.name.trim()?.[0]?.toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <div>
+            <Typography tag="h2" variant="h3">
+              {user.name}
             </Typography>
-          </div>
-          {user?.phoneNumber && (
-            <div className="flex flex-row gap-1 text-secondary items-center">
-              <PhoneIcon className="h-5 w-5" />
+            <div className="flex gap-1 text-secondary items-center">
+              <MailIcon className="h-5 w-5" />
               <Typography tag="span" variant="h5" color="secondary">
-                {user?.phoneNumber}
+                {user.email}
               </Typography>
             </div>
-          )}
+            {user.phoneNumber && (
+              <div className="flex gap-1 text-secondary items-center">
+                <PhoneIcon className="h-5 w-5" />
+                <Typography tag="span" variant="h5" color="secondary">
+                  {user.phoneNumber}
+                </Typography>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       <Button size="sm" asLink to={ROUTES.EDIT_PROFILE}>
         <EditIcon />
         Edit Profile

@@ -38,8 +38,7 @@ export const BookingCard = ({
           </Chip>
         )}
       </div>
-
-      <div className="mt-3 flex flex-col gap-3 text-sm">
+      <div className="mt-3 space-y-3 text-sm">
         <div>
           <Typography variant="small" tag="p" color="secondary">
             Showtime
@@ -48,7 +47,6 @@ export const BookingCard = ({
             {showTimeLabel}
           </Typography>
         </div>
-
         <div>
           <Typography variant="small" tag="p" color="secondary">
             Seats
@@ -58,7 +56,6 @@ export const BookingCard = ({
           </Typography>
         </div>
       </div>
-
       {isUpcoming && (
         <div className="mt-4">
           <Button onClick={handleClick} variant="outline" size="sm" disabled={isLoading}>

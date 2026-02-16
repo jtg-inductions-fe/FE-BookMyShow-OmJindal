@@ -124,5 +124,6 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
   tagTypes: Object.values(API_TAGS),
+  refetchOnReconnect: true,
   endpoints: () => ({}),
 });
