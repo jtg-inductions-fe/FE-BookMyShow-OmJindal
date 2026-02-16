@@ -13,7 +13,7 @@ export const TypographyVariants = cva('font-inter', {
     },
     variant: {
       h1: 'text-3xl font-bold lg:text-5xl ',
-      h2: 'text-3xl font-bold',
+      h2: 'text-2xl font-bold md:text-3xl',
       h3: 'text-2xl font-semibold',
       h4: 'text-xl',
       h5: 'text-lg',
