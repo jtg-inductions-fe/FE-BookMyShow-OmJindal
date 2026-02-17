@@ -6,6 +6,11 @@ export type ProfileProps = {
    */
   name: string;
   /**
+   * The fallback label in case
+   * image is not availabel.
+   */
+  fallbackLabel: string | null;
+  /**
    * The email of the user.
    */
   email: string;

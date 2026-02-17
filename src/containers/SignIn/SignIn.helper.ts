@@ -11,9 +11,9 @@ export const validateSignInForm = (data: SignInForm): FormErrors => {
 
   const emailError = validateEmail(data.email);
 
-  if (emailError) err.email = emailError[0];
+  if (emailError) err.email = emailError;
 
-  if (!data.password) err.password = ERROR_MESSAGES.PASSWORD.REQUIRED;
+  if (!data.password) err.password = [ERROR_MESSAGES.PASSWORD.REQUIRED];
 
   return err;
 };

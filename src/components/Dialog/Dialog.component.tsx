@@ -76,12 +76,11 @@ export const DialogContent = ({
  * The title of the dialog component.
  */
 export const DialogTitle = ({
-  className,
   children,
   ...props
 }: ComponentProps<typeof DialogPrimitive.Title>) => (
   <DialogPrimitive.Title data-slot="dialog-title" {...props} asChild>
-    <Typography variant="h3" tag="h2" className={className}>
+    <Typography variant="h3" tag="h2">
       {children}
     </Typography>
   </DialogPrimitive.Title>
@@ -91,12 +90,9 @@ export const DialogTitle = ({
  * The description of the dialog component.
  */
 export const DialogDescription = ({
-  className,
   ...props
 }: ComponentProps<typeof DialogPrimitive.Description>) => (
   <DialogPrimitive.Description data-slot="dialog-description" {...props} asChild>
-    <Typography color="secondary" className={className}>
-      {props.children}
-    </Typography>
+    <Typography color="secondary">{props.children}</Typography>
   </DialogPrimitive.Description>
 );

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { LogOutIcon, Menu } from 'lucide-react';
-import { VisuallyHidden } from 'radix-ui';
+import { LogOutIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
 import {
@@ -14,18 +13,12 @@ import {
   PopoverContent,
   PopoverTrigger,
   Profile,
-  ProfileSkeleton,
   Separator,
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetTitle,
-  SheetTrigger,
   Typography,
 } from '@/components';
 import { ROUTES } from '@/constants';
-import { type ProfileResponse, useLogoutMutation, useProfileQuery } from '@/services';
+import { Sidebar } from '@/containers/Sidebar';
+import { useLogoutMutation, useProfileQuery } from '@/services';
 import { useAppSelector } from '@/store';
 
 export const Header = () => {
@@ -63,13 +56,9 @@ export const Header = () => {
     setShowModal(open);
   };
 
-  const getUser = (userData: ProfileResponse) => ({
-    name: userData.name,
-    email: userData.email,
-    profilePicture: userData.profilePicture,
-  });
-
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
+
+  const fallbackLabel = user?.name?.trim()?.charAt(0)?.toUpperCase() ?? null;
 
   return (
     <header className="bg-white w-full sticky top-0 z-1">
@@ -125,14 +114,20 @@ export const Header = () => {
                       {/* Avatar */}
                       <Avatar>
                         <AvatarImage src={user.profilePicture} alt={`${user.name} avatar`} />
-                        <AvatarFallback>{user.name.trim()[0].toUpperCase()}</AvatarFallback>
+                        <AvatarFallback>{fallbackLabel}</AvatarFallback>
                       </Avatar>
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent side="bottom" align="end" className="w-64 p-2">
                     {/* Profile Component */}
                     <Link to={ROUTES.PROFILE}>
-                      <Profile {...getUser(user)} size="lg" />
+                      <Profile
+                        name={user.name}
+                        email={user.email}
+                        profilePicture={user.profilePicture}
+                        fallbackLabel={fallbackLabel}
+                        size="lg"
+                      />
                     </Link>
                     <Separator />
                     <Button variant="destructive" onClick={openModal} disabled={isLoggingOut}>
@@ -151,66 +146,7 @@ export const Header = () => {
           )}
         </div>
         {/* Sidebar */}
-        <Sheet>
-          {/* Sidebar trigger element */}
-          <SheetTrigger asChild className="sm:hidden">
-            <button type="button" aria-label="Toggle Sidebar">
-              <Menu color="white" className="bg-purple p-1 rounded-md" size={40} />
-            </button>
-          </SheetTrigger>
-          {/* The content of the sidebar */}
-          <SheetContent>
-            <VisuallyHidden.Root>
-              <SheetTitle>Navigation menu</SheetTitle>
-              <SheetDescription>Browse movies, cinemas, and account options</SheetDescription>
-            </VisuallyHidden.Root>
-            {/* Profile Component */}
-            {isAuthenticated ? (
-              isLoadingUser ? (
-                <ProfileSkeleton />
-              ) : (
-                user && (
-                  <>
-                    <Link to={ROUTES.PROFILE}>
-                      <Profile {...getUser(user)} size="lg" />
-                    </Link>
-                    <Separator />
-                  </>
-                )
-              )
-            ) : null}
-            {/* Navigation Links */}
-            <Typography>Browse</Typography>
-            <nav className="w-full flex flex-col gap-4">
-              <Button
-                variant={location.pathname === ROUTES.MOVIES ? 'primary' : 'secondary'}
-                to={ROUTES.MOVIES}
-                asLink
-              >
-                Movies
-              </Button>
-              <Button
-                variant={location.pathname === ROUTES.CINEMAS ? 'primary' : 'secondary'}
-                to={ROUTES.CINEMAS}
-                asLink
-              >
-                Cinemas
-              </Button>
-            </nav>
-            {/* Signin */}
-            <SheetFooter>
-              {isAuthenticated ? (
-                <Button variant="destructive" onClick={openModal} disabled={isLoggingOut}>
-                  Log out
-                </Button>
-              ) : (
-                <Button to={ROUTES.SIGNIN} asLink>
-                  Sign In
-                </Button>
-              )}
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
+        <Sidebar isLoggingOut={isLoggingOut} openModal={openModal} />
       </div>
       <ConfirmationModal
         open={showModal}

@@ -13,12 +13,13 @@ export const Profile = ({
   email,
   phoneNumber,
   profilePicture,
+  fallbackLabel,
   size = 'default',
 }: ProfileProps) => (
   <div className="flex flex-row gap-4 items-center">
     <Avatar size={size}>
       <AvatarImage src={profilePicture} alt={`${name} avatar`} />
-      <AvatarFallback>{name.trim()[0].toUpperCase()}</AvatarFallback>
+      <AvatarFallback>{fallbackLabel}</AvatarFallback>
     </Avatar>
 
     <div className="space-y-1">
