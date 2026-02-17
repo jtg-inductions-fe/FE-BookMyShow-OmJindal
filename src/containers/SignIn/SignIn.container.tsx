@@ -159,7 +159,7 @@ export const SignIn = () => {
             </Field>
           </FieldGroup>
 
-          <Button type="submit" size="sm" disabled={isLoading}>
+          <Button type="submit" size="md" disabled={isLoading}>
             Sign In
           </Button>
         </form>

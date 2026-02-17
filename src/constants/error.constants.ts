@@ -7,7 +7,7 @@ export const ERROR_MESSAGES = {
   NAME: {
     REQUIRED: 'Name is required',
     MIN_LENGTH: `Name must be at least ${VALIDATION_PARAMETERS.NAME.MIN_LENGTH} characters`,
-    INVALID: 'Name must contain only English alphabets.',
+    INVALID: 'Name must contain only English alphabets',
   },
   EMAIL: {
     REQUIRED: 'Email is required',

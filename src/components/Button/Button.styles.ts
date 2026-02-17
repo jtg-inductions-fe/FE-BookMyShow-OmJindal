@@ -8,20 +8,20 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-gradient-to-r from-purple to-pink text-white hover:opacity-85',
-        destructive: 'bg-error text-white hover:bg-error/70',
+        default: 'bg-gradient-to-r from-purple to-pink text-white opacity-85 hover:opacity-100',
+        primary: 'bg-purple/90 text-white hover:bg-purple',
         secondary: 'bg-grey-bg text-primary border border-grey-border hover:bg-black/20',
+        destructive: 'bg-error/80 text-white hover:bg-error',
         ghost:
           'hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground',
-        purple: 'bg-purple text-white hover:bg-purple/85',
-        link: 'text-primary font-normal hover:underline',
+        link: 'text-primary hover:underline',
         active: 'text-purple font-bold',
       },
       size: {
         default: 'h-11 px-12 py-4',
-        sm: 'h-9 gap-3 px-6 py-5',
-        md: 'h-9 gap-1.5 px-4 py-2',
-        lg: 'h-15 px-16 py-8',
+        sm: 'h-9 gap-1.5 px-4 py-2',
+        md: 'h-9 gap-3 px-6 py-3',
+        lg: 'h-15 gap-5 px-16 py-5',
         chip: 'px-3 py-1 rounded-full gap-1 text-sm',
         icon: 'size-9',
         'icon-sm': 'size-8',

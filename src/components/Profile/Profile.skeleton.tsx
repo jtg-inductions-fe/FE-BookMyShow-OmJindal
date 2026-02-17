@@ -1,5 +1,4 @@
-import { Separator } from '../Separator';
-import { Skeleton } from '../Skeleton';
+import { Skeleton } from '@/components/Skeleton';
 
 export const ProfileSkeleton = () => (
   <>
@@ -11,11 +10,6 @@ export const ProfileSkeleton = () => (
         <Skeleton className="h-5 w-32" />
         <Skeleton className="h-4 w-48" />
       </div>
-    </div>
-    <Separator />
-    <div className="flex flex-col gap-2">
-      <Skeleton className="h-10 w-full rounded-md" />
-      <Skeleton className="h-10 w-full rounded-md" />
     </div>
   </>
 );

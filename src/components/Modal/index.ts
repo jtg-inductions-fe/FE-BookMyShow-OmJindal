@@ -1,1 +1,1 @@
-export { Modal } from './Modal.component';
+export { ConfirmationModal } from './ConfirmationModal.component';

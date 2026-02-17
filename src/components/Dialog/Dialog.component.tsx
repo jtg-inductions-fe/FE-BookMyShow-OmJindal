@@ -2,9 +2,8 @@ import { XIcon } from 'lucide-react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import type { ComponentProps } from 'react';
 
+import { Typography } from '@/components/Typography';
 import { cn } from '@/utils';
-
-import { Typography } from '../Typography';
 
 /**
  * The main dialog container component.

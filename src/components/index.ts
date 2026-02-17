@@ -28,5 +28,5 @@ export { Spinner } from './Spinner';
 export { Toaster } from './Sonner';
 export { Popover, PopoverTrigger, PopoverContent } from './Popover';
 export { Profile, ProfileSkeleton } from './Profile';
-export { Modal } from './Modal';
+export { ConfirmationModal } from './Modal';
 export { Skeleton } from './Skeleton';

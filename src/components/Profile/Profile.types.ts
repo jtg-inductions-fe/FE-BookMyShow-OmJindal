@@ -1,22 +1,24 @@
-import type { To } from 'react-router';
-
-import type { ProfileResponse } from '@/services';
+import type { AvatarSizes } from '@/components/Avatar';
 
 export type ProfileProps = {
   /**
-   * The data of the user.
+   * The name of the user.
    */
-  user: ProfileResponse;
+  name: string;
   /**
-   * The function to be called on logout.
+   * The email of the user.
    */
-  handleClick: () => void;
+  email: string;
   /**
-   * Represent the active state of profile button.
+   * The phone number of the user.
    */
-  isActive: boolean;
+  phoneNumber?: string;
   /**
-   * The route to be navigate to on click of profile button.
+   * The profile picture URL of the user.
    */
-  to: To;
+  profilePicture?: string;
+  /**
+   * The size of the avatar icon.
+   */
+  size?: AvatarSizes;
 };

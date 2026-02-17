@@ -1,41 +1,46 @@
-import type { Dispatch, ReactNode, SetStateAction } from 'react';
+import type { ReactNode } from 'react';
 
-export type ModalProps = {
+export type ConfirmationModalProps = {
   /**
    * Decide whether modal is open or not.
    */
-  isOpen: boolean;
+  open: boolean;
   /**
-   * Dispatch function to toggle the state of modal.
+   * Dispatch function on modal visibility toggle.
    */
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onOpenChange: (open: boolean) => void;
   /**
    * The icon to be displayed inside modal.
    */
-  icon: ReactNode;
+  icon?: ReactNode;
   /**
    * The title of the modal.
    */
-  title: string;
+  title?: string;
   /**
-   * The subtitle of the modal.
+   * The description of the modal.
    */
-  subtitle: string;
+  description?: string;
   /**
-   * Button text to close the modal.
+   * Cancel button Label.
    */
-  closeModalText: string;
+  cancelLabel?: string;
   /**
-   * Confirm button text to be displayed.
+   * Action button Label.
    */
-  confirmText: string;
+  actionLabel?: string;
   /**
-   * Function to be called on clicking handle
-   * confirm button.
+   * Function to be called on clicking
+   * cancel button.
    */
-  handleConfirm: () => void;
+  onCancel?: () => void;
   /**
-   * Represent the loading state of confirm button.
+   * Function to be called on clicking
+   * action button.
    */
-  isLoading: boolean;
+  onAction?: () => void;
+  /**
+   * Represent the loading state of action.
+   */
+  loading?: boolean;
 };

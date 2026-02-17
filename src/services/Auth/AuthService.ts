@@ -1,5 +1,6 @@
 import { API_TAGS, API_URLS } from '@/constants';
 import { logout as logoutAction, setAuthenticated } from '@/features';
+import { api } from '@/services/Api';
 
 import type {
   ProfileQueryResponse,
@@ -10,7 +11,6 @@ import type {
   SignUpRequest,
   SignUpResponse,
 } from './AuthService.types';
-import { api } from '../Api';
 
 /**
  * Authentication-related API endpoints.

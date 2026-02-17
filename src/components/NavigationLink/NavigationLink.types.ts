@@ -2,7 +2,7 @@ import type { VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
 import type { LinkProps } from 'react-router';
 
-import type { TypographyVariants } from '../Typography';
+import type { TypographyVariants } from '@/components/Typography';
 
 /**
  * Props for NavigationLink component

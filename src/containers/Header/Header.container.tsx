@@ -1,16 +1,19 @@
-import { Menu } from 'lucide-react';
-import { Link, useLocation } from 'react-router';
+import { useState } from 'react';
 
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { LogOutIcon, Menu } from 'lucide-react';
+import { VisuallyHidden } from 'radix-ui';
+import { Link, useLocation } from 'react-router';
 
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
   Button,
+  ConfirmationModal,
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Profile,
   ProfileSkeleton,
   Separator,
   Sheet,
@@ -25,25 +28,40 @@ import { ROUTES } from '@/constants';
 import { type ProfileResponse, useLogoutMutation, useProfileQuery } from '@/services';
 import { useAppSelector } from '@/store';
 
-import { ProfileContainer } from '../Profile';
-
 export const Header = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const location = useLocation();
 
+  // State for controlling logout confirmation modal visibility
+  const [showModal, setShowModal] = useState(false);
+
   const { data: user, isLoading: isLoadingUser } = useProfileQuery(undefined, {
     skip: !isAuthenticated,
   });
-  const [logout, { isLoading }] = useLogoutMutation();
 
+  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+
+  // Action to be performed on logout
   const handleLogout = () => {
     void logout();
+    setShowModal(false);
+  };
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleModalChange = (open: boolean) => {
+    setShowModal(open);
   };
 
   const getUser = (userData: ProfileResponse) => ({
     name: userData.name,
     email: userData.email,
-    phoneNumber: userData.phoneNumber,
     profilePicture: userData.profilePicture,
   });
 
@@ -76,7 +94,7 @@ export const Header = () => {
               variant={location.pathname === ROUTES.MOVIES ? 'active' : 'link'}
               to={ROUTES.MOVIES}
               asLink
-              size={'md'}
+              size={'sm'}
             >
               Movies
             </Button>
@@ -84,7 +102,7 @@ export const Header = () => {
               variant={location.pathname === ROUTES.CINEMAS ? 'active' : 'link'}
               to={ROUTES.CINEMAS}
               asLink
-              size={'md'}
+              size={'sm'}
             >
               Cinemas
             </Button>
@@ -92,8 +110,8 @@ export const Header = () => {
           {/* Pop over component */}
           {isAuthenticated ? (
             isLoadingUser ? (
-              <Avatar size="lg">
-                <AvatarFallback>!</AvatarFallback>
+              <Avatar>
+                <AvatarFallback></AvatarFallback>
               </Avatar>
             ) : (
               user && (
@@ -101,19 +119,21 @@ export const Header = () => {
                   <PopoverTrigger asChild>
                     <Button size="icon" className="rounded-full">
                       {/* Avatar */}
-                      <Avatar size="lg">
+                      <Avatar>
                         <AvatarImage src={user.profilePicture} alt={`${user.name} avatar`} />
-                        <AvatarFallback>{user.name.trim()?.[0]?.toUpperCase()}</AvatarFallback>
+                        <AvatarFallback>{user.name.trim()[0].toUpperCase()}</AvatarFallback>
                       </Avatar>
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent side="bottom" align="end" className="w-64 p-2">
                     {/* Profile Component */}
-                    <ProfileContainer
-                      user={getUser(user)}
-                      handleLogout={handleLogout}
-                      isLoading={isLoading}
-                    />
+                    <Link to={ROUTES.PROFILE}>
+                      <Profile {...getUser(user)} size="lg" />
+                    </Link>
+                    <Separator />
+                    <Button variant="destructive" onClick={openModal} disabled={isLoggingOut}>
+                      Log out
+                    </Button>
                   </PopoverContent>
                 </Popover>
               )
@@ -136,10 +156,10 @@ export const Header = () => {
           </SheetTrigger>
           {/* The content of the sidebar */}
           <SheetContent>
-            <VisuallyHidden>
+            <VisuallyHidden.VisuallyHidden>
               <SheetTitle>Navigation menu</SheetTitle>
               <SheetDescription>Browse movies, cinemas, and account options</SheetDescription>
-            </VisuallyHidden>
+            </VisuallyHidden.VisuallyHidden>
             {/* Profile Component */}
             {isAuthenticated ? (
               isLoadingUser ? (
@@ -147,11 +167,9 @@ export const Header = () => {
               ) : (
                 user && (
                   <>
-                    <ProfileContainer
-                      user={getUser(user)}
-                      handleLogout={handleLogout}
-                      isLoading={isLoading}
-                    />
+                    <Link to={ROUTES.PROFILE}>
+                      <Profile {...getUser(user)} size="lg" />
+                    </Link>
                     <Separator />
                   </>
                 )
@@ -161,14 +179,14 @@ export const Header = () => {
             <Typography>Browse</Typography>
             <nav className="w-full flex flex-col gap-4">
               <Button
-                variant={location.pathname === ROUTES.MOVIES ? 'purple' : 'secondary'}
+                variant={location.pathname === ROUTES.MOVIES ? 'primary' : 'secondary'}
                 to={ROUTES.MOVIES}
                 asLink
               >
                 Movies
               </Button>
               <Button
-                variant={location.pathname === ROUTES.CINEMAS ? 'purple' : 'secondary'}
+                variant={location.pathname === ROUTES.CINEMAS ? 'primary' : 'secondary'}
                 to={ROUTES.CINEMAS}
                 asLink
               >
@@ -177,7 +195,11 @@ export const Header = () => {
             </nav>
             {/* Signin */}
             <SheetFooter>
-              {!isAuthenticated && (
+              {isAuthenticated ? (
+                <Button variant="destructive" onClick={openModal} disabled={isLoggingOut}>
+                  Log out
+                </Button>
+              ) : (
                 <Button to={ROUTES.SIGNIN} asLink>
                   Sign In
                 </Button>
@@ -186,6 +208,18 @@ export const Header = () => {
           </SheetContent>
         </Sheet>
       </div>
+      <ConfirmationModal
+        open={showModal}
+        onOpenChange={handleModalChange}
+        icon={<LogOutIcon />}
+        title="Logout from Account?"
+        description="Are you sure you want to logout? You'll need to sign in again to access your account and bookings."
+        cancelLabel="Stay Logged In"
+        actionLabel="Yes, Log out"
+        onCancel={closeModal}
+        onAction={handleLogout}
+        loading={isLoggingOut}
+      />
     </header>
   );
 };
