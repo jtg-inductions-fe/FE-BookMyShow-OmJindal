@@ -21,17 +21,14 @@ export const SheetTrigger = ({ ...props }: ComponentProps<typeof SheetPrimitive.
 /**
  * Portal used to render the Sheet directly inside body.
  */
-export const SheetPortal = ({ ...props }: ComponentProps<typeof SheetPrimitive.Portal>) => (
+const SheetPortal = ({ ...props }: ComponentProps<typeof SheetPrimitive.Portal>) => (
   <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
 );
 
 /**
  * Semi-transparent overlay beside the Sheet.
  */
-export const SheetOverlay = ({
-  className,
-  ...props
-}: ComponentProps<typeof SheetPrimitive.Overlay>) => (
+const SheetOverlay = ({ className, ...props }: ComponentProps<typeof SheetPrimitive.Overlay>) => (
   <SheetPrimitive.Overlay
     data-slot="sheet-overlay"
     className={cn(

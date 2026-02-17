@@ -43,8 +43,12 @@ export const Header = () => {
 
   // Action to be performed on logout
   const handleLogout = () => {
-    void logout();
-    setShowModal(false);
+    logout().then(
+      () => {
+        setShowModal(false);
+      },
+      () => {},
+    );
   };
 
   const openModal = () => {
@@ -156,10 +160,10 @@ export const Header = () => {
           </SheetTrigger>
           {/* The content of the sidebar */}
           <SheetContent>
-            <VisuallyHidden.VisuallyHidden>
+            <VisuallyHidden.Root>
               <SheetTitle>Navigation menu</SheetTitle>
               <SheetDescription>Browse movies, cinemas, and account options</SheetDescription>
-            </VisuallyHidden.VisuallyHidden>
+            </VisuallyHidden.Root>
             {/* Profile Component */}
             {isAuthenticated ? (
               isLoadingUser ? (

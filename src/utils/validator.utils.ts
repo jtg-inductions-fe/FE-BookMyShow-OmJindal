@@ -24,7 +24,7 @@ export const validateName = (name: string): string[] | void => {
     err.push(ERROR_MESSAGES.NAME.INVALID);
   }
 
-  return err;
+  if (err.length) return err;
 };
 
 /**
@@ -75,5 +75,5 @@ export const validatePassword = (password: string): string[] | void => {
     err.push(ERROR_MESSAGES.PASSWORD.NUMBER);
   }
 
-  return err;
+  if (err.length) return err;
 };

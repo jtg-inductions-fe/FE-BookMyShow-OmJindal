@@ -29,4 +29,3 @@ export { Toaster } from './Sonner';
 export { Popover, PopoverTrigger, PopoverContent } from './Popover';
 export { Profile, ProfileSkeleton } from './Profile';
 export { ConfirmationModal } from './Modal';
-export { Skeleton } from './Skeleton';
