@@ -6,7 +6,7 @@ import { TypographyVariants } from './Typography.styles';
 /**
  * Valid HTML tags supported by the Typography component for semantic rendering.
  */
-export type TypographyTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'small' | 'span';
+export type TypographyTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'small' | 'span' | 'a';
 
 /**
  * Variant props for the Typography component.

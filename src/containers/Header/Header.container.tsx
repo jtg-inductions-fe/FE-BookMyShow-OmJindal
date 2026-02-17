@@ -14,17 +14,18 @@ import {
   Typography,
 } from '@/components';
 import { ROUTES } from '@/constants';
-import { logout } from '@/features';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { useLogoutMutation, useProfileQuery } from '@/services';
+import { useAppSelector } from '@/store';
 
 export const Header = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-
   const location = useLocation();
-  const dispatch = useAppDispatch();
+
+  const { data: user } = useProfileQuery(undefined, { skip: !isAuthenticated });
+  const [logout, { isLoading }] = useLogoutMutation();
 
   const handleClick = () => {
-    dispatch(logout());
+    void logout();
   };
 
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
@@ -40,9 +41,8 @@ export const Header = () => {
           <div className="h-10 w-10">
             <img
               src="/moviebook.svg"
-              alt=""
+              alt="Movie Book Logo"
               className="h-full w-full object-contain"
-              aria-hidden="true"
             />
           </div>
           <Typography tag="span" variant="h3">
@@ -56,8 +56,8 @@ export const Header = () => {
               <DropdownMenuTrigger asChild>
                 <Button size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage src="" alt="" />
-                    <AvatarFallback>OJ</AvatarFallback>
+                    <AvatarImage src={user?.profilePicture} alt="User Avatar" />
+                    <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
@@ -67,7 +67,11 @@ export const Header = () => {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem variant="destructive" onClick={handleClick}>
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onClick={handleClick}
+                    disabled={isLoading}
+                  >
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuGroup>

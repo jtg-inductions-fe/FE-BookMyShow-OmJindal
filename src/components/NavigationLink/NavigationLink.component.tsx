@@ -1,7 +1,9 @@
-import type { ComponentProps } from 'react';
-import { Link, type LinkProps } from 'react-router';
+import { Link } from 'react-router';
 
 import { cn } from '@/utils';
+
+import type { NavigationLinkProps } from './NavigationLink.types';
+import { TypographyVariants } from '../Typography';
 
 /**
  * NavigationLink component.
@@ -12,9 +14,11 @@ export const NavigationLink = ({
   to,
   className,
   children,
+  color = 'tertiary',
+  variant = 'a',
   ...props
-}: LinkProps & ComponentProps<'a'>) => (
-  <Link to={to} className={cn('text-pink font-inter font-semibold', className)} {...props}>
+}: NavigationLinkProps) => (
+  <Link to={to} className={cn(TypographyVariants({ color, variant }), className)} {...props}>
     {children}
   </Link>
 );

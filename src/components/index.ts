@@ -15,6 +15,7 @@ export {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
+  InputGroupButton,
   FieldGroup,
   Field,
   FieldLabel,
@@ -22,3 +23,5 @@ export {
 } from './Form';
 export { NavigationLink } from './NavigationLink';
 export { Typography } from './Typography';
+export { Spinner } from './Spinner';
+export { Toaster } from './Sonner';

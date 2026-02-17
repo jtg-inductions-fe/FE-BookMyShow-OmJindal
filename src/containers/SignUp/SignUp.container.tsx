@@ -16,11 +16,12 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
   NavigationLink,
   Typography,
 } from '@/components';
-import { ERROR_MESSAGES, ROUTES } from '@/constants';
+import { ROUTES } from '@/constants';
 import { useSignupMutation } from '@/services';
 import type { ApiError, LocationState } from '@/types';
 
@@ -31,24 +32,30 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState;
+  // The path to be navigated to after successfull signup
   const to = state?.from || ROUTES.HOME;
 
   const [signup, { isLoading }] = useSignupMutation();
 
+  // Form states for sign-up inputs.
   const [form, setForm] = useState<SignupForm>({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
+  // Validation and API error state for the form.
   const [errors, setErrors] = useState<FormErrors>({});
-
+  //  State to manage password visibility toggle.
   const [showPassword, setShowPassword] = useState(false);
+  //  State to manage confirm-password visibility toggle.
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // Handles form submission.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    // Validate form fields.
     const validationError = validateSignUpForm(form);
 
     if (Object.keys(validationError).length > 0) {
@@ -56,6 +63,9 @@ export const SignUp = () => {
       return;
     }
 
+    setErrors({});
+
+    // Trigger RTK Query signup mutation.
     signup({
       name: form.name,
       email: form.email,
@@ -64,13 +74,12 @@ export const SignUp = () => {
     })
       .unwrap()
       .then(() => {
+        // Navigate to the previous page on success OR to Home Page.
         void navigate(to, { replace: true });
       })
       .catch((error: ApiError<QueryError>) => {
-        if (!error || typeof error !== 'object' || !('data' in error)) {
-          setErrors({ detail: ERROR_MESSAGES.UNEXPECTED_ERROR });
-          return;
-        }
+        if (!error || typeof error !== 'object' || !('data' in error)) return;
+
         const data = error.data;
         const err: FormErrors = {};
 
@@ -80,10 +89,14 @@ export const SignUp = () => {
         if (data.password?.length) {
           err.password = data.password;
         }
-        if (data.name) {
+        if (data.name?.length) {
           err.name = data.name;
         }
+        if (data.confirmPassword?.length) {
+          err.confirmPassword = data.confirmPassword;
+        }
 
+        // Set API errors in local form error state.
         setErrors(err);
       });
   };
@@ -175,13 +188,14 @@ export const SignUp = () => {
                   autoComplete="new-password"
                   aria-invalid={Boolean(errors.password)}
                 />
-                <InputGroupAddon
-                  align="inline-end"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="cursor-pointer"
-                  aria-label="Toggle password visibility"
-                >
-                  {showPassword ? <Eye /> : <EyeOffIcon />}
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    aria-label="Toggle password visibility"
+                    size="icon-xs"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <Eye /> : <EyeOffIcon />}
+                  </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
               {errors.password && errors.password.length > 0 ? (
@@ -209,13 +223,14 @@ export const SignUp = () => {
                   autoComplete="new-password"
                   aria-invalid={Boolean(errors.confirmPassword)}
                 />
-                <InputGroupAddon
-                  align="inline-end"
-                  onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="cursor-pointer"
-                  aria-label="Toggle confirm password visibility"
-                >
-                  {showConfirmPassword ? <Eye /> : <EyeOffIcon />}
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    aria-label="Toggle confirm password visibility"
+                    size="icon-xs"
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  >
+                    {showConfirmPassword ? <Eye /> : <EyeOffIcon />}
+                  </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
               {errors.confirmPassword && errors.confirmPassword.length > 0 ? (
@@ -224,7 +239,7 @@ export const SignUp = () => {
                 ))
               ) : (
                 <FieldError>
-                  {errors.detail ? errors.detail : <span aria-hidden="true"> </span>}
+                  <span aria-hidden="true"> </span>
                 </FieldError>
               )}
             </Field>

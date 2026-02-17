@@ -3,6 +3,7 @@ export {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
+  InputGroupButton,
   FieldGroup,
   Field,
   FieldLabel,

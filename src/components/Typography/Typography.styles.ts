@@ -9,6 +9,7 @@ export const TypographyVariants = cva('font-inter', {
       default: 'text-white',
       primary: 'text-primary',
       secondary: 'text-secondary',
+      tertiary: 'text-pink',
     },
     variant: {
       h1: 'text-3xl font-bold lg:text-5xl ',
@@ -20,6 +21,7 @@ export const TypographyVariants = cva('font-inter', {
       p: 'text-base',
       span: 'text-base',
       small: 'text-sm font-medium',
+      a: 'text-base font-semibold hover:underline',
     },
   },
   defaultVariants: {
