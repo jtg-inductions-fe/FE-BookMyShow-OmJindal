@@ -47,7 +47,7 @@ export const EmptyMedia = ({
 );
 
 /**
- * The footer of the empty component.
+ * The content section of the empty component.
  */
 export const EmptyContent = ({ className, ...props }: ComponentProps<'div'>) => (
   <div

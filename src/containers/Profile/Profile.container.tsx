@@ -14,17 +14,17 @@ export const ProfileContainer = ({ handleLogout, isLoading, user }: ProfileConta
 
   const isActive = location.pathname === ROUTES.PROFILE;
 
-  const handleClick = () => {
-    setShowModal((prev) => !prev);
+  const openModal = () => {
+    setShowModal(true);
   };
 
   return (
     <>
-      <Profile handleClick={handleClick} to={ROUTES.PROFILE} user={user} isActive={isActive} />
+      <Profile handleClick={openModal} to={ROUTES.PROFILE} user={user} isActive={isActive} />
       {/* Confirm Logout Modal */}
       <Modal
         isOpen={showModal}
-        setIsOpen={handleClick}
+        setIsOpen={setShowModal}
         icon={<LogOutIcon />}
         title="Logout from Account?"
         subtitle="Are you sure you want to logout? You'll need to sign in again to access your account and bookings."

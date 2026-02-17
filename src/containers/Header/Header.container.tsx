@@ -22,7 +22,7 @@ import {
   Typography,
 } from '@/components';
 import { ROUTES } from '@/constants';
-import { useLogoutMutation, useProfileQuery } from '@/services';
+import { type ProfileResponse, useLogoutMutation, useProfileQuery } from '@/services';
 import { useAppSelector } from '@/store';
 
 import { ProfileContainer } from '../Profile';
@@ -39,6 +39,13 @@ export const Header = () => {
   const handleLogout = () => {
     void logout();
   };
+
+  const getUser = (userData: ProfileResponse) => ({
+    name: userData.name,
+    email: userData.email,
+    phoneNumber: userData.phoneNumber,
+    profilePicture: userData.profilePicture,
+  });
 
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
 
@@ -103,12 +110,7 @@ export const Header = () => {
                   <PopoverContent side="bottom" align="end" className="w-64 p-2">
                     {/* Profile Component */}
                     <ProfileContainer
-                      user={{
-                        name: user.name,
-                        email: user.email,
-                        phoneNumber: user.phoneNumber,
-                        profilePicture: user.profilePicture,
-                      }}
+                      user={getUser(user)}
                       handleLogout={handleLogout}
                       isLoading={isLoading}
                     />
@@ -146,12 +148,7 @@ export const Header = () => {
                 user && (
                   <>
                     <ProfileContainer
-                      user={{
-                        name: user.name,
-                        email: user.email,
-                        phoneNumber: user.phoneNumber,
-                        profilePicture: user.profilePicture,
-                      }}
+                      user={getUser(user)}
                       handleLogout={handleLogout}
                       isLoading={isLoading}
                     />

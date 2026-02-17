@@ -16,24 +16,30 @@ export const Modal = ({
   confirmText,
   handleConfirm,
   isLoading,
-}: ModalProps) => (
-  <Dialog open={isOpen} onOpenChange={setIsOpen}>
-    <DialogContent showCloseButton={false}>
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">{icon}</EmptyMedia>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{subtitle}</DialogDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <Button variant={'secondary'} onClick={setIsOpen} disabled={isLoading}>
-            {closeModalText}
-          </Button>
-          <Button variant="destructive" onClick={handleConfirm} disabled={isLoading}>
-            {confirmText}
-          </Button>
-        </EmptyContent>
-      </Empty>
-    </DialogContent>
-  </Dialog>
-);
+}: ModalProps) => {
+  const handleModalVisibility = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={handleModalVisibility}>
+      <DialogContent showCloseButton={false}>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">{icon}</EmptyMedia>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{subtitle}</DialogDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button variant={'secondary'} onClick={handleModalVisibility} disabled={isLoading}>
+              {closeModalText}
+            </Button>
+            <Button variant="destructive" onClick={handleConfirm} disabled={isLoading}>
+              {confirmText}
+            </Button>
+          </EmptyContent>
+        </Empty>
+      </DialogContent>
+    </Dialog>
+  );
+};
