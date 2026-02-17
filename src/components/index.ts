@@ -60,3 +60,4 @@ export {
 export { DatePicker } from './DatePicker';
 export { ChipGroup } from './ChipGroup';
 export { SlotCard, SlotCardSkeleton } from './SlotCard';
+export { CinemaCard, CinemaCardSkeleton } from './CinemaCard';
