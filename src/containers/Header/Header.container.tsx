@@ -58,8 +58,6 @@ export const Header = () => {
 
   const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
 
-  const fallbackLabel = user?.name?.trim()?.charAt(0)?.toUpperCase() ?? null;
-
   return (
     <header className="bg-white w-full sticky top-0 z-1">
       <div className="flex flex-row justify-between items-center h-18 w-full px-4 max-w-480 mx-auto">
@@ -114,7 +112,7 @@ export const Header = () => {
                       {/* Avatar */}
                       <Avatar>
                         <AvatarImage src={user.profilePicture} alt={`${user.name} avatar`} />
-                        <AvatarFallback>{fallbackLabel}</AvatarFallback>
+                        <AvatarFallback>{user.name?.trim()?.[0]?.toUpperCase()}</AvatarFallback>
                       </Avatar>
                     </Button>
                   </PopoverTrigger>
@@ -122,10 +120,9 @@ export const Header = () => {
                     {/* Profile Component */}
                     <Link to={ROUTES.PROFILE}>
                       <Profile
-                        name={user.name}
+                        name={user.name?.trim() || undefined}
                         email={user.email}
                         profilePicture={user.profilePicture}
-                        fallbackLabel={fallbackLabel}
                         size="lg"
                       />
                     </Link>

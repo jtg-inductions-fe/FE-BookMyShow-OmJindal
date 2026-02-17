@@ -13,25 +13,28 @@ export const Profile = ({
   email,
   phoneNumber,
   profilePicture,
-  fallbackLabel,
   size = 'default',
 }: ProfileProps) => (
   <div className="flex flex-row gap-4 items-center">
     <Avatar size={size}>
-      <AvatarImage src={profilePicture} alt={`${name} avatar`} />
-      <AvatarFallback>{fallbackLabel}</AvatarFallback>
+      <AvatarImage src={profilePicture} alt={name ? `${name} avatar` : 'User avatar'} />
+      <AvatarFallback>{name?.[0].toUpperCase()}</AvatarFallback>
     </Avatar>
 
     <div className="space-y-1">
-      <Typography tag="p" variant="h4">
-        {name}
-      </Typography>
-      <div className="flex gap-1 text-secondary">
-        <Mail className="h-5 w-5" />
-        <Typography tag="p" variant="small" color="secondary">
-          {email}
+      {name && (
+        <Typography tag="p" variant="h4">
+          {name}
         </Typography>
-      </div>
+      )}
+      {email && (
+        <div className="flex gap-1 text-secondary">
+          <Mail className="h-5 w-5" />
+          <Typography tag="p" variant="small" color="secondary">
+            {email}
+          </Typography>
+        </div>
+      )}
       {phoneNumber && (
         <div className="flex gap-1 text-secondary">
           <Phone className="h-5 w-5" />

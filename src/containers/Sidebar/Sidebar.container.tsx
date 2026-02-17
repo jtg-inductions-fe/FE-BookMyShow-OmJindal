@@ -29,8 +29,6 @@ export const Sidebar = ({ openModal, isLoggingOut }: SidebarProps) => {
     skip: !isAuthenticated,
   });
 
-  const fallbackLabel = user?.name?.trim()?.charAt(0)?.toUpperCase() ?? null;
-
   return (
     <Sheet>
       {/* Sidebar trigger element */}
@@ -54,10 +52,9 @@ export const Sidebar = ({ openModal, isLoggingOut }: SidebarProps) => {
               <>
                 <Link to={ROUTES.PROFILE}>
                   <Profile
-                    name={user.name}
+                    name={user.name?.trim() || undefined}
                     email={user.email}
                     profilePicture={user.profilePicture}
-                    fallbackLabel={fallbackLabel}
                     size="lg"
                   />
                 </Link>
