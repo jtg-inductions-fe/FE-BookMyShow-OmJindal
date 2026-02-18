@@ -68,7 +68,7 @@ export const EditProfile = () => {
 
     // Trigger RTK Query editProfile mutation.
     editProfile({
-      name: form.name || undefined,
+      name: form.name.trim() || undefined,
       phone_number: form.phoneNumber || undefined,
       profile_picture: form.profilePicture,
     })
@@ -162,7 +162,7 @@ export const EditProfile = () => {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="profilePicture" className="flex flex-col">
-                  <div className="h-25 w-25 bg-secondary/10 rounded-full flex items-center justify-center mx-auto overflow-hidden cursor-pointer">
+                  <div className="h-25 w-25 bg-secondary/10 rounded-full flex items-center justify-center mx-auto cursor-pointer">
                     {preview ? (
                       <img
                         src={preview}
@@ -243,13 +243,13 @@ export const EditProfile = () => {
               </Field>
             </FieldGroup>
             <div className="flex flex-col justify-center sm:flex-row gap-5 *:w-full sm:*:w-1/2">
-              <Button type="submit" size="sm" disabled={isLoading}>
+              <Button type="submit" size="md" disabled={isLoading}>
                 Save Changes
               </Button>
               <Button
                 type="button"
                 variant="secondary"
-                size="sm"
+                size="md"
                 disabled={isLoading}
                 onClick={handleClick}
               >

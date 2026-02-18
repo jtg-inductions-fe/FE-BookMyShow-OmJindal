@@ -1,7 +1,7 @@
 import { EditProfile } from '@/containers';
 
 const EditProfilePage = () => (
-  <div className="w-full mt-15 mb-15 mx-auto max-w-xl px-10">
+  <div className="w-full mx-auto max-w-xl px-10 py-15">
     <EditProfile />
   </div>
 );
