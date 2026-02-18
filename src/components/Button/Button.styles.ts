@@ -16,14 +16,14 @@ export const buttonVariants = cva(
           'hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground',
         link: 'text-primary hover:underline',
         active: 'text-purple font-bold',
-        outline:
-          'bg-error/10 hover:bg-error/25 dark:bg-destructive/20 text-destructive dark:hover:bg-destructive/30',
+        outline: 'bg-error/10 hover:bg-error/25 text-destructive',
+        success: 'bg-success/20 text-green-700 hover:bg-success/20',
       },
       size: {
         default: 'h-11 px-12 py-4',
         sm: 'h-9 gap-1.5 px-4 py-2',
-        md: 'h-9 gap-3 px-6 py-3',
-        lg: 'h-15 gap-5 px-16 py-5',
+        md: 'h-12 gap-3 px-8 py-4',
+        lg: 'h-15 gap-5 px-16 py-6',
         chip: 'px-3 py-1 rounded-full gap-1 text-sm',
         icon: 'size-9',
         'icon-sm': 'size-8',

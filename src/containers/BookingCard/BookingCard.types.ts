@@ -3,7 +3,10 @@ import type { Booking } from '@/types';
 /**
  * Props for BookingCardContainer
  *
- * Extends basic Booking fields.
+ * Extends Booking fields.
  * Booking - {@link Booking}
  */
-export type BookingCardContainerProps = Booking;
+export type BookingCardContainerProps = Pick<
+  Booking,
+  'id' | 'movie' | 'cinemaName' | 'cinemaCity' | 'status' | 'startTime' | 'seats'
+>;

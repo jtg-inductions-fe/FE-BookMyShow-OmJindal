@@ -2,24 +2,24 @@ import { memo, useState } from 'react';
 
 import { Trash as TrashIcon } from 'lucide-react';
 
-import { BookingCard, Modal } from '@/components';
+import { BookingCard, ConfirmationModal } from '@/components';
 import { useCancelBookingMutation } from '@/services';
 import { dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
 
 import type { BookingCardContainerProps } from './BookingCard.types';
 
 export const BookingCardContainer = memo(function BookingCardContainer({
+  id,
+  movie,
+  cinemaName,
+  cinemaCity,
+  status,
   startTime,
   seats,
-  id,
-  cinemaCity,
-  cinemaName,
-  movie,
-  status,
 }: BookingCardContainerProps) {
   const [showModal, setShowModal] = useState(false);
 
-  const [cancelBooking, { isLoading }] = useCancelBookingMutation();
+  const [cancelBooking, { isLoading: isCancelling }] = useCancelBookingMutation();
 
   const showTime = new Date(startTime);
   const now = new Date();
@@ -29,45 +29,57 @@ export const BookingCardContainer = memo(function BookingCardContainer({
   const isUpcoming = !isPast && !isCancelled;
 
   const seatLabel = seats.map((s) => `${seatRowFormatter(s.rowNumber)}${s.seatNumber}`).join(', ');
-  const showTimeLabel = `${dateFormatter(startTime, 'MMM DD')} at ${timeFormatter(startTime, 'HHMM A')}`;
+  const showTimeLabel = `${dateFormatter(startTime, 'MMM DD')} at ${timeFormatter(startTime)}`;
 
   const handleCancel = () => {
     void cancelBooking(id);
   };
 
-  const handleClick = () => {
-    setShowModal((prev) => !prev);
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleModalChange = (open: boolean) => {
+    setShowModal(open);
   };
 
   const handleConfirm = () => {
     handleCancel();
-    handleClick();
+    setShowModal(false);
   };
 
   return (
     <>
       <BookingCard
         title={movie}
-        subtitle={`${cinemaName}, ${cinemaCity}`}
-        seatLabel={seatLabel}
-        showTimeLabel={showTimeLabel}
-        isPast={isPast}
-        isCancelled={isCancelled}
-        isUpcoming={isUpcoming}
-        handleClick={handleClick}
-        isLoading={isLoading}
+        description={`${cinemaName}, ${cinemaCity}`}
+        status={isCancelled ? 'error' : isUpcoming ? 'success' : 'neutral'}
+        disabled={isPast}
+        badgeText={!isPast ? (isCancelled ? 'Cancelled' : 'Upcoming') : undefined}
+        info={[
+          { label: 'Showtime', value: showTimeLabel },
+          { label: 'Seats', value: seatLabel },
+        ]}
+        actionLabel={isUpcoming ? 'Cancel Booking' : undefined}
+        onAction={openModal}
+        loading={isCancelling}
       />
       {/* Confirm Cancel Modal */}
-      <Modal
-        isOpen={showModal}
-        setIsOpen={handleClick}
+      <ConfirmationModal
+        open={showModal}
+        onOpenChange={handleModalChange}
         icon={<TrashIcon />}
         title="Cancel Booking?"
-        subtitle="Are you sure you want to cancel this booking? This action cannot be undone and your seats will be released."
-        closeModalText="Keep Booking"
-        confirmText="Yes, Cancel"
-        handleConfirm={handleConfirm}
-        isLoading={isLoading}
+        description="Are you sure you want to cancel this booking? This action cannot be undone and your seats will be released."
+        cancelLabel="Keep Booking"
+        actionLabel="Yes, Cancel"
+        onCancel={closeModal}
+        onAction={handleConfirm}
+        loading={isCancelling}
       />
     </>
   );

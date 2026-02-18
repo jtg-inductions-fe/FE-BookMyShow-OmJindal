@@ -1,11 +1,10 @@
-import type { Booking } from '@/types';
+import type { Booking, PageResponse } from '@/types';
 
 /**
  * API response for the user booking history endpoint.
  *
- * Extends basic booking id, movie and status and add backend
+ * Extends basic booking fields and add backend
  * specific fields name.
- *
  * Booking - {@link Booking}
  */
 export type BookingApiResponse = Pick<Booking, 'id' | 'movie' | 'status'> & {
@@ -35,3 +34,24 @@ export type BookingApiResponse = Pick<Booking, 'id' | 'movie' | 'status'> & {
     seat_number: number;
   }>;
 };
+
+/**
+ * Paginated response of booking api.
+ */
+export type BookingApiPaginatedResponse = PageResponse<BookingApiResponse>;
+
+/**
+ * BookingHistory endpoint response.
+ *
+ * Extends Booking fields.
+ * Booking - {@link Booking}
+ */
+export type BookingResponse = Pick<
+  Booking,
+  'id' | 'movie' | 'status' | 'cinemaCity' | 'cinemaName' | 'seats' | 'startTime'
+>;
+
+/**
+ * Paginated response of booking history endpoint.
+ */
+export type BookingPaginatedResponse = PageResponse<BookingResponse>;

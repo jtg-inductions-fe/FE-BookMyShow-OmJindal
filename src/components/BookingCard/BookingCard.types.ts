@@ -1,38 +1,52 @@
+/**
+ * Represents a data displayed inside the card.
+ */
+export type InfoItem = {
+  /**
+   * Label describing the information.
+   */
+  label: string;
+  /**
+   * Value associated with the label.
+   */
+  value: string;
+};
+
 export type BookingCardProps = {
   /**
-   * The title of the booking card component.
+   * The title of the card.
    */
   title: string;
   /**
-   * The subtitle of the booking card component.
+   * The description of the card.
    */
-  subtitle: string;
+  description?: string;
   /**
-   * The show time label of the booking card component.
+   * Status used to control styling.
    */
-  showTimeLabel: string;
+  status?: 'success' | 'error' | 'neutral';
   /**
-   * The seat label of the booking card component.
+   * Optional badge shown on the top-right of the card.
    */
-  seatLabel: string;
+  badgeText?: string;
   /**
-   * Whether the booking is of future slot.
+   * Data to be shown inside the card.
    */
-  isUpcoming: boolean;
+  info?: InfoItem[];
   /**
-   * Whether the booking is cancelled.
+   * Label displayed on the action button.
    */
-  isCancelled: boolean;
+  actionLabel?: string;
   /**
-   * Whether the booking is of past slot.
+   * To display the card as visually disabled.
    */
-  isPast: boolean;
+  disabled?: boolean;
   /**
-   * Whether the booking is cancelling or not.
+   * Indicates whether the action is in progress.
    */
-  isLoading: boolean;
+  loading?: boolean;
   /**
-   * The action to be performed on button click.
+   * Callback fired when the action button is clicked.
    */
-  handleClick: () => void;
+  onAction?: () => void;
 };

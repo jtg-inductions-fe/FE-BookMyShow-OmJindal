@@ -1,68 +1,65 @@
+import { Button } from '@/components//Button';
+import { Chip } from '@/components/Chip';
+import { Typography } from '@/components/Typography';
+
 import type { BookingCardProps } from './BookingCard.types';
-import { Button } from '../Button';
-import { Chip } from '../Chip';
-import { Typography } from '../Typography';
 
 export const BookingCard = ({
   title,
-  subtitle,
-  showTimeLabel,
-  isUpcoming,
-  isCancelled,
-  isPast,
-  seatLabel,
-  handleClick,
-  isLoading,
-}: BookingCardProps) => (
-  <div
-    className={`flex rounded-xl border-2 bg-white
-        ${!isUpcoming ? 'opacity-50' : 'opacity-100'}`}
-  >
-    <div
-      className={`w-2 rounded-l-xl ${isCancelled ? 'bg-error' : isUpcoming ? 'bg-success' : 'bg-secondary/50'}`}
-    />
-    <div className="flex-1 p-4">
-      <div className="flex items-start justify-between">
-        <div>
+  description,
+  status = 'neutral',
+  badgeText,
+  info,
+  actionLabel,
+  loading,
+  onAction,
+  disabled,
+}: BookingCardProps) => {
+  const statusBarClass =
+    status === 'error' ? 'bg-error' : status === 'success' ? 'bg-success' : 'bg-secondary/50';
+
+  const badgeVariant =
+    status === 'error' ? 'outline' : status === 'success' ? 'success' : 'secondary';
+
+  return (
+    <article
+      className={`h-full flex rounded-xl border-2 bg-white ${disabled ? 'opacity-50' : 'opacity-100'}`}
+    >
+      <div className={`w-2 rounded-l-xl ${statusBarClass}`} />
+
+      <div className="flex-1 p-4">
+        <div className="flex items-start justify-between">
           <Typography variant="h3" tag="h2">
             {title}
           </Typography>
-          <Typography color="secondary">{subtitle}</Typography>
+          {badgeText && <Chip variant={badgeVariant}>{badgeText}</Chip>}
         </div>
-        {!isPast && (
-          <Chip
-            size="chip"
-            className={`${isCancelled ? `bg-error/20 text-error` : `bg-success/20 text-green-700`}`}
-          >
-            {isCancelled ? 'Cancelled' : 'Upcoming'}
-          </Chip>
+
+        {description && <Typography color="secondary">{description}</Typography>}
+
+        {info && info.length > 0 && (
+          <div className="mt-3 space-y-3 text-sm">
+            {info.map((item) => (
+              <div key={item.label}>
+                <Typography variant="small" tag="h3" color="secondary">
+                  {item.label}
+                </Typography>
+                <Typography color="primary" tag="p" variant="h6">
+                  {item.value}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {actionLabel && onAction && (
+          <div className="mt-4">
+            <Button onClick={onAction} variant="outline" size="sm" disabled={loading}>
+              {actionLabel}
+            </Button>
+          </div>
         )}
       </div>
-      <div className="mt-3 space-y-3 text-sm">
-        <div>
-          <Typography variant="small" tag="p" color="secondary">
-            Showtime
-          </Typography>
-          <Typography color="primary" tag="p" variant="h6">
-            {showTimeLabel}
-          </Typography>
-        </div>
-        <div>
-          <Typography variant="small" tag="p" color="secondary">
-            Seats
-          </Typography>
-          <Typography color="primary" tag="p" variant="h6">
-            {seatLabel}
-          </Typography>
-        </div>
-      </div>
-      {isUpcoming && (
-        <div className="mt-4">
-          <Button onClick={handleClick} variant="outline" size="sm" disabled={isLoading}>
-            Cancel Booking
-          </Button>
-        </div>
-      )}
-    </div>
-  </div>
-);
+    </article>
+  );
+};

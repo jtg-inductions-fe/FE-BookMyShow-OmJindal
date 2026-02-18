@@ -14,7 +14,7 @@ export const ConfirmationModal = ({
   description,
   cancelLabel,
   actionLabel,
-  onCancel = () => onOpenChange(false),
+  onCancel,
   onAction,
   loading,
 }: ConfirmationModalProps) => (

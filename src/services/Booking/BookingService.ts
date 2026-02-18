@@ -1,8 +1,7 @@
 import { API_URLS } from '@/constants';
-import type { Booking, PageResponse } from '@/types';
+import { api } from '@/services/Api';
 
-import type { BookingApiResponse } from './BookingService.types';
-import { api } from '../Api';
+import type { BookingApiPaginatedResponse, BookingPaginatedResponse } from './BookingService.types';
 
 /**
  * Booking related API endpoints.
@@ -13,7 +12,7 @@ const bookingApi = api.injectEndpoints({
      * Retrieves the authenticated user's bookings from the backend
      * and normalizes the response into the frontend `Booking` model.
      */
-    bookingHistory: builder.infiniteQuery<PageResponse<Booking>, void, string | null>({
+    bookingHistory: builder.infiniteQuery<BookingPaginatedResponse, void, string | null>({
       query: ({ pageParam }) => {
         if (!pageParam) {
           return {
@@ -26,7 +25,7 @@ const bookingApi = api.injectEndpoints({
           method: 'GET',
         };
       },
-      transformResponse: (response: PageResponse<BookingApiResponse>): PageResponse<Booking> => ({
+      transformResponse: (response: BookingApiPaginatedResponse): BookingPaginatedResponse => ({
         ...response,
         results: response.results.map((item) => ({
           id: item.id,
@@ -49,7 +48,8 @@ const bookingApi = api.injectEndpoints({
     /**
      * Cancels an existing booking by its ID.
      *
-     * Invalidates Booking tag upon successful cancellation.
+     * Optimistically updates booking cache and rollback
+     * if any failure occurs.
      */
     cancelBooking: builder.mutation<void, number>({
       query: (bookingId) => ({
