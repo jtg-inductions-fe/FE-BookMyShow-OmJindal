@@ -1,4 +1,4 @@
-export { Avatar, AvatarFallback, AvatarImage } from './Avatar';
+export { Avatar, AvatarFallback, AvatarImage, AvatarSkeleton } from './Avatar';
 export { Button } from './Button';
 export { Card, CardHeader, CardContent, CardFooter } from './Card';
 export { ErrorComponent } from './Error';

@@ -1,5 +1,6 @@
 import { Menu } from 'lucide-react';
 import { VisuallyHidden } from 'radix-ui';
+import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 
 import {
@@ -29,6 +30,28 @@ export const Sidebar = ({ openModal, isLoggingOut }: SidebarProps) => {
     skip: !isAuthenticated,
   });
 
+  let profileSection: ReactNode = null;
+
+  if (isAuthenticated) {
+    if (isLoadingUser) {
+      profileSection = <ProfileSkeleton />;
+    } else if (user) {
+      profileSection = (
+        <>
+          <Link to={ROUTES.PROFILE}>
+            <Profile
+              name={user.name}
+              email={user.email}
+              profilePicture={user.profilePicture}
+              size="lg"
+            />
+          </Link>
+          <Separator />
+        </>
+      );
+    }
+  }
+
   return (
     <Sheet>
       {/* Sidebar trigger element */}
@@ -43,26 +66,8 @@ export const Sidebar = ({ openModal, isLoggingOut }: SidebarProps) => {
           <SheetTitle>Navigation menu</SheetTitle>
           <SheetDescription>Browse movies, cinemas, and account options</SheetDescription>
         </VisuallyHidden.Root>
-        {/* Profile Component */}
-        {isAuthenticated ? (
-          isLoadingUser ? (
-            <ProfileSkeleton />
-          ) : (
-            user && (
-              <>
-                <Link to={ROUTES.PROFILE}>
-                  <Profile
-                    name={user.name?.trim() || undefined}
-                    email={user.email}
-                    profilePicture={user.profilePicture}
-                    size="lg"
-                  />
-                </Link>
-                <Separator />
-              </>
-            )
-          )
-        ) : null}
+        {/* Profile section */}
+        {profileSection}
         {/* Navigation Links */}
         <Typography>Browse</Typography>
         <nav className="w-full flex flex-col gap-4">

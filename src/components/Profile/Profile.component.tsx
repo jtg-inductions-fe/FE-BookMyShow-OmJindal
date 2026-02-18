@@ -17,8 +17,8 @@ export const Profile = ({
 }: ProfileProps) => (
   <div className="flex flex-row gap-4 items-center">
     <Avatar size={size}>
-      <AvatarImage src={profilePicture} alt={name ? `${name} avatar` : 'User avatar'} />
-      <AvatarFallback>{name?.[0].toUpperCase()}</AvatarFallback>
+      <AvatarImage src={profilePicture} alt="User avatar" />
+      <AvatarFallback>{name[0]?.toUpperCase()}</AvatarFallback>
     </Avatar>
 
     <div className="space-y-1">

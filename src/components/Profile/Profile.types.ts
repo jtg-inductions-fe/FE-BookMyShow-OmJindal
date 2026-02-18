@@ -4,11 +4,11 @@ export type ProfileProps = {
   /**
    * The name of the user.
    */
-  name?: string;
+  name: string;
   /**
    * The email of the user.
    */
-  email?: string;
+  email: string;
   /**
    * The phone number of the user.
    */

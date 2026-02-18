@@ -3,34 +3,17 @@ import { useState } from 'react';
 import { LogOutIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  ConfirmationModal,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Profile,
-  Separator,
-  Typography,
-} from '@/components';
+import { Button, ConfirmationModal, Typography } from '@/components';
 import { ROUTES } from '@/constants';
+import { AuthUserMenu } from '@/containers/AuthMenu';
 import { Sidebar } from '@/containers/Sidebar';
-import { useLogoutMutation, useProfileQuery } from '@/services';
-import { useAppSelector } from '@/store';
+import { useLogoutMutation } from '@/services';
 
 export const Header = () => {
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const location = useLocation();
 
   // State for controlling logout confirmation modal visibility
   const [showModal, setShowModal] = useState(false);
-
-  const { data: user, isLoading: isLoadingUser } = useProfileQuery(undefined, {
-    skip: !isAuthenticated,
-  });
 
   const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
 
@@ -55,8 +38,6 @@ export const Header = () => {
   const handleModalChange = (open: boolean) => {
     setShowModal(open);
   };
-
-  const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
 
   return (
     <header className="bg-white w-full sticky top-0 z-1">
@@ -99,48 +80,7 @@ export const Header = () => {
             </Button>
           </nav>
           {/* Pop over component */}
-          {isAuthenticated ? (
-            isLoadingUser ? (
-              <Avatar>
-                <AvatarFallback></AvatarFallback>
-              </Avatar>
-            ) : (
-              user && (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button size="icon" className="rounded-full">
-                      {/* Avatar */}
-                      <Avatar>
-                        <AvatarImage src={user.profilePicture} alt={`${user.name} avatar`} />
-                        <AvatarFallback>{user.name?.trim()?.[0]?.toUpperCase()}</AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent side="bottom" align="end" className="w-64 p-2">
-                    {/* Profile Component */}
-                    <Link to={ROUTES.PROFILE}>
-                      <Profile
-                        name={user.name?.trim() || undefined}
-                        email={user.email}
-                        profilePicture={user.profilePicture}
-                        size="lg"
-                      />
-                    </Link>
-                    <Separator />
-                    <Button variant="destructive" onClick={openModal} disabled={isLoggingOut}>
-                      Log out
-                    </Button>
-                  </PopoverContent>
-                </Popover>
-              )
-            )
-          ) : (
-            !isAuthRoute && (
-              <Button to={ROUTES.SIGNIN} asLink>
-                Sign In
-              </Button>
-            )
-          )}
+          <AuthUserMenu isLoggingOut={isLoggingOut} openModal={openModal} />
         </div>
         {/* Sidebar */}
         <Sidebar isLoggingOut={isLoggingOut} openModal={openModal} />
