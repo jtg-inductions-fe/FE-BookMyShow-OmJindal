@@ -3,7 +3,11 @@ import type { EditProfileRequest } from '@/services';
 /**
  * Represents the data of edit-profile form.
  */
-export type EditProfileForm = Pick<EditProfileRequest, 'name'> & {
+export type EditProfileForm = {
+  /**
+   * The name of the user.
+   */
+  name: string;
   /**
    * The phone number of the user.
    */

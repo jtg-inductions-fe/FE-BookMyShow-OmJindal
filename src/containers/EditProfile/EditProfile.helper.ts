@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES, VALIDATION_PARAMETERS } from '@/constants';
+import { ERROR_MESSAGES, REGEX, VALIDATION_PARAMETERS } from '@/constants';
 
 import type { EditProfileForm, FormErrors } from './EditProfile.types';
 
@@ -8,9 +8,19 @@ import type { EditProfileForm, FormErrors } from './EditProfile.types';
 export const validateEditProfileForm = (data: EditProfileForm): FormErrors => {
   const err: FormErrors = {};
 
-  if (data.name && data.name.length < VALIDATION_PARAMETERS.NAME.MIN_LENGTH) {
-    err.name = [ERROR_MESSAGES.NAME.MIN_LENGTH];
+  const trimmed = data.name.trim();
+
+  const nameError = [];
+
+  if (trimmed && trimmed.length < VALIDATION_PARAMETERS.NAME.MIN_LENGTH) {
+    nameError.push(ERROR_MESSAGES.NAME.MIN_LENGTH);
   }
+  if (!REGEX.NAME.test(trimmed)) {
+    nameError.push(ERROR_MESSAGES.NAME.INVALID);
+  }
+
+  if (nameError.length) err.name = nameError;
+
   if (data.phoneNumber && data.phoneNumber.length < VALIDATION_PARAMETERS.PHONE.MIN_LENGTH) {
     err.phoneNumber = [ERROR_MESSAGES.PHONE.MIN_LENGTH];
   }
@@ -21,12 +31,17 @@ export const validateEditProfileForm = (data: EditProfileForm): FormErrors => {
 /**
  * Helper function to validate profileImage
  */
-export const validateProfileImage = (file: File) => {
+export const validateProfileImage = (file: File): string[] | undefined => {
+  const ImageError = [];
+
   if (!VALIDATION_PARAMETERS.ALLOWED_IMAGE_TYPES.includes(file.type)) {
-    return [ERROR_MESSAGES.IMAGE_TYPE];
+    ImageError.push(ERROR_MESSAGES.IMAGE_TYPE);
   }
   if (file.size > VALIDATION_PARAMETERS.MAX_IMAGE_SIZE_BYTES) {
-    return [ERROR_MESSAGES.IMAGE_SIZE];
+    ImageError.push(ERROR_MESSAGES.IMAGE_SIZE);
   }
+
+  if (ImageError.length) return ImageError;
+
   return undefined;
 };

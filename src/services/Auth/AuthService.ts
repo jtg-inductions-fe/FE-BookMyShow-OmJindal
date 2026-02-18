@@ -1,8 +1,8 @@
 import { API_TAGS, API_URLS } from '@/constants';
 import { logout as logoutAction, setAuthenticated } from '@/features';
 import { api } from '@/services/Api';
+import { buildFormData } from '@/utils';
 
-import { buildEditProfileFormData } from './AuthService.helper';
 import type {
   EditProfileRequest,
   ProfileQueryResponse,
@@ -141,7 +141,7 @@ export const authApi = api.injectEndpoints({
       query: (data) => ({
         url: API_URLS.USER.USER,
         method: 'PATCH',
-        body: buildEditProfileFormData(data),
+        body: buildFormData(data),
       }),
       invalidatesTags: ['Profile'],
     }),
