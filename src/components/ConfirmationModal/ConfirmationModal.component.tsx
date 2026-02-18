@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/Dialog';
 
-import type { ConfirmationModalProps } from './Modal.types';
+import type { ConfirmationModalProps } from './ConfirmationModal.types';
 
 /**
  * Modal component used to display a confirmation dialog box.
