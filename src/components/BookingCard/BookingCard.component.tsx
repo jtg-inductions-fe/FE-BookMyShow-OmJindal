@@ -1,4 +1,4 @@
-import { Button } from '@/components//Button';
+import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Typography } from '@/components/Typography';
 
@@ -29,7 +29,7 @@ export const BookingCard = ({
 
       <div className="flex-1 p-4">
         <div className="flex items-start justify-between">
-          <Typography variant="h3" tag="h2">
+          <Typography variant="h3" tag="span">
             {title}
           </Typography>
           {badgeText && <Chip variant={badgeVariant}>{badgeText}</Chip>}
@@ -41,7 +41,7 @@ export const BookingCard = ({
           <div className="mt-3 space-y-3 text-sm">
             {info.map((item) => (
               <div key={item.label}>
-                <Typography variant="small" tag="h3" color="secondary">
+                <Typography variant="small" tag="span" color="secondary">
                   {item.label}
                 </Typography>
                 <Typography color="primary" tag="p" variant="h6">
@@ -54,7 +54,13 @@ export const BookingCard = ({
 
         {actionLabel && onAction && (
           <div className="mt-4">
-            <Button onClick={onAction} variant="outline" size="sm" disabled={loading}>
+            <Button
+              onClick={onAction}
+              variant="outline"
+              size="sm"
+              disabled={loading}
+              aria-label={`Cancel booking for ${title}`}
+            >
               {actionLabel}
             </Button>
           </div>

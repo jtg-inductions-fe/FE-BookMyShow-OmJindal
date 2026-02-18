@@ -1,7 +1,7 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
 
-import { buttonVariants } from '@/components/Button';
+import type { buttonVariants } from '@/components/Button';
 
 /**
  * Props for the Chip component.

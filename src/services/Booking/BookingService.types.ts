@@ -24,11 +24,11 @@ export type BookingApiResponse = Pick<Booking, 'id' | 'movie' | 'status'> & {
    * List of seats associated with this booking.
    */
   seats: Array<{
-    /*
+    /**
      * Row number of the seat.
      */
     row_number: number;
-    /*
+    /**
      * Seat number within the row.
      */
     seat_number: number;

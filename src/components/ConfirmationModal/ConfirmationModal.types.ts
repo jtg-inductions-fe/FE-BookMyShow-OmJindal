@@ -8,7 +8,7 @@ export type ConfirmationModalProps = {
   /**
    * Dispatch function on modal visibility toggle.
    */
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange: (open: boolean) => void;
   /**
    * The icon to be displayed inside modal.
    */
