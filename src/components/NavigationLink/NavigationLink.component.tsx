@@ -1,9 +1,9 @@
 import { Link } from 'react-router';
 
+import { TypographyVariants } from '@/components/Typography';
 import { cn } from '@/utils';
 
 import type { NavigationLinkProps } from './NavigationLink.types';
-import { TypographyVariants } from '../Typography';
 
 /**
  * NavigationLink component.

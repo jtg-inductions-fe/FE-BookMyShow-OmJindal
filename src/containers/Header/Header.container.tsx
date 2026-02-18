@@ -1,38 +1,48 @@
+import { useState } from 'react';
+
+import { LogOutIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  Typography,
-} from '@/components';
+import { Button, ConfirmationModal, Typography } from '@/components';
 import { ROUTES } from '@/constants';
-import { useLogoutMutation, useProfileQuery } from '@/services';
-import { useAppSelector } from '@/store';
+import { AuthUserMenu } from '@/containers/AuthMenu';
+import { Sidebar } from '@/containers/Sidebar';
+import { useLogoutMutation } from '@/services';
 
 export const Header = () => {
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const location = useLocation();
 
-  const { data: user } = useProfileQuery(undefined, { skip: !isAuthenticated });
-  const [logout, { isLoading }] = useLogoutMutation();
+  // State for controlling logout confirmation modal visibility
+  const [showModal, setShowModal] = useState(false);
 
-  const handleClick = () => {
-    void logout();
+  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+
+  // Action to be performed on logout
+  const handleLogout = () => {
+    logout().then(
+      () => {
+        setShowModal(false);
+      },
+      () => {},
+    );
   };
 
-  const isAuthRoute = location.pathname === ROUTES.SIGNIN || location.pathname === ROUTES.SIGNUP;
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleModalChange = (open: boolean) => {
+    setShowModal(open);
+  };
 
   return (
     <header className="bg-white w-full sticky top-0 z-1">
-      <div className="flex flex-row justify-between items-center h-18 w-full px-2 max-w-480 mx-auto">
+      <div className="flex flex-row justify-between items-center h-18 w-full px-4 max-w-480 mx-auto">
+        {/* Logo */}
         <Link
           to={ROUTES.HOME}
           className="flex flex-row gap-2 items-end"
@@ -49,43 +59,44 @@ export const Header = () => {
             Movie Book
           </Typography>
         </Link>
-        <div className="flex flex-row items-center gap-3">
-          <div className="text-primary">Movies</div>
-          {isAuthenticated ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="icon" className="rounded-full">
-                  <Avatar>
-                    <AvatarImage src={user?.profilePicture} alt="User Avatar" />
-                    <AvatarFallback>{user?.name?.trim()?.[0]?.toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-32">
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    variant="destructive"
-                    onClick={handleClick}
-                    disabled={isLoading}
-                  >
-                    Log out
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            !isAuthRoute && (
-              <Button size="sm" to={ROUTES.SIGNIN} asLink>
-                Sign In
-              </Button>
-            )
-          )}
+        <div className="hidden sm:flex flex-row items-center gap-4">
+          {/* Navigation Links */}
+          <nav>
+            <Button
+              variant={location.pathname === ROUTES.MOVIES ? 'active' : 'link'}
+              to={ROUTES.MOVIES}
+              asLink
+              size={'sm'}
+            >
+              Movies
+            </Button>
+            <Button
+              variant={location.pathname === ROUTES.CINEMAS ? 'active' : 'link'}
+              to={ROUTES.CINEMAS}
+              asLink
+              size={'sm'}
+            >
+              Cinemas
+            </Button>
+          </nav>
+          {/* Pop over component */}
+          <AuthUserMenu isLoggingOut={isLoggingOut} openModal={openModal} />
         </div>
+        {/* Sidebar */}
+        <Sidebar isLoggingOut={isLoggingOut} openModal={openModal} />
       </div>
+      <ConfirmationModal
+        open={showModal}
+        onOpenChange={handleModalChange}
+        icon={<LogOutIcon />}
+        title="Logout from Account?"
+        description="Are you sure you want to logout? You'll need to sign in again to access your account and bookings."
+        cancelLabel="Stay Logged In"
+        actionLabel="Yes, Log out"
+        onCancel={closeModal}
+        onAction={handleLogout}
+        loading={isLoggingOut}
+      />
     </header>
   );
 };

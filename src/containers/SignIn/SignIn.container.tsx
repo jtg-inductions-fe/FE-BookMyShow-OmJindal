@@ -122,7 +122,15 @@ export const SignIn = () => {
                 autoComplete="email"
                 aria-invalid={Boolean(errors.detail) || Boolean(errors.email)}
               />
-              <FieldError>{errors.email || <span aria-hidden="true"></span>}</FieldError>
+              {errors.email && errors.email.length > 0 ? (
+                errors.email.map((emailError) => (
+                  <FieldError key={emailError}>{emailError}</FieldError>
+                ))
+              ) : (
+                <FieldError>
+                  <span aria-hidden="true"> </span>
+                </FieldError>
+              )}
             </Field>
 
             <Field>
@@ -149,17 +157,21 @@ export const SignIn = () => {
                   </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
-              <FieldError>
-                {errors.password || errors.detail ? (
-                  errors.password || errors.detail
-                ) : (
+              {errors.password && errors.password.length > 0 ? (
+                errors.password.map((passwordError) => (
+                  <FieldError key={passwordError}>{passwordError}</FieldError>
+                ))
+              ) : errors.detail ? (
+                <FieldError>{errors.detail}</FieldError>
+              ) : (
+                <FieldError>
                   <span aria-hidden="true"> </span>
-                )}
-              </FieldError>
+                </FieldError>
+              )}
             </Field>
           </FieldGroup>
 
-          <Button type="submit" size="sm" disabled={isLoading}>
+          <Button type="submit" size="md" disabled={isLoading}>
             Sign In
           </Button>
         </form>

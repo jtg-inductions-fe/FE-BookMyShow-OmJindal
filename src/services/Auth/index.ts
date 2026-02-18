@@ -5,3 +5,4 @@ export {
   useProfileQuery,
   useLogoutMutation,
 } from './AuthService';
+export type { ProfileResponse } from './AuthService.types';

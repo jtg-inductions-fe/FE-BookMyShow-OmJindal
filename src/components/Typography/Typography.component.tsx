@@ -1,5 +1,3 @@
-import { cn } from '@/utils';
-
 import { TypographyVariants } from './Typography.styles';
 import type { TypographyProps } from './Typography.types';
 
@@ -18,14 +16,13 @@ export const Typography = ({
   tag = 'p',
   variant = tag,
   color = 'primary',
-  className,
   children,
   ...props
 }: TypographyProps) => {
   const Component = tag;
 
   return (
-    <Component className={cn(TypographyVariants({ color, variant }), className)} {...props}>
+    <Component className={TypographyVariants({ color, variant })} {...props}>
       {children}
     </Component>
   );

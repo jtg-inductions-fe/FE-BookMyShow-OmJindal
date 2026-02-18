@@ -1,8 +1,7 @@
 import { type ComponentProps, useMemo } from 'react';
 
 import type { VariantProps } from 'class-variance-authority';
-
-import { Root } from '@radix-ui/react-label';
+import { Label as RadixLabel } from 'radix-ui';
 
 import { cn } from '@/utils';
 
@@ -13,8 +12,8 @@ import { fieldVariants } from './Field.styles';
  *
  * Wraps Radix Label `Root` and provides consistent styling.
  */
-const Label = ({ className, ...props }: ComponentProps<typeof Root>) => (
-  <Root
+const Label = ({ className, ...props }: ComponentProps<typeof RadixLabel.Root>) => (
+  <RadixLabel.Root
     data-slot="label"
     className={cn(
       'flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',

@@ -9,4 +9,7 @@ export const ROUTES = {
   NOT_FOUND: '*',
   SIGNUP: '/signup',
   SIGNIN: '/signin',
+  PROFILE: '/profile',
+  MOVIES: '/movies',
+  CINEMAS: '/cinemas',
 } as const;

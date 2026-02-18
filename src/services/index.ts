@@ -5,4 +5,5 @@ export {
   useRefreshQuery,
   useProfileQuery,
   useLogoutMutation,
+  type ProfileResponse,
 } from './Auth';
