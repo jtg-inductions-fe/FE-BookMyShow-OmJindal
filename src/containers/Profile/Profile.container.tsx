@@ -1,11 +1,11 @@
 import { Edit as EditIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 
-import { Button, Profile, ProfileSkeleton } from '@/components';
+import { Button, Profile as ProfileComponent, ProfileSkeleton } from '@/components';
 import { ROUTES } from '@/constants';
 import { useProfileQuery } from '@/services';
 
-export const ProfileContainer = () => {
+export const Profile = () => {
   const { data: user, isLoading: isLoadingUser } = useProfileQuery();
 
   let profileSection: ReactNode = null;
@@ -14,7 +14,7 @@ export const ProfileContainer = () => {
     profileSection = <ProfileSkeleton />;
   } else if (user) {
     profileSection = (
-      <Profile
+      <ProfileComponent
         email={user.email}
         name={user.name}
         profilePicture={user.profilePicture}

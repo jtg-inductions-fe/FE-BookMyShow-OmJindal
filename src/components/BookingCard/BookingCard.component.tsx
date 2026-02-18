@@ -22,9 +22,7 @@ export const BookingCard = ({
     status === 'error' ? 'outline' : status === 'success' ? 'success' : 'secondary';
 
   return (
-    <article
-      className={`h-full flex rounded-xl border-2 bg-white ${disabled ? 'opacity-50' : 'opacity-100'}`}
-    >
+    <article className={`h-full flex rounded-xl border-2 bg-white ${disabled ?? 'opacity-50'}`}>
       <div className={`w-2 rounded-l-xl ${statusBarClass}`} />
 
       <div className="flex-1 p-4">
@@ -39,8 +37,8 @@ export const BookingCard = ({
 
         {info && info.length > 0 && (
           <div className="mt-3 space-y-3 text-sm">
-            {info.map((item) => (
-              <div key={item.label}>
+            {info.map((item, index) => (
+              <div key={`${item.label}-${index}`}>
                 <Typography variant="small" tag="span" color="secondary">
                   {item.label}
                 </Typography>
