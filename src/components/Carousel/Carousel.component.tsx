@@ -4,12 +4,15 @@ import { type VariantProps } from 'class-variance-authority';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
+import { Button, type buttonVariants } from '@/components/Button';
 import { cn } from '@/utils';
 
 import type { CarouselProps } from './Carousel.types';
 import { CarouselContext, useCarousel } from './Carousel.utils';
-import { Button, buttonVariants } from '../Button';
 
+/**
+ * The main container of the carousel component.
+ */
 export const Carousel = ({
   orientation = 'horizontal',
   opts,
@@ -100,6 +103,9 @@ export const Carousel = ({
   );
 };
 
+/**
+ * The content of the carousel component.
+ */
 export const CarouselContent = ({ className, ...props }: ComponentProps<'div'>) => {
   const { carouselRef, orientation } = useCarousel();
 
@@ -113,6 +119,9 @@ export const CarouselContent = ({ className, ...props }: ComponentProps<'div'>) 
   );
 };
 
+/**
+ * The item of the carousel component.
+ */
 export const CarouselItem = ({ className, ...props }: ComponentProps<'div'>) => {
   const { orientation } = useCarousel();
 
@@ -122,7 +131,7 @@ export const CarouselItem = ({ className, ...props }: ComponentProps<'div'>) => 
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(
-        'min-w-0 shrink-0 grow-0 basis-full',
+        'min-w-0 shrink-0 grow-0 basis-full flex justify-center items-center',
         orientation === 'horizontal' ? 'pl-4' : 'pt-4',
         className,
       )}
@@ -131,6 +140,9 @@ export const CarouselItem = ({ className, ...props }: ComponentProps<'div'>) => 
   );
 };
 
+/**
+ * The previous button to slide to previous item.
+ */
 export const CarouselPrevious = ({
   className,
   variant = 'link',
@@ -161,6 +173,9 @@ export const CarouselPrevious = ({
   );
 };
 
+/**
+ * The next button to slide to next item.
+ */
 export const CarouselNext = ({
   className,
   variant = 'link',

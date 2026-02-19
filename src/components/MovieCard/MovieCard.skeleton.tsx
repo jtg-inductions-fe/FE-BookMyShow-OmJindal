@@ -1,4 +1,4 @@
-import { Skeleton } from '../Skeleton';
+import { Skeleton } from '@/components/Skeleton';
 
 export const MovieCardSkeleton = () => (
   <article className="w-full xs:w-58 border-2 border-border-grey rounded-xl">
