@@ -12,6 +12,11 @@ export type InfoItem = {
   value: string;
 };
 
+/**
+ * The status of the booking card.
+ */
+export type BookingCardStatus = 'error' | 'success';
+
 export type BookingCardProps = {
   /**
    * The title of the card.
@@ -24,7 +29,7 @@ export type BookingCardProps = {
   /**
    * Status used to control styling.
    */
-  status?: 'success' | 'error' | 'neutral';
+  status?: BookingCardStatus;
   /**
    * Optional badge shown on the top-right of the card.
    */
@@ -38,15 +43,11 @@ export type BookingCardProps = {
    */
   actionLabel?: string;
   /**
-   * To display the card as visually disabled.
-   */
-  disabled?: boolean;
-  /**
-   * Indicates whether the action is in progress.
-   */
-  loading?: boolean;
-  /**
    * Callback fired when the action button is clicked.
    */
   onAction?: () => void;
+  /**
+   * Indicates whether the action is in progress.
+   */
+  disabled?: boolean;
 };

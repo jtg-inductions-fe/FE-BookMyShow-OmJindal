@@ -6,6 +6,8 @@ import { BookingCard, ConfirmationModal } from '@/components';
 import { useCancelBookingMutation } from '@/services';
 import { dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
 
+import { BOOKING_CARD_CONFIG } from './BookingCard.config';
+import { getBookingState } from './BookingCard.helper';
 import type { BookingCardContainerProps } from './BookingCard.types';
 
 export const BookingCardContainer = memo(function BookingCardContainer({
@@ -20,16 +22,6 @@ export const BookingCardContainer = memo(function BookingCardContainer({
   const [showModal, setShowModal] = useState(false);
 
   const [cancelBooking, { isLoading: isCancelling }] = useCancelBookingMutation();
-
-  const showTime = new Date(startTime);
-  const now = new Date();
-
-  const isPast = showTime < now;
-  const isCancelled = status === 'C';
-  const isUpcoming = !isPast && !isCancelled;
-
-  const seatLabel = seats.map((s) => `${seatRowFormatter(s.rowNumber)}${s.seatNumber}`).join(', ');
-  const showTimeLabel = `${dateFormatter(startTime, 'MMM DD')} at ${timeFormatter(startTime)}`;
 
   const handleCancel = () => {
     void cancelBooking(id);
@@ -52,21 +44,26 @@ export const BookingCardContainer = memo(function BookingCardContainer({
     setShowModal(false);
   };
 
+  const bookingState = getBookingState(startTime, status);
+  const { actionLabel, badgeText, bookingStatus } = BOOKING_CARD_CONFIG[bookingState];
+
+  const seatLabel = seats.map((s) => `${seatRowFormatter(s.rowNumber)}${s.seatNumber}`).join(', ');
+  const showTimeLabel = `${dateFormatter(startTime, 'MMM DD')} at ${timeFormatter(startTime)}`;
+
   return (
     <>
       <BookingCard
         title={movie}
         description={`${cinemaName}, ${cinemaCity}`}
-        status={isCancelled ? 'error' : isUpcoming ? 'success' : 'neutral'}
-        disabled={isPast}
-        badgeText={!isPast ? (isCancelled ? 'Cancelled' : 'Upcoming') : undefined}
+        status={bookingStatus}
+        badgeText={badgeText}
         info={[
           { label: 'Showtime', value: showTimeLabel },
           { label: 'Seats', value: seatLabel },
         ]}
-        actionLabel={isUpcoming ? 'Cancel Booking' : undefined}
+        actionLabel={actionLabel}
         onAction={openModal}
-        loading={isCancelling}
+        disabled={isCancelling}
       />
       {/* Confirm Cancel Modal */}
       <ConfirmationModal

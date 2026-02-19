@@ -30,5 +30,5 @@ export { Popover, PopoverTrigger, PopoverContent } from './Popover';
 export { Profile, ProfileSkeleton } from './Profile';
 export { ConfirmationModal } from './ConfirmationModal';
 export { Skeleton } from './Skeleton';
-export { BookingCard, BookingCardSkeleton } from './BookingCard';
+export { BookingCard, BookingCardSkeleton, type BookingCardStatus } from './BookingCard';
 export { Chip } from './Chip';

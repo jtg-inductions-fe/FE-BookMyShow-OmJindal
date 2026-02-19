@@ -1,4 +1,4 @@
-import { API_URLS } from '@/constants';
+import { API_CONSTANTS, API_URLS } from '@/constants';
 import { api } from '@/services/Api';
 
 import type { BookingApiPaginatedResponse, BookingPaginatedResponse } from './BookingService.types';
@@ -60,9 +60,9 @@ const bookingApi = api.injectEndpoints({
         const patchResult = dispatch(
           bookingApi.util.updateQueryData('bookingHistory', undefined, (draft) => {
             draft.pages.forEach((page) => {
-              const booking = page.results.find((b) => b.id === bookingId);
-              if (booking) {
-                booking.status = 'C';
+              const selectedBooking = page.results.find((booking) => booking.id === bookingId);
+              if (selectedBooking) {
+                selectedBooking.status = API_CONSTANTS.BOOKING.STATUS.CANCELLED;
               }
             });
           }),

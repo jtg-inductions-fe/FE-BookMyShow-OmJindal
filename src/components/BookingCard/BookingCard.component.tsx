@@ -2,27 +2,24 @@ import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Typography } from '@/components/Typography';
 
+import { STYLES_CONFIG } from './BookingCard.config';
 import type { BookingCardProps } from './BookingCard.types';
 
 export const BookingCard = ({
   title,
   description,
-  status = 'neutral',
+  status,
   badgeText,
   info,
   actionLabel,
-  loading,
   onAction,
   disabled,
 }: BookingCardProps) => {
-  const statusBarClass =
-    status === 'error' ? 'bg-error' : status === 'success' ? 'bg-success' : 'bg-secondary/50';
-
-  const badgeVariant =
-    status === 'error' ? 'outline' : status === 'success' ? 'success' : 'secondary';
+  const resolvedStatus = status ?? 'default';
+  const { statusBarClass, badgeVariant } = STYLES_CONFIG[resolvedStatus];
 
   return (
-    <article className={`h-full flex rounded-xl border-2 bg-white ${disabled ? 'opacity-50' : ''}`}>
+    <article className={`h-full flex rounded-xl border-2 bg-white`}>
       <div className={`w-2 rounded-l-xl ${statusBarClass}`} />
 
       <div className="flex-1 p-4">
@@ -54,9 +51,9 @@ export const BookingCard = ({
           <div className="mt-4">
             <Button
               onClick={onAction}
-              variant="outline"
+              variant="destructive-soft"
               size="sm"
-              disabled={loading}
+              disabled={disabled}
               aria-label={`${actionLabel} for ${title}`}
             >
               {actionLabel}

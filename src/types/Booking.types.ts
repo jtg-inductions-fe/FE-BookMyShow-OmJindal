@@ -1,3 +1,8 @@
+import { API_CONSTANTS } from '@/constants';
+
+export type BookingStatus =
+  (typeof API_CONSTANTS.BOOKING.STATUS)[keyof typeof API_CONSTANTS.BOOKING.STATUS];
+
 /**
  * Represents a single movie booking made by a user.
  */
@@ -24,19 +29,17 @@ export type Booking = {
   startTime: string;
   /**
    * Current booking status.
-   * - 'B' - Booked
-   * - 'C' - Cancelled
    */
-  status: 'B' | 'C';
+  status: BookingStatus;
   /**
    * List of seats associated with this booking.
    */
   seats: Array<{
-    /*
+    /**
      * Row number of the seat.
      */
     rowNumber: number;
-    /*
+    /**
      * Seat number within the row.
      */
     seatNumber: number;
