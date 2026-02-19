@@ -1,8 +1,7 @@
 import { API_URLS } from '@/constants';
-import type { Movie, PageResponse } from '@/types';
+import { api } from '@/services/Api';
 
-import type { MovieListQuery } from './MovieService.types';
-import { api } from '../Api';
+import type { MovieListQuery, MoviePaginatedResponse } from './MovieService.types';
 
 /**
  * Movie related API endpoints.
@@ -13,7 +12,7 @@ const movieApi = api.injectEndpoints({
      * Retrieves the list of movies from the backend based on
      * different filters.
      */
-    movieList: builder.infiniteQuery<PageResponse<Movie>, MovieListQuery, string | null>({
+    movieList: builder.infiniteQuery<MoviePaginatedResponse, MovieListQuery, string | null>({
       query: ({ queryArg, pageParam }) => {
         if (pageParam) {
           return {

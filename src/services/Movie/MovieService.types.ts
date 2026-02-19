@@ -1,3 +1,5 @@
+import type { Movie, PageResponse } from '@/types';
+
 /**
  *  Query parameters used to filter the movie list endpoint.
  */
@@ -23,3 +25,10 @@ export type MovieListQuery = {
    */
   date?: string;
 };
+
+/**
+ * Paginated response for movie-list API.
+ */
+export type MoviePaginatedResponse = PageResponse<
+  Pick<Movie, 'id' | 'description' | 'duration' | 'genres' | 'languages' | 'name' | 'poster'>
+>;

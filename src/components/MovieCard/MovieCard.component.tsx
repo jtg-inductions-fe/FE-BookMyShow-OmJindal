@@ -1,28 +1,30 @@
 import { memo } from 'react';
 
-import type { Movie } from '@/types';
+import { Typography } from '@/components/Typography';
 
-import { Typography } from '../Typography';
+import type { MovieCardProps } from './MovieCard.types';
 
-export const MovieCard = memo(function MovieCard({ poster, name, genres, languages }: Movie) {
-  const genreLabel = genres.join(', ');
-  const languageLabel = languages.join(', ');
-
+export const MovieCard = memo(function MovieCard({
+  title,
+  poster,
+  primaryLabel,
+  secondaryLabel,
+}: MovieCardProps) {
   return (
-    <article className="h-full w-full border-2 border-border-grey rounded-xl hover:shadow-md hover:-translate-y-1 transition-all duration-200 ease-in-out">
+    <article className="h-full w-full border-2 border-border-grey rounded-xl hover:-translate-y-2 hover:border-black/75 transition-all duration-200 ease-in-out">
       <div className="w-full h-50 rounded-t-xl">
         <img
           src={poster}
-          alt={`${name} poster`}
+          alt={`${title} poster`}
           className="h-full w-full rounded-t-xl object-cover"
         />
       </div>
       <div className="p-3">
         <Typography variant="h3" tag="h2">
-          {name}
+          {title}
         </Typography>
-        <Typography color="secondary">{genreLabel}</Typography>
-        <Typography color="secondary">{languageLabel}</Typography>
+        <Typography color="secondary">{primaryLabel}</Typography>
+        <Typography color="secondary">{secondaryLabel}</Typography>
       </div>
     </article>
   );

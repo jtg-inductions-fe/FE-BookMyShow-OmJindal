@@ -5,4 +5,5 @@ export { SignUp } from './SignUp';
 export { Booking } from './Booking';
 export { ProfileContainer } from './Profile';
 export { EditProfile } from './EditProfile';
-export { Home } from './Home';
+export { LatestMovieCarousel } from './LatestMovieCarousel';
+export { LatestMovieGrid } from './LatestMovieGrid';

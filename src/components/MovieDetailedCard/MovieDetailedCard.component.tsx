@@ -1,68 +1,58 @@
 import { memo } from 'react';
 
-import { Clock as ClockIcon, EarthIcon } from 'lucide-react';
+import { Chip } from '@/components/Chip';
+import { Typography } from '@/components/Typography';
 
-import type { Movie } from '@/types';
-
-import { Chip } from '../Chip';
-import { Typography } from '../Typography';
+import type { MovieDetailedCardProps } from './MovieDetailedCard.types';
 
 export const MovieDetailedCard = memo(function MovieDetailedCard({
+  title,
   poster,
-  name,
-  genres,
-  languages,
-  duration,
   description,
-}: Movie) {
-  const languageLabel = languages?.join(', ');
-  const durationLabel = `${duration?.slice(0, 2)}h ${duration?.slice(3, 5)}m`;
-
+  tags,
+  info,
+}: MovieDetailedCardProps) {
   return (
-    <article className="w-full h-full flex items-center justify-center flex-row gap-10">
-      {poster ? (
+    <article className="h-full flex items-center gap-10">
+      {poster && (
         <div className="h-70 md:h-80 w-80 rounded-2xl">
           <img
             src={poster}
-            alt={`${name} poster`}
+            alt={`${title} poster`}
             className="h-full w-full rounded-2xl object-cover"
           />
         </div>
-      ) : (
-        <div className="bg-white/80 h-70 md:h-80 w-80 rounded-2xl"></div>
       )}
-      <div className="flex-col gap-5 hidden md:flex">
-        {name && (
-          <Typography variant="h2" tag="h1" color="default">
-            {name}
-          </Typography>
-        )}
-        {genres && (
+      <div className="hidden md:block space-y-5">
+        <Typography variant="h2" tag="h1" color="default">
+          {title}
+        </Typography>
+        {tags && (
           <div className="flex flex-row gap-2">
-            {genres?.map((genre, index) => (
-              <Chip size="chip" variant="secondary" key={'genre-' + index}>
-                {genre}
+            {tags?.map((tag, index) => (
+              <Chip
+                size="chip"
+                variant="secondary"
+                key={'genre-' + index}
+                className="hover:text-white"
+              >
+                {tag}
               </Chip>
             ))}
           </div>
         )}
         <div className="flex flex-row gap-5">
-          {duration && (
-            <div className="flex flex-row gap-2">
-              <ClockIcon color="white" />
-              {<Typography color="default">{durationLabel}</Typography>}
-            </div>
-          )}
-          {languageLabel && (
-            <div className="flex flex-row gap-2">
-              <EarthIcon color="white" />
-              <Typography color="default">{languageLabel}</Typography>
-            </div>
-          )}
+          {info &&
+            info.map((item, index) => (
+              <div className="flex flex-row gap-2" key={`${item.label}-${index}`}>
+                {item.icon}
+                <Typography color="default">{item.label}</Typography>
+              </div>
+            ))}
         </div>
         {description && (
           <div>
-            <Typography color="default" variant="h3" tag="h2">
+            <Typography color="default" variant="h3" tag="span">
               Description
             </Typography>
             <Typography color="default">{description}</Typography>
