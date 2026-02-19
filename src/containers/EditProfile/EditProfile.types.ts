@@ -11,7 +11,7 @@ export type EditProfileForm = {
   /**
    * The phone number of the user.
    */
-  phoneNumber?: string;
+  phoneNumber: string;
   /**
    * The profile picture of the user.
    */
@@ -21,7 +21,7 @@ export type EditProfileForm = {
 /**
  * Represents validation errors for the edit-profile form.
  */
-export type FormErrors = Partial<Record<keyof EditProfileForm, string[]>>;
+export type FormErrors = Record<keyof EditProfileForm, string[]>;
 
 /**
  * Represents validation errors returned by the backend API.

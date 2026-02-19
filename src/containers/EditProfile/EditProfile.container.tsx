@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useState } from 'react';
+import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react';
 
 import { User as UserIcon } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
@@ -12,7 +12,6 @@ import {
   FieldGroup,
   FieldLabel,
   Input,
-  Spinner,
   Typography,
 } from '@/components';
 import { REGEX, ROUTES } from '@/constants';
@@ -20,6 +19,7 @@ import { useEditProfileMutation, useProfileQuery } from '@/services';
 import type { ApiError, LocationState } from '@/types';
 
 import { validateEditProfileForm, validateProfileImage } from './EditProfile.helper';
+import { EditProfileSkeleton } from './EditProfile.skelton';
 import type { EditProfileForm, FormErrors, QueryError } from './EditProfile.types';
 
 export const EditProfile = () => {
@@ -39,9 +39,35 @@ export const EditProfile = () => {
     profilePicture: undefined,
   });
   // Validation and API error state for the form.
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<FormErrors>({
+    name: [],
+    phoneNumber: [],
+    profilePicture: [],
+  });
   // Preview state to show preview of user profilePicture
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | undefined>(undefined);
+
+  // UseEffect to set the user data inside the form
+  useEffect(() => {
+    if (!user) return;
+
+    const setter = () => {
+      setForm((prev) => ({
+        ...prev,
+        name: user.name ?? '',
+        phoneNumber: user.phoneNumber ?? '',
+      }));
+      setPreview(user.profilePicture);
+    };
+
+    setter();
+  }, [user]);
+
+  // Check if the new fields are same as current user fields.
+  const isUnchanged =
+    (form.name.trim() === '' || form.name.trim() === user?.name) &&
+    (form.phoneNumber.trim() === '' || form.phoneNumber.trim() === user?.phoneNumber) &&
+    !form.profilePicture;
 
   // Handles form submission.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -49,27 +75,30 @@ export const EditProfile = () => {
 
     // Validate form fields.
     const validationError = validateEditProfileForm(form);
-    if (Object.keys(validationError).length > 0) {
+
+    let isError = false;
+
+    Object.values(validationError).forEach((value) => {
+      if (value.length > 0) {
+        isError = true;
+      }
+    });
+
+    if (isError) {
       setErrors(validationError);
       return;
     }
-    setErrors({});
 
-    // Check if the new fields are same as current user fields.
-    const isUnchanged =
-      (form.name?.trim() === '' || form.name === user?.name) &&
-      (form.phoneNumber?.trim() === '' || form.phoneNumber === user?.phoneNumber) &&
-      !form.profilePicture;
-    // If fields are same then do not place API call
-    if (isUnchanged) {
-      void navigate(to, { replace: true });
-      return;
-    }
+    setErrors({
+      name: [],
+      phoneNumber: [],
+      profilePicture: [],
+    });
 
     // Trigger RTK Query editProfile mutation.
     editProfile({
-      name: form.name.trim() || undefined,
-      phone_number: form.phoneNumber || undefined,
+      name: form.name.trim(),
+      phone_number: form.phoneNumber,
       profile_picture: form.profilePicture,
     })
       .unwrap()
@@ -79,17 +108,22 @@ export const EditProfile = () => {
       })
       .catch((error: ApiError<QueryError>) => {
         const data = error.data;
-        const err: FormErrors = {};
+        const err: FormErrors = {
+          name: [],
+          phoneNumber: [],
+          profilePicture: [],
+        };
 
+        if (data.name?.length) {
+          err.name = data.name;
+        }
         if (data.phone_number?.length) {
           err.phoneNumber = data.phone_number;
         }
         if (data.profile_picture?.length) {
           err.profilePicture = data.profile_picture;
         }
-        if (data.name?.length) {
-          err.name = data.name;
-        }
+
         // Set API errors in local form error state.
         setErrors(err);
       });
@@ -109,13 +143,13 @@ export const EditProfile = () => {
       // Validates Profile Image
       const error = validateProfileImage(file);
 
-      if (error) {
+      if (error.length) {
         setErrors((prev) => ({ ...prev, profilePicture: error }));
         return;
       }
 
       // Clear error if image validation passes
-      setErrors((prev) => ({ ...prev, profilePicture: undefined }));
+      setErrors((prev) => ({ ...prev, profilePicture: [] }));
 
       setForm((prev) => ({ ...prev, [name]: file }));
 
@@ -148,7 +182,7 @@ export const EditProfile = () => {
   const handleClick = () => void navigate(to);
 
   if (isLoadingProfile) {
-    return <Spinner />;
+    return <EditProfileSkeleton />;
   }
 
   return (
@@ -191,7 +225,7 @@ export const EditProfile = () => {
                   <Typography tag="span">Upload Image</Typography>
                 </FieldLabel>
 
-                {errors.profilePicture?.length ? (
+                {errors.profilePicture.length ? (
                   errors.profilePicture.map((profilePictureError) => (
                     <FieldError key={profilePictureError} className="text-center">
                       {profilePictureError}
@@ -210,7 +244,7 @@ export const EditProfile = () => {
                   accept="image/*"
                   onChange={handleChange}
                   disabled={isLoading}
-                  aria-invalid={Boolean(errors.profilePicture)}
+                  aria-invalid={Boolean(errors.profilePicture.length)}
                   aria-label="Upload profile picture"
                   className="sr-only"
                   tabIndex={-1}
@@ -226,9 +260,9 @@ export const EditProfile = () => {
                   value={form.name}
                   disabled={isLoading}
                   autoComplete="name"
-                  aria-invalid={Boolean(errors.name)}
+                  aria-invalid={Boolean(errors.name.length)}
                 />
-                {errors.name?.length ? (
+                {errors.name.length ? (
                   errors.name.map((nameError) => (
                     <FieldError key={nameError}>{nameError}</FieldError>
                   ))
@@ -249,9 +283,9 @@ export const EditProfile = () => {
                   type="tel"
                   disabled={isLoading}
                   autoComplete="tel"
-                  aria-invalid={Boolean(errors.phoneNumber)}
+                  aria-invalid={Boolean(errors.phoneNumber.length)}
                 />
-                {errors.phoneNumber?.length ? (
+                {errors.phoneNumber.length ? (
                   errors.phoneNumber.map((phoneNumberError) => (
                     <FieldError key={phoneNumberError}>{phoneNumberError}</FieldError>
                   ))
@@ -263,7 +297,7 @@ export const EditProfile = () => {
               </Field>
             </FieldGroup>
             <div className="flex flex-col justify-center sm:flex-row gap-5 *:w-full sm:*:w-1/2">
-              <Button type="submit" size="md" disabled={isLoading}>
+              <Button type="submit" size="md" disabled={isLoading || isUnchanged}>
                 Save Changes
               </Button>
               <Button
