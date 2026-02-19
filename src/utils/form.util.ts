@@ -4,7 +4,7 @@
 export const buildFormData = (data: Record<string, string | Blob>): FormData => {
   const formData = new FormData();
   Object.entries(data).forEach(([key, value]) => {
-    if (data[key]) {
+    if (value) {
       formData.append(key, value);
     }
   });

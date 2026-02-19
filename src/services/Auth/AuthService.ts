@@ -143,7 +143,7 @@ export const authApi = api.injectEndpoints({
         method: 'PATCH',
         body: buildFormData(data),
       }),
-      invalidatesTags: ['Profile'],
+      invalidatesTags: [API_TAGS.PROFILE],
     }),
   }),
 });

@@ -14,12 +14,12 @@ import {
   Input,
   Typography,
 } from '@/components';
-import { REGEX, ROUTES } from '@/constants';
+import { REGEX, ROUTES, VALIDATION_PARAMETERS } from '@/constants';
 import { useEditProfileMutation, useProfileQuery } from '@/services';
 import type { ApiError, LocationState } from '@/types';
 
 import { validateEditProfileForm, validateProfileImage } from './EditProfile.helper';
-import { EditProfileSkeleton } from './EditProfile.skelton';
+import { EditProfileSkeleton } from './EditProfile.skeleton';
 import type { EditProfileForm, FormErrors, QueryError } from './EditProfile.types';
 
 export const EditProfile = () => {
@@ -76,13 +76,7 @@ export const EditProfile = () => {
     // Validate form fields.
     const validationError = validateEditProfileForm(form);
 
-    let isError = false;
-
-    Object.values(validationError).forEach((value) => {
-      if (value.length > 0) {
-        isError = true;
-      }
-    });
+    const isError = Object.values(validationError).some((value) => value.length > 0);
 
     if (isError) {
       setErrors(validationError);
@@ -107,6 +101,8 @@ export const EditProfile = () => {
         void navigate(to, { replace: true });
       })
       .catch((error: ApiError<QueryError>) => {
+        if (!error || typeof error !== 'object' || !('data' in error)) return;
+
         const data = error.data;
         const err: FormErrors = {
           name: [],
@@ -154,14 +150,17 @@ export const EditProfile = () => {
       setForm((prev) => ({ ...prev, [name]: file }));
 
       // Create object URL and set the Profile Image Preview
-      const objectUrl = URL.createObjectURL(file);
-      setPreview(objectUrl);
+      setPreview((prev) => {
+        if (prev && prev.startsWith('blob:')) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(file);
+      });
+
       return;
     }
 
     // Add only valid values to phoneNumber form field
     if (name === 'phoneNumber') {
-      const number = value.slice(0, 10);
+      const number = value.slice(0, VALIDATION_PARAMETERS.PHONE.MAX_LENGTH);
       // Ignores all character other than number
       if (!REGEX.PHONE.test(number)) {
         return;
@@ -241,7 +240,7 @@ export const EditProfile = () => {
                   id="profilePicture"
                   name="profilePicture"
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg,image/png,image/webp"
                   onChange={handleChange}
                   disabled={isLoading}
                   aria-invalid={Boolean(errors.profilePicture.length)}

@@ -7,6 +7,7 @@ export const VALIDATION_PARAMETERS = {
   },
   PHONE: {
     MIN_LENGTH: 10,
+    MAX_LENGTH: 10,
   },
   PASSWORD: {
     MIN_LENGTH: 8,

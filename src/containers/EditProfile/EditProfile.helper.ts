@@ -32,16 +32,14 @@ export const validateEditProfileForm = (data: EditProfileForm): FormErrors => {
  * Helper function to validate profileImage
  */
 export const validateProfileImage = (file: File): string[] => {
-  const ImageError = [];
+  const imageError = [];
 
   if (!VALIDATION_PARAMETERS.ALLOWED_IMAGE_TYPES.includes(file.type)) {
-    ImageError.push(ERROR_MESSAGES.IMAGE_TYPE);
+    imageError.push(ERROR_MESSAGES.IMAGE_TYPE);
   }
   if (file.size > VALIDATION_PARAMETERS.MAX_IMAGE_SIZE_BYTES) {
-    ImageError.push(ERROR_MESSAGES.IMAGE_SIZE);
+    imageError.push(ERROR_MESSAGES.IMAGE_SIZE);
   }
 
-  if (ImageError.length) return ImageError;
-
-  return ImageError;
+  return imageError;
 };
