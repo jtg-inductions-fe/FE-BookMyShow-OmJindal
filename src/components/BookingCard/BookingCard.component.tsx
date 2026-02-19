@@ -22,7 +22,7 @@ export const BookingCard = ({
     status === 'error' ? 'outline' : status === 'success' ? 'success' : 'secondary';
 
   return (
-    <article className={`h-full flex rounded-xl border-2 bg-white ${disabled ?? 'opacity-50'}`}>
+    <article className={`h-full flex rounded-xl border-2 bg-white ${disabled ? 'opacity-50' : ''}`}>
       <div className={`w-2 rounded-l-xl ${statusBarClass}`} />
 
       <div className="flex-1 p-4">
@@ -57,7 +57,7 @@ export const BookingCard = ({
               variant="outline"
               size="sm"
               disabled={loading}
-              aria-label={`Cancel booking for ${title}`}
+              aria-label={`${actionLabel} for ${title}`}
             >
               {actionLabel}
             </Button>

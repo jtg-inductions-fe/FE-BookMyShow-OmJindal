@@ -31,7 +31,7 @@ export const Profile = () => {
     >
       {profileSection}
       <Button size="md" asLink to={ROUTES.EDIT_PROFILE}>
-        <EditIcon />
+        <EditIcon aria-hidden="true" />
         Edit Profile
       </Button>
     </section>
