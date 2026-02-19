@@ -161,8 +161,22 @@ export const EditProfile = () => {
           <form className="space-y-4" noValidate onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="profilePicture" className="flex flex-col">
-                  <div className="h-25 w-25 bg-secondary/10 rounded-full flex items-center justify-center mx-auto cursor-pointer">
+                <FieldLabel
+                  htmlFor="profilePicture"
+                  tabIndex={0}
+                  className="group flex flex-col items-center cursor-pointer"
+                  onKeyDown={(e) => {
+                    if (e.code === 'Enter' || e.code === 'Space') {
+                      e.preventDefault();
+                      document.getElementById('profilePicture')?.click();
+                    }
+                  }}
+                >
+                  <div
+                    className="h-25 w-25 bg-secondary/10 rounded-full flex items-center justify-center
+                    group-focus-visible:ring-2 group-focus-visible:ring-black
+                    group-focus-visible:ring-offset-2"
+                  >
                     {preview ? (
                       <img
                         src={preview}
@@ -173,17 +187,22 @@ export const EditProfile = () => {
                       <UserIcon size="30" />
                     )}
                   </div>
-                  <Typography>Upload Image</Typography>
-                  {errors.profilePicture && errors.profilePicture.length > 0 ? (
-                    errors.profilePicture.map((profilePictureError) => (
-                      <FieldError key={profilePictureError}>{profilePictureError}</FieldError>
-                    ))
-                  ) : (
-                    <FieldError>
-                      <span aria-hidden="true"> </span>
-                    </FieldError>
-                  )}
+
+                  <Typography tag="span">Upload Image</Typography>
                 </FieldLabel>
+
+                {errors.profilePicture?.length ? (
+                  errors.profilePicture.map((profilePictureError) => (
+                    <FieldError key={profilePictureError} className="text-center">
+                      {profilePictureError}
+                    </FieldError>
+                  ))
+                ) : (
+                  <FieldError>
+                    <span aria-hidden="true"> </span>
+                  </FieldError>
+                )}
+
                 <Input
                   id="profilePicture"
                   name="profilePicture"
@@ -193,7 +212,8 @@ export const EditProfile = () => {
                   disabled={isLoading}
                   aria-invalid={Boolean(errors.profilePicture)}
                   aria-label="Upload profile picture"
-                  className="hidden"
+                  className="sr-only"
+                  tabIndex={-1}
                 />
               </Field>
               <Field>
@@ -208,7 +228,7 @@ export const EditProfile = () => {
                   autoComplete="name"
                   aria-invalid={Boolean(errors.name)}
                 />
-                {errors.name && errors.name.length > 0 ? (
+                {errors.name?.length ? (
                   errors.name.map((nameError) => (
                     <FieldError key={nameError}>{nameError}</FieldError>
                   ))
@@ -231,7 +251,7 @@ export const EditProfile = () => {
                   autoComplete="tel"
                   aria-invalid={Boolean(errors.phoneNumber)}
                 />
-                {errors.phoneNumber && errors.phoneNumber.length > 0 ? (
+                {errors.phoneNumber?.length ? (
                   errors.phoneNumber.map((phoneNumberError) => (
                     <FieldError key={phoneNumberError}>{phoneNumberError}</FieldError>
                   ))
