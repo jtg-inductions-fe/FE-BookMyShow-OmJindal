@@ -13,4 +13,11 @@ export const DateConfig = {
       year: 'numeric',
     },
   },
+  'MMM DD': {
+    locale: 'en-IN',
+    options: {
+      month: 'short',
+      day: 'numeric',
+    },
+  },
 } satisfies Record<DateFormatTypes, DateConfigTypes>;

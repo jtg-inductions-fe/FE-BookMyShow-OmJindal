@@ -1,7 +1,7 @@
 /**
  * Valid date formats patterns for date formatting.
  */
-export type DateFormatTypes = 'DDMMYY';
+export type DateFormatTypes = 'DDMMYY' | 'MMM DD';
 
 /**
  * Configuration structure for DateConfig object.

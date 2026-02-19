@@ -23,7 +23,7 @@ if (!BASE_URL) {
  * List of RTK Query endpoints that require
  * an Authorization header.
  */
-const authEndpoints = ['profile', 'logout'];
+const authEndpoints = ['profile', 'logout', 'bookingHistory', 'cancelBooking'];
 /**
  * List of RTK Query endpoints that does not
  * call refresh again when api returns 401.
@@ -124,5 +124,6 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
   tagTypes: Object.values(API_TAGS),
+  refetchOnReconnect: true,
   endpoints: () => ({}),
 });

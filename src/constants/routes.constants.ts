@@ -10,6 +10,7 @@ export const ROUTES = {
   SIGNUP: '/signup',
   SIGNIN: '/signin',
   PROFILE: '/profile',
+  EDIT_PROFILE: '/profile/update',
   MOVIES: '/movies',
   CINEMAS: '/cinemas',
 } as const;

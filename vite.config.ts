@@ -5,7 +5,15 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 
-const basePlugins: PluginOption[] = [react(), tsconfigPaths(), tailwindcss()];
+const basePlugins: PluginOption[] = [
+  react({
+    babel: {
+      plugins: ['babel-plugin-react-compiler'],
+    },
+  }),
+  tsconfigPaths(),
+  tailwindcss(),
+];
 
 /* Common Config for both PROD and DEV mode */
 const commonConfig: UserConfig = {

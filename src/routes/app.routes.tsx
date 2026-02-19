@@ -6,12 +6,14 @@ import { ROUTES } from '@/constants';
 import { MainLayout } from '@/layouts';
 
 import { GuestRoute } from './Guest.route';
+import { ProtectedRoute } from './Protected.route';
 
 const HomePage = lazy(() => import('@/pages/Home.page'));
 const SignInPage = lazy(() => import('@/pages/SignIn.page'));
 const SignUpPage = lazy(() => import('@/pages/SignUp.page'));
 const NotFoundPage = lazy(() => import('@/pages/NotFound.page'));
 const ErrorPage = lazy(() => import('@/pages/Error.page'));
+const ProfilePage = lazy(() => import('@/pages/Profile.page'));
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +28,10 @@ export const router = createBrowserRouter([
           { path: ROUTES.SIGNIN, Component: SignInPage },
           { path: ROUTES.SIGNUP, Component: SignUpPage },
         ],
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [{ path: ROUTES.PROFILE, Component: ProfilePage }],
       },
       { path: ROUTES.NOT_FOUND, Component: NotFoundPage },
     ],

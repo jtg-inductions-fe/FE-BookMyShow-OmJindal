@@ -7,3 +7,4 @@ export {
   useLogoutMutation,
   type ProfileResponse,
 } from './Auth';
+export { useBookingHistoryInfiniteQuery, useCancelBookingMutation } from './Booking';

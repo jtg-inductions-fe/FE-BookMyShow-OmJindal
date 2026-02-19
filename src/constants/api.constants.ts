@@ -8,6 +8,9 @@ export const API_URLS = {
     REFRESH: '/user/refresh/',
     LOGOUT: '/user/logout/',
   },
+  BOOKING: {
+    BOOKING: '/bookings/',
+  },
 } as const;
 
 /**
@@ -15,4 +18,16 @@ export const API_URLS = {
  */
 export const API_TAGS = {
   PROFILE: 'Profile',
+} as const;
+
+/**
+ * Constants for API data.
+ */
+export const API_CONSTANTS = {
+  BOOKING: {
+    STATUS: {
+      BOOKED: 'B',
+      CANCELLED: 'C',
+    },
+  },
 } as const;
