@@ -7,19 +7,19 @@ export type BookingStatus =
  * Represents a single movie booking made by a user.
  */
 export type Booking = {
-  /*
+  /**
    * Unique identifier for the booking.
    */
   id: number;
-  /*
+  /**
    * Name of the movie.
    */
   movie: string;
-  /*
+  /**
    * Name of the cinema where the movie is playing.
    */
   cinemaName: string;
-  /*
+  /**
    * City in which the cinema is located.
    */
   cinemaCity: string;

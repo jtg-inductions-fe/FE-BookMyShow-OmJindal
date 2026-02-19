@@ -8,11 +8,11 @@ import type { Booking, PageResponse } from '@/types';
  * Booking - {@link Booking}
  */
 export type BookingApiResponse = Pick<Booking, 'id' | 'movie' | 'status'> & {
-  /*
+  /**
    * Name of the cinema where the movie is playing.
    */
   cinema_name: string;
-  /*
+  /**
    * City in which the cinema is located.
    */
   cinema_city: string;
