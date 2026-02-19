@@ -1,4 +1,4 @@
-import { Edit as EditIcon } from 'lucide-react';
+import { SquarePen } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 import { Button, Profile as ProfileComponent, ProfileSkeleton } from '@/components';
@@ -31,7 +31,7 @@ export const Profile = () => {
     >
       {profileSection}
       <Button size="md" asLink to={ROUTES.EDIT_PROFILE}>
-        <EditIcon aria-hidden="true" />
+        <SquarePen aria-hidden="true" />
         Edit Profile
       </Button>
     </section>
