@@ -37,9 +37,12 @@ export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) =
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl flex flex-col gap-3 w-75">
+    <section
+      className="bg-white p-5 rounded-2xl flex flex-col gap-3 w-75"
+      aria-labelledby="filterHeading"
+    >
       <div className="flex flex-row justify-between">
-        <Typography tag="h2" variant="h3">
+        <Typography tag="h2" variant="h3" id="filterHeading">
           Filters
         </Typography>
         {/* Button to clear all the filters */}
@@ -113,6 +116,6 @@ export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) =
       <GenreFilter value={filters.genres} onChange={(v) => updateFilter('genres', v)} />
       {/* Language dropdown component */}
       <LanguageFilter value={filters.languages} onChange={(v) => updateFilter('languages', v)} />
-    </div>
+    </section>
   );
 };

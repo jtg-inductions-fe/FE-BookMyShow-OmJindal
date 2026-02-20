@@ -27,34 +27,36 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
   }
 
   return (
-    <div className="w-full">
+    <section className="w-full" aria-label="Filtered movies list">
       <InfiniteScroll
         dataLength={movies.length}
         next={moviesQuery.fetchNextPage}
         hasMore={moviesQuery.hasNextPage}
         loader={null}
       >
-        <div className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <ul className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {movies.map((movie) => {
             const to = `/movies/${slugGenerator(movie.name)}/${movie.id}`;
             const genreLabel = movie.genres.join(', ');
             const languageLabel = movie.languages.join(', ');
             return (
-              <Link to={to} key={movie.id}>
-                <MovieCard
-                  title={movie.name}
-                  poster={movie.poster}
-                  primaryLabel={genreLabel}
-                  secondaryLabel={languageLabel}
-                />
-              </Link>
+              <li key={movie.id}>
+                <Link to={to}>
+                  <MovieCard
+                    title={movie.name}
+                    poster={movie.poster}
+                    primaryLabel={genreLabel}
+                    secondaryLabel={languageLabel}
+                  />
+                </Link>
+              </li>
             );
           })}
 
           {moviesQuery.isFetchingNextPage &&
             Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={`loader-${i}`} />)}
-        </div>
+        </ul>
       </InfiniteScroll>
-    </div>
+    </section>
   );
 };
