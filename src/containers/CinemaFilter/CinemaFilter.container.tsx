@@ -7,7 +7,6 @@ import {
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
-  Typography,
 } from '@/components';
 import { useDebounce } from '@/hooks';
 import type { CinemaPaginatedApiResponse } from '@/services';
@@ -33,36 +32,31 @@ export const CinemaFilter = ({ value, onChange }: CinemaFilterProps) => {
   };
 
   return (
-    <>
-      <Typography tag="h3" variant="h4">
-        Cinema
-      </Typography>
-      <Combobox
-        items={cinemas}
-        autoHighlight
-        onValueChange={(val: CinemaPaginatedApiResponse | null | undefined) => {
-          if (val) {
-            addCinema(val);
-            setSearch('');
-          }
-        }}
-      >
-        <ComboboxInput
-          placeholder="Search for cinema"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <ComboboxContent>
-          <ComboboxEmpty>No cinemas found.</ComboboxEmpty>
-          <ComboboxList>
-            {(cinema: CinemaPaginatedApiResponse) => (
-              <ComboboxItem key={cinema.id} value={cinema}>
-                {cinema.name}, {cinema.city}
-              </ComboboxItem>
-            )}
-          </ComboboxList>
-        </ComboboxContent>
-      </Combobox>
-    </>
+    <Combobox
+      items={cinemas}
+      autoHighlight
+      onValueChange={(val: CinemaPaginatedApiResponse | null | undefined) => {
+        if (val) {
+          addCinema(val);
+          setSearch('');
+        }
+      }}
+    >
+      <ComboboxInput
+        placeholder="Search for cinema"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <ComboboxContent>
+        <ComboboxEmpty>No cinemas found.</ComboboxEmpty>
+        <ComboboxList>
+          {(cinema: CinemaPaginatedApiResponse) => (
+            <ComboboxItem key={cinema.id} value={cinema}>
+              {cinema.name}, {cinema.city}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
   );
 };

@@ -109,8 +109,14 @@ export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) =
         />
       </div>
       {/* Cinema search component */}
+      <Typography tag="h3" variant="h4">
+        Cinema
+      </Typography>
       <CinemaFilter value={filters.cinemas} onChange={(v) => updateFilter('cinemas', v)} />
       {/* Date Picker component */}
+      <Typography tag="h3" variant="h4">
+        Date
+      </Typography>
       <DateFilter value={filters.date} onChange={(v) => updateFilter('date', v)} />
       {/* Genre dropdown component */}
       <GenreFilter value={filters.genres} onChange={(v) => updateFilter('genres', v)} />
