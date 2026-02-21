@@ -14,6 +14,7 @@ const SignUpPage = lazy(() => import('@/pages/SignUp.page'));
 const NotFoundPage = lazy(() => import('@/pages/NotFound.page'));
 const ErrorPage = lazy(() => import('@/pages/Error.page'));
 const ProfilePage = lazy(() => import('@/pages/Profile.page'));
+const EditProfilePage = lazy(() => import('@/pages/EditProfile.page'));
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +32,10 @@ export const router = createBrowserRouter([
       },
       {
         element: <ProtectedRoute />,
-        children: [{ path: ROUTES.PROFILE, Component: ProfilePage }],
+        children: [
+          { path: ROUTES.PROFILE, Component: ProfilePage },
+          { path: ROUTES.EDIT_PROFILE, Component: EditProfilePage },
+        ],
       },
       { path: ROUTES.NOT_FOUND, Component: NotFoundPage },
     ],

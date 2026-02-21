@@ -4,5 +4,6 @@ export {
   useRefreshQuery,
   useProfileQuery,
   useLogoutMutation,
+  useEditProfileMutation,
 } from './AuthService';
-export type { ProfileResponse } from './AuthService.types';
+export type { ProfileResponse, EditProfileRequest } from './AuthService.types';

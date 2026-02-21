@@ -77,3 +77,41 @@ export const validatePassword = (password: string): string[] | void => {
 
   if (err.length) return err;
 };
+
+/**
+ * Validator for phoneNumber.
+ *
+ * Rules:
+ * - Must match the specified length.
+ */
+export const validatePhoneNumber = (phoneNumber: string): string[] | void => {
+  const trimmed = phoneNumber.trim();
+
+  const err = [];
+
+  if (trimmed.length != VALIDATION_PARAMETERS.PHONE.LENGTH) {
+    err.push(ERROR_MESSAGES.PHONE.LENGTH);
+  }
+
+  if (err.length) return err;
+};
+
+/**
+ * Validator for Image.
+ *
+ * Rules:
+ * - Must be a valid type.
+ * - Size must be less than specified limit.
+ */
+export const validateImage = (file: File): string[] | void => {
+  const err = [];
+
+  if (!VALIDATION_PARAMETERS.ALLOWED_IMAGE_TYPES.includes(file.type)) {
+    err.push(ERROR_MESSAGES.IMAGE_TYPE);
+  }
+  if (file.size > VALIDATION_PARAMETERS.MAX_IMAGE_SIZE_BYTES) {
+    err.push(ERROR_MESSAGES.IMAGE_SIZE);
+  }
+
+  if (err.length) return err;
+};

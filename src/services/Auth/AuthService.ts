@@ -1,8 +1,10 @@
 import { API_TAGS, API_URLS } from '@/constants';
 import { logout as logoutAction, setAuthenticated } from '@/features';
 import { api } from '@/services/Api';
+import { buildFormData } from '@/utils';
 
 import type {
+  EditProfileRequest,
   ProfileQueryResponse,
   ProfileResponse,
   RefreshResponse,
@@ -132,6 +134,17 @@ export const authApi = api.injectEndpoints({
         );
       },
     }),
+    /**
+     * Mutation for updating the authenticated user's profile.
+     */
+    editProfile: builder.mutation<void, EditProfileRequest>({
+      query: (data) => ({
+        url: API_URLS.USER.USER,
+        method: 'PATCH',
+        body: buildFormData(data),
+      }),
+      invalidatesTags: [API_TAGS.PROFILE],
+    }),
   }),
 });
 
@@ -141,4 +154,5 @@ export const {
   useRefreshQuery,
   useProfileQuery,
   useLogoutMutation,
+  useEditProfileMutation,
 } = authApi;
