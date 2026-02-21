@@ -9,3 +9,4 @@ export { LatestMovieCarousel } from './LatestMovieCarousel';
 export { LatestMovieGrid } from './LatestMovieGrid';
 export { MovieList } from './MovieList';
 export { MovieDetail } from './MovieDetail';
+export { CinemaList } from './CinemaList';
