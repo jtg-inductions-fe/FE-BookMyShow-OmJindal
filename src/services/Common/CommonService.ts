@@ -4,6 +4,7 @@ import { api } from '@/services/Api';
 import type {
   CityListPaginatedResponse,
   CityListQuery,
+  CityListQueryParams,
   CityListResponse,
   GenreListResponse,
   LanguageListResponse,
@@ -35,11 +36,15 @@ const commonApi = api.injectEndpoints({
     /**
      * Retrieves the list of cities from the backend.
      */
-    cityList: builder.query<CityListResponse, void>({
-      query: () => ({
-        url: API_URLS.COMMON.CITIES,
-        method: 'GET',
-      }),
+    cityList: builder.query<CityListResponse, CityListQueryParams>({
+      query: (queryArg) => {
+        const params = new URLSearchParams();
+        if (queryArg.cityIds?.length) params.append('city_ids', String(queryArg.cityIds.join(',')));
+        return {
+          url: `${API_URLS.COMMON.CITIES}?${params.toString()}`,
+          method: 'GET',
+        };
+      },
     }),
     /**
      * Retrieves the paginated list of cities from the backend based on

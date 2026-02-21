@@ -39,6 +39,16 @@ export type GenreListResponse = Pick<Genre, 'id' | 'name'>[];
 export type LanguageListResponse = Pick<Language, 'id' | 'name'>[];
 
 /**
+ *  Query parameters used to filter the city list endpoint.
+ */
+export type CityListQueryParams = {
+  /**
+   *  Array of city IDs to filter cities.
+   */
+  cityIds?: number[];
+};
+
+/**
  * Response of City List API.
  *
  * Extends city fields

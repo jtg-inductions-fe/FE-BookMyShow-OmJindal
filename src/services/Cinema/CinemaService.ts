@@ -52,7 +52,7 @@ const cinemaApi = api.injectEndpoints({
       query: (queryArg) => {
         const params = new URLSearchParams();
         if (queryArg.cinemaIds?.length)
-          params.append('cinemaIds', String(queryArg.cinemaIds.join(',')));
+          params.append('cinema_ids', String(queryArg.cinemaIds.join(',')));
         return {
           url: `${API_URLS.CINEMA.LIST}?${params.toString()}`,
           method: 'GET',
