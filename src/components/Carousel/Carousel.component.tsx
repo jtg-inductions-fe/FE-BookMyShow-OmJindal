@@ -84,7 +84,7 @@ export const Carousel = ({
         carouselRef,
         api,
         opts,
-        orientation: orientation || (opts?.axis === 'y' ? 'vertical' : 'horizontal'),
+        orientation: orientation,
         scrollPrev,
         scrollNext,
         canScrollPrev,

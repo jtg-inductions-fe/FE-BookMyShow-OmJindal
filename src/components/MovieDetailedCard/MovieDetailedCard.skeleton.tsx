@@ -1,7 +1,7 @@
 import { Skeleton } from '@/components/Skeleton';
 
 export const MovieDetailedCardSkeleton = () => (
-  <div className="flex flex-row items-center gap-10">
+  <article className="flex flex-row items-center gap-10" aria-hidden="true">
     <div className="h-70 md:h-80 w-80 rounded-2xl">
       <Skeleton />
     </div>
@@ -22,5 +22,5 @@ export const MovieDetailedCardSkeleton = () => (
         <Skeleton className="h-4 w-95" />
       </div>
     </div>
-  </div>
+  </article>
 );

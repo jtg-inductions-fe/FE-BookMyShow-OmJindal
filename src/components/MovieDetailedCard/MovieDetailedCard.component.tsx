@@ -27,7 +27,7 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
         <Typography variant="h2" tag="h1" color="default">
           {title}
         </Typography>
-        {tags && (
+        {tags.length > 0 && (
           <div className="flex flex-row gap-2">
             {tags.map((tag, index) => (
               <Chip

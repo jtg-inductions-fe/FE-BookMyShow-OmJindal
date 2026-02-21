@@ -18,6 +18,7 @@ export const MovieCard = memo(function MovieCard({
             src={poster}
             alt={`${title} poster`}
             className="h-full w-full rounded-t-xl object-cover"
+            loading="lazy"
           />
         </div>
       )}
