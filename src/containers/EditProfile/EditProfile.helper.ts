@@ -14,14 +14,14 @@ export const validateEditProfileForm = (data: EditProfileForm): FormErrors => {
 
   const trimmed = data.name.trim();
 
-  if (trimmed && trimmed.length < VALIDATION_PARAMETERS.NAME.MIN_LENGTH) {
+  if (trimmed.length < VALIDATION_PARAMETERS.NAME.MIN_LENGTH) {
     err.name.push(ERROR_MESSAGES.NAME.MIN_LENGTH);
   }
   if (!REGEX.NAME.test(trimmed)) {
     err.name.push(ERROR_MESSAGES.NAME.INVALID);
   }
 
-  if (data.phoneNumber && data.phoneNumber.length < VALIDATION_PARAMETERS.PHONE.MIN_LENGTH) {
+  if (data.phoneNumber.length < VALIDATION_PARAMETERS.PHONE.MIN_LENGTH) {
     err.phoneNumber = [ERROR_MESSAGES.PHONE.MIN_LENGTH];
   }
 
@@ -32,7 +32,7 @@ export const validateEditProfileForm = (data: EditProfileForm): FormErrors => {
  * Helper function to validate profileImage
  */
 export const validateProfileImage = (file: File): string[] => {
-  const imageError = [];
+  const imageError: string[] = [];
 
   if (!VALIDATION_PARAMETERS.ALLOWED_IMAGE_TYPES.includes(file.type)) {
     imageError.push(ERROR_MESSAGES.IMAGE_TYPE);

@@ -1,7 +1,7 @@
 /**
  * Converts an object to FormData.
  */
-export const buildFormData = (data: Record<string, string | Blob>): FormData => {
+export const buildFormData = (data: Record<string, string | Blob | undefined>): FormData => {
   const formData = new FormData();
   Object.entries(data).forEach(([key, value]) => {
     if (value) {

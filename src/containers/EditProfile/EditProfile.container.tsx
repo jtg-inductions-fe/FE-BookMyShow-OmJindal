@@ -63,10 +63,20 @@ export const EditProfile = () => {
     setter();
   }, [user]);
 
+  // Revokes previously created object URLs to prevent memory leaks.
+  useEffect(
+    () => () => {
+      if (preview?.startsWith('blob:')) {
+        URL.revokeObjectURL(preview);
+      }
+    },
+    [preview],
+  );
+
   // Check if the new fields are same as current user fields.
   const isUnchanged =
-    (form.name.trim() === '' || form.name.trim() === user?.name) &&
-    (form.phoneNumber.trim() === '' || form.phoneNumber.trim() === user?.phoneNumber) &&
+    form.name.trim() === user?.name &&
+    form.phoneNumber.trim() === user?.phoneNumber &&
     !form.profilePicture;
 
   // Handles form submission.
@@ -104,6 +114,7 @@ export const EditProfile = () => {
         if (!error || typeof error !== 'object' || !('data' in error)) return;
 
         const data = error.data;
+
         const err: FormErrors = {
           name: [],
           phoneNumber: [],
@@ -150,11 +161,8 @@ export const EditProfile = () => {
       setForm((prev) => ({ ...prev, [name]: file }));
 
       // Create object URL and set the Profile Image Preview
-      setPreview((prev) => {
-        if (prev && prev.startsWith('blob:')) URL.revokeObjectURL(prev);
-        return URL.createObjectURL(file);
-      });
-
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
       return;
     }
 
