@@ -1,1 +1,6 @@
-export { useCityListInfiniteQuery, useGenreListQuery, useLanguageListQuery } from './CommonService';
+export {
+  useCityListPaginatedInfiniteQuery,
+  useGenreListQuery,
+  useLanguageListQuery,
+  useCityListQuery,
+} from './CommonService';

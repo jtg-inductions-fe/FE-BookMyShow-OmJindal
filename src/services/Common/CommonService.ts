@@ -2,6 +2,7 @@ import { API_URLS } from '@/constants';
 import { api } from '@/services/Api';
 
 import type {
+  CityListPaginatedResponse,
   CityListQuery,
   CityListResponse,
   GenreListResponse,
@@ -32,10 +33,23 @@ const commonApi = api.injectEndpoints({
       }),
     }),
     /**
+     * Retrieves the list of cities from the backend.
+     */
+    cityList: builder.query<CityListResponse, void>({
+      query: () => ({
+        url: API_URLS.COMMON.CITIES,
+        method: 'GET',
+      }),
+    }),
+    /**
      * Retrieves the paginated list of cities from the backend based on
      * search filters.
      */
-    cityList: builder.infiniteQuery<CityListResponse, CityListQuery, string | null>({
+    cityListPaginated: builder.infiniteQuery<
+      CityListPaginatedResponse,
+      CityListQuery,
+      string | null
+    >({
       query: ({ queryArg, pageParam }) => {
         if (pageParam) {
           return {
@@ -46,7 +60,7 @@ const commonApi = api.injectEndpoints({
         const params = new URLSearchParams();
         if (queryArg?.search) params.append('search', queryArg.search);
         return {
-          url: `${API_URLS.COMMON.CITIES}?${params.toString()}`,
+          url: `${API_URLS.COMMON.CITY_PAGINATED}?${params.toString()}`,
           method: 'GET',
         };
       },
@@ -58,4 +72,9 @@ const commonApi = api.injectEndpoints({
   }),
 });
 
-export const { useGenreListQuery, useLanguageListQuery, useCityListInfiniteQuery } = commonApi;
+export const {
+  useGenreListQuery,
+  useLanguageListQuery,
+  useCityListPaginatedInfiniteQuery,
+  useCityListQuery,
+} = commonApi;

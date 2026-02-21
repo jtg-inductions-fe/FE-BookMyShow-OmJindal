@@ -19,9 +19,10 @@ export const API_URLS = {
     LIST_PAGINATED: '/cinemas/',
   },
   COMMON: {
-    CITIES: '/cities/',
+    CITY_PAGINATED: '/cities/',
     LANGUAGES: '/languages/',
     GENRES: '/genres/',
+    CITIES: '/cities/list',
   },
 } as const;
 
