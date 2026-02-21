@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react';
+import { type ChangeEvent, type FormEvent, useEffect, useRef, useState } from 'react';
 
 import { User as UserIcon } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
@@ -47,6 +47,8 @@ export const EditProfile = () => {
   // Preview state to show preview of user profilePicture
   const [preview, setPreview] = useState<string | undefined>(undefined);
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // UseEffect to set the user data inside the form
   useEffect(() => {
     if (!user) return;
@@ -75,7 +77,7 @@ export const EditProfile = () => {
   // Check if the new fields are same as current user fields.
   const isUnchanged =
     form.name.trim() === user?.name &&
-    form.phoneNumber.trim() === user?.phoneNumber &&
+    form.phoneNumber.trim() === (user?.phoneNumber ?? '') &&
     !form.profilePicture;
 
   // Handles form submission.
@@ -208,7 +210,7 @@ export const EditProfile = () => {
                   onKeyDown={(e) => {
                     if (e.code === 'Enter' || e.code === 'Space') {
                       e.preventDefault();
-                      document.getElementById('profilePicture')?.click();
+                      fileInputRef.current?.click();
                     }
                   }}
                 >
@@ -244,6 +246,7 @@ export const EditProfile = () => {
                 )}
 
                 <Input
+                  ref={fileInputRef}
                   id="profilePicture"
                   name="profilePicture"
                   type="file"
