@@ -12,17 +12,3 @@ export const buildFormData = (data: Record<string, string | Blob | undefined>): 
   });
   return formData;
 };
-
-/**
- * Function to compare values of two objects.
- */
-export const areFieldsEqual = (
-  formData: Record<string, unknown>,
-  originalData: Record<string, unknown>,
-): boolean =>
-  Object.keys(formData).every((key) => {
-    if (!originalData.hasOwnProperty(key)) {
-      return false;
-    }
-    return formData[key] === originalData[key];
-  });

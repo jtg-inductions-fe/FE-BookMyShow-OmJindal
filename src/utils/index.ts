@@ -10,4 +10,4 @@ export {
   validatePhoneNumber,
 } from './validator.utils';
 export { seatRowFormatter } from './Seat';
-export { buildFormData, areFieldsEqual } from './form.util';
+export { buildFormData } from './form.util';

@@ -15,9 +15,10 @@ import {
   Typography,
 } from '@/components';
 import { REGEX, ROUTES, VALIDATION_PARAMETERS } from '@/constants';
+import { useFieldsUnchanged } from '@/hooks';
 import { useEditProfileMutation, useProfileQuery } from '@/services';
 import type { ApiError, LocationState } from '@/types';
-import { areFieldsEqual, validateImage } from '@/utils';
+import { validateImage } from '@/utils';
 
 import { validateEditProfileForm } from './EditProfile.helper';
 import { EditProfileSkeleton } from './EditProfile.skeleton';
@@ -80,10 +81,10 @@ export const EditProfile = () => {
 
   // Check if the new fields are same as current user fields.
   const isUnchanged =
-    areFieldsEqual(
+    useFieldsUnchanged(
       {
         name: form.name.trim(),
-        email: form.email.trim(),
+        email: form.email.trim().toLowerCase(),
         phoneNumber: form.phoneNumber,
       },
       {
