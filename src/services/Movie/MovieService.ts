@@ -28,8 +28,10 @@ const movieApi = api.injectEndpoints({
         if (queryArg.cinemas?.length) params.append('cinemas', queryArg.cinemas.join(','));
         if (queryArg.date) params.append('date', queryArg.date);
 
+        const queryString = params.toString();
+
         return {
-          url: `${API_URLS.MOVIE.LIST}?${params.toString()}`,
+          url: queryString ? `${API_URLS.MOVIE.LIST}?${queryString}` : API_URLS.MOVIE.LIST,
           method: 'GET',
         };
       },

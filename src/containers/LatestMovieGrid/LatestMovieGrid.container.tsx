@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router';
 
 import { MovieCard, MovieCardSkeleton, Typography } from '@/components';
-import { API_DEFAULTS } from '@/constants';
+import { API_DEFAULTS, ROUTES } from '@/constants';
 import { useMovieListInfiniteQuery } from '@/services';
 import { slugGenerator } from '@/utils';
 
@@ -13,14 +13,14 @@ export const LatestMovieGrid = () => {
 
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
 
+  const movieGridSkeleton = Array.from({ length: 10 }).map((_, i) => <MovieCardSkeleton key={i} />);
+
   let movieGridContent: ReactNode = null;
 
   if (isLoading) {
     movieGridContent = (
       <div className="p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <MovieCardSkeleton key={i} />
-        ))}
+        {movieGridSkeleton}
       </div>
     );
   } else if (!movies.length) {
@@ -35,7 +35,7 @@ export const LatestMovieGrid = () => {
       >
         <div className="p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
           {movies.map((movie) => {
-            const to = `/movies/${slugGenerator(movie.name)}/${movie.id}`;
+            const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(movie.name)}/${movie.id}`;
             const genreLabel = movie.genres.join(', ');
             const languageLabel = movie.languages.join(', ');
             return (
@@ -49,8 +49,7 @@ export const LatestMovieGrid = () => {
               </Link>
             );
           })}
-          {isFetchingNextPage &&
-            Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={`loader-${i}`} />)}
+          {isFetchingNextPage && movieGridSkeleton}
         </div>
       </InfiniteScroll>
     );

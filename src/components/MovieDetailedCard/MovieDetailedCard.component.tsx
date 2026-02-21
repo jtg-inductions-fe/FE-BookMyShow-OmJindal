@@ -50,14 +50,7 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
               </div>
             ))}
         </div>
-        {description && (
-          <div>
-            <Typography color="default" variant="h3" tag="span">
-              Description
-            </Typography>
-            <Typography color="default">{description}</Typography>
-          </div>
-        )}
+        {description && <Typography color="default">{description}</Typography>}
       </div>
     </article>
   );

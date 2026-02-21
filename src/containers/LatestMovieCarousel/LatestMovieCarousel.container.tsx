@@ -14,7 +14,7 @@ import {
   MovieDetailedCardSkeleton,
   Typography,
 } from '@/components';
-import { API_DEFAULTS } from '@/constants';
+import { API_DEFAULTS, CAROUSEL_AUTOPLAY_DELAY, ROUTES } from '@/constants';
 import { useMovieListInfiniteQuery } from '@/services';
 import { formatDurationLabel, slugGenerator } from '@/utils';
 
@@ -23,7 +23,7 @@ export const LatestMovieCarousel = () => {
     latest_days: API_DEFAULTS.MOVIE.LATEST_DAYS,
   });
 
-  const plugins = useMemo(() => [Autoplay({ delay: 3000 })], []);
+  const plugins = useMemo(() => [Autoplay({ delay: CAROUSEL_AUTOPLAY_DELAY })], []);
 
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
 
@@ -43,7 +43,7 @@ export const LatestMovieCarousel = () => {
     );
   } else {
     carouselContent = movies.slice(0, 5).map((movie) => {
-      const to = `/movies/${slugGenerator(movie.name)}/${movie.id}`;
+      const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(movie.name)}/${movie.id}`;
       const languageLabel = movie.languages.join(', ');
       const durationLabel = formatDurationLabel(movie.duration);
       return (
