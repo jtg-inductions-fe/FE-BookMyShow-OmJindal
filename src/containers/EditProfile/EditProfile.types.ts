@@ -9,9 +9,13 @@ export type EditProfileForm = {
    */
   name: string;
   /**
+   * The email of the user.
+   */
+  email: string;
+  /**
    * The phone number of the user.
    */
-  phoneNumber: string;
+  phoneNumber?: string;
   /**
    * The profile picture of the user.
    */

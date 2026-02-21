@@ -10,7 +10,7 @@ export const ERROR_MESSAGES = {
     INVALID: 'Name must contain only English alphabets',
   },
   PHONE: {
-    MIN_LENGTH: `Phone number must be at exactly ${VALIDATION_PARAMETERS.PHONE.MIN_LENGTH} digits`,
+    LENGTH: `Phone number must be at exactly ${VALIDATION_PARAMETERS.PHONE.LENGTH} digits`,
   },
   EMAIL: {
     REQUIRED: 'Email is required',

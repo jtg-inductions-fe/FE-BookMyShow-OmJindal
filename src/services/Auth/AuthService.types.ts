@@ -97,7 +97,7 @@ export type ProfileResponse = Pick<User, 'name' | 'email' | 'city' | 'phoneNumbe
  * Extends user fields and add backend-specific fields.
  * User - {@link User}
  */
-export type EditProfileRequest = Partial<Pick<User, 'name'>> & {
+export type EditProfileRequest = Partial<Pick<User, 'name' | 'email'>> & {
   /**
    * The phone number of the user.
    */

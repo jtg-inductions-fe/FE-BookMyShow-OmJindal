@@ -17,8 +17,9 @@ import {
 import { REGEX, ROUTES, VALIDATION_PARAMETERS } from '@/constants';
 import { useEditProfileMutation, useProfileQuery } from '@/services';
 import type { ApiError, LocationState } from '@/types';
+import { areFieldsEqual, validateImage } from '@/utils';
 
-import { validateEditProfileForm, validateProfileImage } from './EditProfile.helper';
+import { validateEditProfileForm } from './EditProfile.helper';
 import { EditProfileSkeleton } from './EditProfile.skeleton';
 import type { EditProfileForm, FormErrors, QueryError } from './EditProfile.types';
 
@@ -35,12 +36,14 @@ export const EditProfile = () => {
   // Form states for edit-profile inputs.
   const [form, setForm] = useState<EditProfileForm>({
     name: '',
+    email: '',
     phoneNumber: '',
     profilePicture: undefined,
   });
   // Validation and API error state for the form.
   const [errors, setErrors] = useState<FormErrors>({
     name: [],
+    email: [],
     phoneNumber: [],
     profilePicture: [],
   });
@@ -58,6 +61,7 @@ export const EditProfile = () => {
         ...prev,
         name: user.name ?? '',
         phoneNumber: user.phoneNumber ?? '',
+        email: user.email,
       }));
       setPreview(user.profilePicture);
     };
@@ -76,9 +80,18 @@ export const EditProfile = () => {
 
   // Check if the new fields are same as current user fields.
   const isUnchanged =
-    form.name.trim() === user?.name &&
-    form.phoneNumber.trim() === (user?.phoneNumber ?? '') &&
-    !form.profilePicture;
+    areFieldsEqual(
+      {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phoneNumber: form.phoneNumber,
+      },
+      {
+        name: user?.name,
+        email: user?.email,
+        phoneNumber: user?.phoneNumber ?? '',
+      },
+    ) && !form.profilePicture;
 
   // Handles form submission.
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -96,6 +109,7 @@ export const EditProfile = () => {
 
     setErrors({
       name: [],
+      email: [],
       phoneNumber: [],
       profilePicture: [],
     });
@@ -103,6 +117,7 @@ export const EditProfile = () => {
     // Trigger RTK Query editProfile mutation.
     editProfile({
       name: form.name.trim(),
+      email: form.email.trim(),
       phone_number: form.phoneNumber,
       profile_picture: form.profilePicture,
     })
@@ -118,12 +133,16 @@ export const EditProfile = () => {
 
         const err: FormErrors = {
           name: [],
+          email: [],
           phoneNumber: [],
           profilePicture: [],
         };
 
         if (data.name?.length) {
           err.name = data.name;
+        }
+        if (data.email?.length) {
+          err.email = data.email;
         }
         if (data.phone_number?.length) {
           err.phoneNumber = data.phone_number;
@@ -149,9 +168,9 @@ export const EditProfile = () => {
       if (!file) return;
 
       // Validates Profile Image
-      const error = validateProfileImage(file);
+      const error = validateImage(file);
 
-      if (error.length) {
+      if (error) {
         setErrors((prev) => ({ ...prev, profilePicture: error }));
         return;
       }
@@ -169,7 +188,7 @@ export const EditProfile = () => {
 
     // Add only valid values to phoneNumber form field
     if (name === 'phoneNumber') {
-      const number = value.slice(0, VALIDATION_PARAMETERS.PHONE.MAX_LENGTH);
+      const number = value.slice(0, VALIDATION_PARAMETERS.PHONE.LENGTH);
       // Ignores all character other than number
       if (!REGEX.PHONE.test(number)) {
         return;
@@ -194,7 +213,7 @@ export const EditProfile = () => {
   }
 
   return (
-    <div>
+    <>
       <Typography variant="h2" tag="h1">
         Edit Profile
       </Typography>
@@ -282,6 +301,29 @@ export const EditProfile = () => {
                 )}
               </Field>
               <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  onChange={handleChange}
+                  value={form.email}
+                  type="email"
+                  disabled={isLoading}
+                  autoComplete="email"
+                  aria-invalid={Boolean(errors.email.length)}
+                />
+                {errors.email && errors.email.length > 0 ? (
+                  errors.email.map((emailError) => (
+                    <FieldError key={emailError}>{emailError}</FieldError>
+                  ))
+                ) : (
+                  <FieldError>
+                    <span aria-hidden="true"> </span>
+                  </FieldError>
+                )}
+              </Field>
+              <Field>
                 <FieldLabel htmlFor="phoneNumber">Phone Number</FieldLabel>
                 <Input
                   id="phoneNumber"
@@ -322,6 +364,6 @@ export const EditProfile = () => {
           </form>
         </CardContent>
       </Card>
-    </div>
+    </>
   );
 };
