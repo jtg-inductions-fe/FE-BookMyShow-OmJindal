@@ -64,14 +64,13 @@ export const EditProfile = () => {
   }, [user]);
 
   // Revokes previously created object URLs to prevent memory leaks.
-  useEffect(
-    () => () => {
-      if (preview?.startsWith('blob:')) {
-        URL.revokeObjectURL(preview);
-      }
-    },
-    [preview],
-  );
+  useEffect(() => {
+    if (!preview || !preview.startsWith('blob:')) return;
+
+    return () => {
+      URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
 
   // Check if the new fields are same as current user fields.
   const isUnchanged =
