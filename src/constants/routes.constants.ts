@@ -12,5 +12,7 @@ export const ROUTES = {
   PROFILE: '/profile',
   EDIT_PROFILE: '/profile/update',
   MOVIES: '/movies',
+  MOVIE_DETAIL: '/movies/:movieName/:movieId',
   CINEMAS: '/cinemas',
+  SLOT: '/slot/seat-layout/:slotId',
 } as const;
