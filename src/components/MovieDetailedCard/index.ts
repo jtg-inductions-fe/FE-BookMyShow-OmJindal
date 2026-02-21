@@ -1,2 +1,2 @@
 export { MovieDetailedCard } from './MovieDetailedCard.component';
-export { MovieDetailedCardSkeleton } from './MovieDetailedCard.skelton';
+export { MovieDetailedCardSkeleton } from './MovieDetailedCard.skeleton';

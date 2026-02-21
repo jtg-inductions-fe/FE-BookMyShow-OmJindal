@@ -67,6 +67,8 @@ export const Carousel = ({
       setCanScrollNext(api.canScrollNext());
     };
 
+    handleSelect();
+
     api.on('reInit', handleSelect);
     api.on('select', handleSelect);
 
@@ -200,7 +202,7 @@ export const CarouselNext = ({
       onClick={scrollNext}
       {...props}
     >
-      <ChevronRightIcon className="ml-3 cn-rtl-flip" color="white" size={64} />
+      <ChevronRightIcon className="ml-3 cn-rtl-flip" color="white" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

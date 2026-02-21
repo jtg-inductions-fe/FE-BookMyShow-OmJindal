@@ -12,13 +12,15 @@ export const MovieCard = memo(function MovieCard({
 }: MovieCardProps) {
   return (
     <article className="h-full w-full border-2 border-border-grey rounded-xl hover:-translate-y-2 hover:border-black/75 transition-all duration-200 ease-in-out">
-      <div className="w-full h-50 rounded-t-xl">
-        <img
-          src={poster}
-          alt={`${title} poster`}
-          className="h-full w-full rounded-t-xl object-cover"
-        />
-      </div>
+      {poster && (
+        <div className="w-full h-50 rounded-t-xl">
+          <img
+            src={poster}
+            alt={`${title} poster`}
+            className="h-full w-full rounded-t-xl object-cover"
+          />
+        </div>
+      )}
       <div className="p-3">
         <Typography variant="h3" tag="h2">
           {title}

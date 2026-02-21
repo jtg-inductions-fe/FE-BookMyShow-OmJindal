@@ -29,11 +29,11 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
         </Typography>
         {tags && (
           <div className="flex flex-row gap-2">
-            {tags?.map((tag, index) => (
+            {tags.map((tag, index) => (
               <Chip
                 size="chip"
                 variant="secondary"
-                key={'genre-' + index}
+                key={'tag-' + index}
                 className="hover:text-white"
               >
                 {tag}

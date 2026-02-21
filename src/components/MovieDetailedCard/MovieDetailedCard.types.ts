@@ -5,11 +5,11 @@ import type { ReactNode } from 'react';
  */
 export type InfoItem = {
   /**
-   * Label describing the information.
+   * Icon representing the information item.
    */
   icon: ReactNode;
   /**
-   * Value associated with the label.
+   * Text label describing the information.
    */
   label: string;
 };

@@ -2,7 +2,7 @@
  * Defines the structure of the movie.
  */
 export type Movie = {
-  /*
+  /**
    * Unique identifier for the movie.
    */
   id: number;

@@ -17,13 +17,13 @@ export const LatestMovieGrid = () => {
 
   if (isLoading) {
     movieGridContent = (
-      <div className="p-1 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
+      <div className="p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
         {Array.from({ length: 10 }).map((_, i) => (
           <MovieCardSkeleton key={i} />
         ))}
       </div>
     );
-  } else if (!movies?.length) {
+  } else if (!movies.length) {
     movieGridContent = <Typography>No movies found</Typography>;
   } else {
     movieGridContent = (
@@ -59,7 +59,7 @@ export const LatestMovieGrid = () => {
   return (
     <section className="space-y-5 px-5 md:px-10 mb-20" aria-labelledby="movieHeading">
       <Typography tag="h2" id="movieHeading">
-        Latest Movie
+        Latest Movies
       </Typography>
       {movieGridContent}
     </section>
