@@ -20,4 +20,9 @@ export type DatePickerProps = {
    * The title of the DatePicker component.
    */
   title: string;
+  /**
+   * The display format of the date.
+   * @default 'PPP'
+   */
+  dateDisplayFormat: string;
 };

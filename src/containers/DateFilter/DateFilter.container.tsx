@@ -13,5 +13,6 @@ export const DateFilter = ({ value, onChange, disabled }: DateFilterProps) => (
     }}
     disabled={disabled}
     title="Pick a date"
+    dateDisplayFormat="PPP"
   />
 );
