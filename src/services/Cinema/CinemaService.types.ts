@@ -16,7 +16,7 @@ export type CinemaListPaginatedQueryParams = {
 };
 
 /**
- *  Query parameters used to filter the cinema list endpoint.
+ *  Request parameters used to filter the cinema list by specific IDs.
  */
 export type CinemaListRequest = {
   /**

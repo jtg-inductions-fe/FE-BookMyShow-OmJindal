@@ -124,7 +124,7 @@ export const ComboboxList = ({ className, ...props }: ComboboxPrimitive.List.Pro
   <ComboboxPrimitive.List
     data-slot="combobox-list"
     className={cn(
-      'no-scrollbar max-h-[min(calc(theme(spacing.72)-theme(spacing.9)),calc(var(--available-height)-theme(spacing.9)))] scroll-py-1 p-1 data-empty:p-0 overflow-y-auto overscroll-contain',
+      'no-scrollbar max-h-[min(--spacing(63),calc(var(--available-height)--spacing(9)))] scroll-py-1 p-1 data-empty:p-0 overflow-y-auto overscroll-contain',
       className,
     )}
     {...props}

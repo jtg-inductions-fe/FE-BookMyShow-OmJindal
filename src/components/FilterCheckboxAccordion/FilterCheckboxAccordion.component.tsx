@@ -8,7 +8,7 @@ import {
 import { Checkbox, Field, FieldGroup, FieldLabel } from '@/components/Form';
 import { Typography } from '@/components/Typography';
 
-import type { FilterCheckboxAccordionProps } from './FilterCheckboxAccordian.types';
+import type { FilterCheckboxAccordionProps } from './FilterCheckboxAccordion.types';
 
 export const FilterCheckboxAccordion = ({
   title,
@@ -19,7 +19,7 @@ export const FilterCheckboxAccordion = ({
   onChange,
 }: FilterCheckboxAccordionProps) => {
   const toggle = (id: number, checked: boolean) =>
-    onChange(checked ? [...value, id] : value.filter((valudId) => valudId !== id));
+    onChange(checked ? [...value, id] : value.filter((valueId) => valueId !== id));
 
   return (
     <Accordion type="single" collapsible>

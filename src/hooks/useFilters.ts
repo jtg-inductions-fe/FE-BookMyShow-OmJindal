@@ -25,14 +25,16 @@ export const useFilters = <
 ) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Extracting data passed by the user
-  const entries = Object.entries(config) as [keyof T, FilterConfig<T>[keyof T]][];
-
-  // Creating initial filter object
-  const initialFilters = Object.fromEntries(entries.map(([k, v]) => [k, v.value])) as unknown as T;
-
   // Build initial state from URL of filters
   const [filters, setFilters] = useState<T>(() => {
+    // Extracting data passed by the user
+    const entries = Object.entries(config) as [keyof T, FilterConfig<T>[keyof T]][];
+
+    // Creating initial filter object
+    const initialFilters = Object.fromEntries(
+      entries.map(([k, v]) => [k, v.value]),
+    ) as unknown as T;
+
     const newFilters = { ...initialFilters };
 
     entries.forEach(([key, value]) => {
@@ -40,9 +42,13 @@ export const useFilters = <
       if (!paramValue) return;
 
       switch (value.type) {
-        case 'number':
-          (newFilters[key] as number) = Number(paramValue);
+        case 'number': {
+          const parsed = Number(paramValue);
+          if (!Number.isNaN(parsed)) {
+            (newFilters[key] as number) = parsed;
+          }
           break;
+        }
         case 'string':
           (newFilters[key] as string) = paramValue;
           break;
@@ -79,9 +85,6 @@ export const useFilters = <
           if (Array.isArray(value)) {
             if (value.length) next.set(key, value.join(','));
             else next.delete(key);
-            return;
-          }
-          if (Array.isArray(value) && value.length) {
             return;
           }
           if (typeof value === 'number' || typeof value === 'string') {

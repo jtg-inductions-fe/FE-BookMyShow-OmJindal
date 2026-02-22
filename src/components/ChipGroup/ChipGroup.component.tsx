@@ -12,18 +12,29 @@ export const ChipGroup = <T,>({
   title,
   variant = 'primary',
   size = 'chip',
-}: ChipGroupProps<T>) => (
-  <>
-    {ids.map((id) => {
-      const item = data.find((x) => getId(x) === id);
-      if (!item) return null;
+  ...rest
+}: ChipGroupProps<T>) => {
+  const map = new Map(data.map((item) => [getId(item), item]));
 
-      return (
-        <Button key={`${title}-${id}`} size={size} variant={variant} onClick={() => onAction(id)}>
-          {getLabel(item)}
-          {icon && <> {icon}</>}
-        </Button>
-      );
-    })}
-  </>
-);
+  return (
+    <>
+      {ids.map((id) => {
+        const item = map.get(id);
+        if (!item) return null;
+
+        return (
+          <Button
+            key={`${title}-${id}`}
+            size={size}
+            variant={variant}
+            onClick={() => onAction(id)}
+            {...rest}
+          >
+            {getLabel(item)}
+            {icon && <> {icon}</>}
+          </Button>
+        );
+      })}
+    </>
+  );
+};

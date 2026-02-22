@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 
 /**
- * Props for MovieList filter state
+ * State shape for MovieListFilter
  */
 export type MovieListFilterType = {
   /**
