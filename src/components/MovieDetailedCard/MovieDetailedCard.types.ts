@@ -24,11 +24,6 @@ export type MovieDetailedCardProps = {
    */
   poster?: string;
   /**
-   * Image loading behavior.
-   * @defaultValue 'eager'
-   */
-  loading?: 'eager' | 'lazy';
-  /**
    * The description of the card.
    */
   description?: string;
