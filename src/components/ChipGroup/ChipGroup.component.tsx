@@ -20,7 +20,8 @@ export const ChipGroup = <T,>({
 
       return (
         <Button key={`${title}-${id}`} size={size} variant={variant} onClick={() => onAction(id)}>
-          {getLabel(item)} {icon}
+          {getLabel(item)}
+          {icon && <> {icon}</>}
         </Button>
       );
     })}

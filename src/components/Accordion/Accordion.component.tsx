@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react';
 import { cn } from '@/utils';
 
 /**
- * The main container of the accordian component.
+ * The main container of the accordion component.
  */
 export const Accordion = ({
   className,
@@ -19,7 +19,7 @@ export const Accordion = ({
 );
 
 /**
- * The trigger element of the accordian.
+ * The trigger element of the accordion.
  */
 export const AccordionTrigger = ({
   className,
@@ -49,7 +49,7 @@ export const AccordionTrigger = ({
 );
 
 /**
- * The content of the accordian component.
+ * The content of the accordion component.
  */
 export const AccordionContent = ({
   className,
@@ -58,12 +58,12 @@ export const AccordionContent = ({
 }: ComponentProps<typeof AccordionPrimitive.Content>) => (
   <AccordionPrimitive.Content
     data-slot="accordion-content"
-    className="data-open:animate-accordion-down data-closed:animate-accordion-up text-sm overflow-hidden"
+    className="data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up text-sm overflow-hidden"
     {...props}
   >
     <div
       className={cn(
-        'pt-0 pb-2.5 [&_a]:hover:text-foreground h-(--radix-accordion-content-height) [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4',
+        'pt-0 pb-2.5 [&_a]:hover:text-foreground [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4',
         className,
       )}
     >
@@ -73,7 +73,7 @@ export const AccordionContent = ({
 );
 
 /**
- * The item of the accordian content.
+ * The item of the accordion content.
  */
 export const AccordionItem = ({
   className,

@@ -41,7 +41,7 @@ export type LanguageListResponse = Pick<Language, 'id' | 'name'>[];
 /**
  *  Query parameters used to filter the city list endpoint.
  */
-export type CityListQueryParams = {
+export type CityListRequest = {
   /**
    *  Array of city IDs to filter cities.
    */

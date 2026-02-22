@@ -22,7 +22,7 @@ export const API_URLS = {
     CITY_PAGINATED: '/cities/',
     LANGUAGES: '/languages/',
     GENRES: '/genres/',
-    CITIES: '/cities/list',
+    CITIES: '/cities/list/',
   },
 } as const;
 

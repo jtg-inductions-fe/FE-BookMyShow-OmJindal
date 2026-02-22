@@ -5,7 +5,7 @@ import type {
   CinemaListApiResponse,
   CinemaListPaginatedQueryParams,
   CinemaListPaginatedResponse,
-  CinemaListQueryParams,
+  CinemaListRequest,
 } from './CinemaService.types';
 
 /**
@@ -51,13 +51,15 @@ const cinemaApi = api.injectEndpoints({
      * Retrieve the list of cinemas from the backend based on
      * cinemaIds filters.
      */
-    cinemaList: builder.query<CinemaListApiResponse, CinemaListQueryParams>({
+    cinemaList: builder.query<CinemaListApiResponse, CinemaListRequest>({
       query: (queryArg) => {
         const params = new URLSearchParams();
         if (queryArg.cinemaIds?.length)
           params.append('cinema_ids', String(queryArg.cinemaIds.join(',')));
+
+        const queryString = params.toString();
         return {
-          url: `${API_URLS.CINEMA.LIST}?${params.toString()}`,
+          url: queryString ? `${API_URLS.CINEMA.LIST}?${queryString}` : API_URLS.CINEMA.LIST,
           method: 'GET',
         };
       },

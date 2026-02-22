@@ -15,7 +15,7 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
 
   if (moviesQuery.isLoading) {
     return (
-      <div className="w-full gap-10 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {Array.from({ length: 10 }).map((_, i) => (
           <MovieCardSkeleton key={i} />
         ))}
@@ -24,7 +24,7 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
   }
 
   if (movies.length === 0) {
-    return <Typography>No movies found</Typography>;
+    return <Typography tag="p">No movies found</Typography>;
   }
 
   return (
@@ -55,7 +55,11 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
           })}
 
           {moviesQuery.isFetchingNextPage &&
-            Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={`loader-${i}`} />)}
+            Array.from({ length: 5 }).map((_, i) => (
+              <li key={`loader-${i}`}>
+                <MovieCardSkeleton />
+              </li>
+            ))}
         </ul>
       </InfiniteScroll>
     </section>

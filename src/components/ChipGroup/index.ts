@@ -1,2 +1,2 @@
 export { ChipGroup } from './ChipGroup.component';
-export { ChipGroupSkeleton } from './ChipGroup.skelton';
+export { ChipGroupSkeleton } from './ChipGroup.skeleton';

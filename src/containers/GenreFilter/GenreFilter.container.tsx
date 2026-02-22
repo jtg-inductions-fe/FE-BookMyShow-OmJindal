@@ -1,6 +1,6 @@
 import {
-  AccordianCheckboxSkeleton,
   Accordion,
+  AccordionCheckboxSkeleton,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
@@ -37,7 +37,7 @@ export const GenreFilter = ({ value, onChange }: GenreFilterProps) => {
         <AccordionContent>
           <FieldGroup>
             {genreQuery.isLoading
-              ? Array.from({ length: 5 }).map((_, i) => <AccordianCheckboxSkeleton key={i} />)
+              ? Array.from({ length: 5 }).map((_, i) => <AccordionCheckboxSkeleton key={i} />)
               : genreData.map((genre) => (
                   <Field key={genre.id} orientation="horizontal">
                     <Checkbox

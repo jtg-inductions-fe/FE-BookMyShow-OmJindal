@@ -7,10 +7,7 @@ import { GenreFilter } from '@/containers/GenreFilter';
 import { LanguageFilter } from '@/containers/LanguageFilter';
 import { useCinemaListQuery } from '@/services';
 
-import type {
-  MovieListFilter as MovieListFilterType,
-  MovieListFilterProps,
-} from './MovieListFilter.types';
+import type { MovieListFilterProps, MovieListFilterType } from './MovieListFilter.types';
 
 export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) => {
   const selectedCinemasQuery = useCinemaListQuery(
@@ -22,9 +19,9 @@ export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) =
 
   const selectedCinemas = selectedCinemasQuery.data ?? [];
 
-  const updateFilter = (
-    key: keyof MovieListFilterType,
-    value: MovieListFilterType[keyof MovieListFilterType],
+  const updateFilter = <K extends keyof MovieListFilterType>(
+    key: K,
+    value: MovieListFilterType[K],
   ) => {
     setFilters((prev) => ({
       ...prev,

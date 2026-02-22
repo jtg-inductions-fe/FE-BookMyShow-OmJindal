@@ -1,6 +1,6 @@
 import {
-  AccordianCheckboxSkeleton,
   Accordion,
+  AccordionCheckboxSkeleton,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
@@ -37,7 +37,7 @@ export const LanguageFilter = ({ value, onChange }: LanguageFilterProps) => {
         <AccordionContent>
           <FieldGroup>
             {languageQuery.isLoading
-              ? Array.from({ length: 5 }).map((_, i) => <AccordianCheckboxSkeleton key={i} />)
+              ? Array.from({ length: 5 }).map((_, i) => <AccordionCheckboxSkeleton key={i} />)
               : languageData.map((language) => (
                   <Field key={language.id} orientation="horizontal">
                     <Checkbox

@@ -1,5 +1,5 @@
 /**
- * Props for datePicker component.
+ * Props for DatePicker component.
  */
 export type DatePickerProps = {
   /**
@@ -9,5 +9,5 @@ export type DatePickerProps = {
   /**
    * The function to execute when a date is selected.
    */
-  selectDate: (date?: Date) => void;
+  onSelect: (date?: Date) => void;
 };

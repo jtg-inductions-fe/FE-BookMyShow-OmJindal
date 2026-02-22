@@ -47,8 +47,8 @@ export {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordianCheckboxSkeleton,
-} from './Accordian';
+  AccordionCheckboxSkeleton,
+} from './Accordion';
 export {
   Combobox,
   ComboboxContent,

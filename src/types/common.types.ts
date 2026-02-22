@@ -17,43 +17,22 @@ export type PageResponse<T> = {
 };
 
 /**
- * Defines the structure of the language.
+ * Base shape for simple lookup entities (id + name pairs).
  */
-export type Language = {
-  /**
-   * Unique identifier for the language.
-   */
+type NamedEntity = {
   id: number;
-  /**
-   * The name of the language.
-   */
   name: string;
 };
 
+/*
+ * Defines the structure of the language.
+ */
+export type Language = NamedEntity;
 /**
  * Defines the structure of the genre.
  */
-export type Genre = {
-  /**
-   * Unique identifier for the genre.
-   */
-  id: number;
-  /**
-   * The name of the genre.
-   */
-  name: string;
-};
-
+export type Genre = NamedEntity;
 /**
  * Defines the structure of the city.
  */
-export type City = {
-  /**
-   * Unique identifier for the city.
-   */
-  id: number;
-  /**
-   * The name of the city.
-   */
-  name: string;
-};
+export type City = NamedEntity;

@@ -47,7 +47,10 @@ export const useFilters = <
           (newFilters[key] as string) = paramValue;
           break;
         case 'number[]':
-          (newFilters[key] as number[]) = paramValue.split(',').map(Number);
+          (newFilters[key] as number[]) = paramValue
+            .split(',')
+            .map(Number)
+            .filter((n) => !Number.isNaN(n));
           break;
         case 'string[]':
           (newFilters[key] as string[]) = paramValue.split(',');
@@ -57,8 +60,6 @@ export const useFilters = <
             ? paramValue
             : undefined;
           break;
-        default:
-          (newFilters[key] as unknown) = paramValue;
       }
     });
 
@@ -67,20 +68,32 @@ export const useFilters = <
 
   // Sync filters with URL search params
   useEffect(() => {
-    const params: Record<string, string> = {};
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value === undefined || value === null) {
+            next.delete(key);
+            return;
+          }
+          if (Array.isArray(value)) {
+            if (value.length) next.set(key, value.join(','));
+            else next.delete(key);
+            return;
+          }
+          if (Array.isArray(value) && value.length) {
+            return;
+          }
+          if (typeof value === 'number' || typeof value === 'string') {
+            next.set(key, String(value));
+            return;
+          }
+        });
 
-    Object.entries(filters).forEach(([key, value]) => {
-      if (!value) return;
-      if (Array.isArray(value) && value.length) {
-        params[key] = value.join(',');
-        return;
-      }
-      if (typeof value === 'number' || typeof value === 'string') {
-        params[key] = String(value);
-        return;
-      }
-    });
-    setSearchParams(params, { replace: true });
+        return next;
+      },
+      { replace: true },
+    );
   }, [filters, setSearchParams]);
 
   return { filters, setFilters };

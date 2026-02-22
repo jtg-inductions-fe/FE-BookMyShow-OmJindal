@@ -2,12 +2,12 @@ import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
-import { Calendar } from '@/components/Calender';
+import { Calendar } from '@/components/Calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover';
 
 import type { DatePickerProps } from './DatePicker.types';
 
-export const DatePicker = ({ date, selectDate }: DatePickerProps) => (
+export const DatePicker = ({ date, onSelect }: DatePickerProps) => (
   <Popover>
     <PopoverTrigger asChild>
       <Button variant="ghost" data-empty={!date} className="border-2 rounded-full">
@@ -19,7 +19,7 @@ export const DatePicker = ({ date, selectDate }: DatePickerProps) => (
       <Calendar
         mode="single"
         selected={date}
-        onSelect={selectDate}
+        onSelect={onSelect}
         disabled={{ before: new Date() }}
       />
     </PopoverContent>

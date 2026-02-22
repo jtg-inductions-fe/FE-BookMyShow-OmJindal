@@ -7,7 +7,7 @@ export type DateFilterProps = {
    */
   value?: string;
   /**
-   * Callback fired whenever the selected date change.
+   * Callback fired whenever the selected date changes.
    */
   onChange: (date?: string) => void;
 };

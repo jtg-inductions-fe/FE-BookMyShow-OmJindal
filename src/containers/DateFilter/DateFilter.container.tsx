@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 
 import { DatePicker } from '@/components';
 
@@ -6,8 +6,8 @@ import type { DateFilterProps } from './DateFilter.types';
 
 export const DateFilter = ({ value, onChange }: DateFilterProps) => (
   <DatePicker
-    date={value ? new Date(value) : undefined}
-    selectDate={(date) => {
+    date={value ? parse(value, 'yyyy-MM-dd', new Date()) : undefined}
+    onSelect={(date) => {
       onChange(date ? format(date, 'yyyy-MM-dd') : undefined);
     }}
   />

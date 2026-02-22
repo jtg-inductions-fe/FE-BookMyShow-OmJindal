@@ -1,2 +1,2 @@
 export { MovieListFilter } from './MovieListFilter.container';
-export type { MovieListFilter as MovieListFilterType } from './MovieListFilter.types';
+export type { MovieListFilterType } from './MovieListFilter.types';
