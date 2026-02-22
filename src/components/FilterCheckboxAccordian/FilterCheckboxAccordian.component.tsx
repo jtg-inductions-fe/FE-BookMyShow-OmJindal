@@ -1,13 +1,14 @@
-import type { FilterCheckboxAccordionProps } from './FilterCheckboxAccordian.types';
 import {
   Accordion,
   AccordionCheckboxSkeleton,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '../Accordion';
-import { Checkbox, Field, FieldGroup, FieldLabel } from '../Form';
-import { Typography } from '../Typography';
+} from '@/components/Accordion';
+import { Checkbox, Field, FieldGroup, FieldLabel } from '@/components/Form';
+import { Typography } from '@/components/Typography';
+
+import type { FilterCheckboxAccordionProps } from './FilterCheckboxAccordian.types';
 
 export const FilterCheckboxAccordion = ({
   title,
