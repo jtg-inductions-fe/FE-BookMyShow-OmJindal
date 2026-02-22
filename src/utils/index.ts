@@ -11,3 +11,5 @@ export {
 } from './validator.utils';
 export { seatRowFormatter } from './Seat';
 export { buildFormData } from './form.util';
+export { slugGenerator } from './slug.util';
+export { formatDurationLabel } from './duration.util';

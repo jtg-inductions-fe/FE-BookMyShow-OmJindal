@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Link } from 'react-router';
 
 import {
@@ -19,6 +21,7 @@ import { useAppSelector } from '@/store';
 import type { AuthMenuProps } from './AuthMenu.types';
 
 export const AuthUserMenu = ({ isLoggingOut, openModal }: AuthMenuProps) => {
+  const [open, setOpen] = useState(false);
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   const { data: user, isLoading: isLoadingUser } = useProfileQuery(undefined, {
@@ -45,7 +48,7 @@ export const AuthUserMenu = ({ isLoggingOut, openModal }: AuthMenuProps) => {
   if (!user) return null;
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button size="icon" className="rounded-full">
           <Avatar>
@@ -55,7 +58,7 @@ export const AuthUserMenu = ({ isLoggingOut, openModal }: AuthMenuProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent side="bottom" align="end" className="w-64 p-2">
-        <Link to={ROUTES.PROFILE}>
+        <Link to={ROUTES.PROFILE} onClick={() => setOpen(false)}>
           <Profile
             name={user.name}
             email={user.email}

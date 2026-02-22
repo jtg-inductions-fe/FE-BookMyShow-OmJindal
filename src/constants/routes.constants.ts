@@ -12,5 +12,9 @@ export const ROUTES = {
   PROFILE: '/profile',
   EDIT_PROFILE: '/profile/update',
   MOVIES: '/movies',
+  MOVIE_DETAIL: {
+    BASE: '/movies/',
+    PATH_PARAMETERS: ':movieName/:movieId',
+  },
   CINEMAS: '/cinemas',
 } as const;

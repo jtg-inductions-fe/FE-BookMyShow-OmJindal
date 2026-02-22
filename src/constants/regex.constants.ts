@@ -8,4 +8,6 @@ export const REGEX = {
   PASSWORD_LOWERCASE: /[a-z]/,
   PASSWORD_NUMBER: /[0-9]/,
   PHONE: /^\d*$/,
+  SLUG_INVALID_CHARS: /[^a-z0-9\s-]/g,
+  SLUG_WHITESPACE: /\s+/g,
 } as const;

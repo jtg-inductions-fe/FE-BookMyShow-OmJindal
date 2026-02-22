@@ -32,3 +32,12 @@ export { ConfirmationModal } from './ConfirmationModal';
 export { Skeleton } from './Skeleton';
 export { BookingCard, BookingCardSkeleton, type BookingCardStatus } from './BookingCard';
 export { Chip } from './Chip';
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from './Carousel';
+export { MovieCard, MovieCardSkeleton } from './MovieCard';
+export { MovieDetailedCard, MovieDetailedCardSkeleton } from './MovieDetailedCard';
