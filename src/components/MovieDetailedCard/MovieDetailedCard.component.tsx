@@ -8,6 +8,7 @@ import type { MovieDetailedCardProps } from './MovieDetailedCard.types';
 export const MovieDetailedCard = memo(function MovieDetailedCard({
   title,
   poster,
+  loading = 'eager',
   description,
   tags,
   info,
@@ -20,7 +21,7 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
             src={poster}
             alt={`${title} poster`}
             className="h-full w-full rounded-2xl object-cover"
-            loading="lazy"
+            loading={loading}
           />
         </div>
       )}

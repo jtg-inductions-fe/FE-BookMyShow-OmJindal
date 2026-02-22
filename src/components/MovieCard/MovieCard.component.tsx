@@ -7,6 +7,7 @@ import type { MovieCardProps } from './MovieCard.types';
 export const MovieCard = memo(function MovieCard({
   title,
   poster,
+  loading = 'eager',
   primaryLabel,
   secondaryLabel,
 }: MovieCardProps) {
@@ -18,7 +19,7 @@ export const MovieCard = memo(function MovieCard({
             src={poster}
             alt={`${title} poster`}
             className="h-full w-full rounded-t-xl object-cover"
-            loading="lazy"
+            loading={loading}
           />
         </div>
       )}

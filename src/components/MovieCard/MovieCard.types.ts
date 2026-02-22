@@ -8,6 +8,11 @@ export type MovieCardProps = {
    */
   poster?: string;
   /**
+   * Image loading behavior.
+   * @defaultValue 'eager'
+   */
+  loading?: 'eager' | 'lazy';
+  /**
    * The primary label of the card.
    */
   primaryLabel?: string;
