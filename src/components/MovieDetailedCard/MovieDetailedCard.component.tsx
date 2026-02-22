@@ -20,6 +20,7 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
             src={poster}
             alt={`${title} poster`}
             className="h-full w-full rounded-2xl object-cover"
+            loading="lazy"
           />
         </div>
       )}
@@ -41,15 +42,16 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
             ))}
           </div>
         )}
-        <div className="flex flex-row gap-5">
-          {info &&
-            info.map((item, index) => (
+        {info && info.length > 0 && (
+          <div className="flex flex-row gap-5">
+            {info.map((item, index) => (
               <div className="flex flex-row gap-2" key={`${item.label}-${index}`}>
                 {item.icon}
                 <Typography color="default">{item.label}</Typography>
               </div>
             ))}
-        </div>
+          </div>
+        )}
         {description && <Typography color="default">{description}</Typography>}
       </div>
     </article>
