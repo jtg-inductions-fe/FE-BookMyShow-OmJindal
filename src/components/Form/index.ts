@@ -8,4 +8,5 @@ export {
   Field,
   FieldLabel,
   FieldError,
+  Checkbox,
 } from './subcomponents';
