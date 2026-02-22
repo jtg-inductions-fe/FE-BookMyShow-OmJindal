@@ -1,15 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
- *  A generic React hook that returns a debounced version of a value.
+ *  A generic React hook that returns a debounced version of a function.
  */
-export const useDebounce = <T>(value: T, delay: number) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+export const useDebounce = <Args extends unknown[]>(fn: (...args: Args) => void, delay: number) => {
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    const id = setTimeout(() => setDebouncedValue(value), delay);
-    return () => clearTimeout(id);
-  }, [value, delay]);
+  const debouncedFn = (...args: Args) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-  return debouncedValue;
+    timeoutRef.current = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+
+  useEffect(
+    () => () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    },
+    [],
+  );
+
+  return debouncedFn;
 };

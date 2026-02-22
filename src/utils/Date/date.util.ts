@@ -2,10 +2,12 @@ import { format, isValid, parse } from 'date-fns';
 
 /**
  * Validates whether a given string is a real calendar date
- * in the `yyyy-MM-dd` format.
+ * in the provided format.
  */
-export const isValidDate = (value: string): boolean => {
-  const parsed = parse(value, 'yyyy-MM-dd', new Date());
+export const isValidDate = (value: string, dateFormat: string): boolean => {
+  if (!value) return false;
 
-  return isValid(parsed) && format(parsed, 'yyyy-MM-dd') === value;
+  const parsed = parse(value, dateFormat, new Date());
+
+  return isValid(parsed) && format(parsed, dateFormat) === value;
 };

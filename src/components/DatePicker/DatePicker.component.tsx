@@ -7,21 +7,16 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover';
 
 import type { DatePickerProps } from './DatePicker.types';
 
-export const DatePicker = ({ date, onSelect }: DatePickerProps) => (
+export const DatePicker = ({ date, onSelect, disabled, title }: DatePickerProps) => (
   <Popover>
     <PopoverTrigger asChild>
       <Button variant="ghost" data-empty={!date} className="border-2 rounded-full">
         <CalendarIcon className="text-pink" />
-        {date ? format(date, 'PPP') : <span>Pick a date</span>}
+        {date ? format(date, 'PPP') : <span>{title}</span>}
       </Button>
     </PopoverTrigger>
     <PopoverContent className="w-auto p-0">
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={onSelect}
-        disabled={{ before: new Date() }}
-      />
+      <Calendar mode="single" selected={date} onSelect={onSelect} disabled={disabled} />
     </PopoverContent>
   </Popover>
 );

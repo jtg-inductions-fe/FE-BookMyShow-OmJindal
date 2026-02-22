@@ -1,6 +1,5 @@
 import {
   Accordion,
-  AccordionCheckboxSkeleton,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
@@ -14,7 +13,6 @@ export const FilterCheckboxAccordion = ({
   title,
   accordionValue,
   items,
-  isLoading,
   value,
   onChange,
 }: FilterCheckboxAccordionProps) => {
@@ -31,18 +29,16 @@ export const FilterCheckboxAccordion = ({
         </AccordionTrigger>
         <AccordionContent>
           <FieldGroup>
-            {isLoading
-              ? Array.from({ length: 5 }).map((_, i) => <AccordionCheckboxSkeleton key={i} />)
-              : items.map((item) => (
-                  <Field key={item.id} orientation="horizontal">
-                    <Checkbox
-                      id={`${accordionValue}-${item.id}`}
-                      checked={value.includes(item.id)}
-                      onCheckedChange={(checked) => toggle(item.id, !!checked)}
-                    />
-                    <FieldLabel htmlFor={`${accordionValue}-${item.id}`}>{item.name}</FieldLabel>
-                  </Field>
-                ))}
+            {items.map((item) => (
+              <Field key={item.id} orientation="horizontal">
+                <Checkbox
+                  id={`${accordionValue}-${item.id}`}
+                  checked={value.includes(item.id)}
+                  onCheckedChange={(checked) => toggle(item.id, !!checked)}
+                />
+                <FieldLabel htmlFor={`${accordionValue}-${item.id}`}>{item.name}</FieldLabel>
+              </Field>
+            ))}
           </FieldGroup>
         </AccordionContent>
       </AccordionItem>

@@ -8,6 +8,7 @@ import {
   ComboboxItem,
   ComboboxList,
 } from '@/components';
+import { SEARCH_DEBOUNCE_DELAY } from '@/constants';
 import { useDebounce } from '@/hooks';
 import type { CinemaPaginatedApiResponse } from '@/services';
 import { useCinemaListPaginatedInfiniteQuery } from '@/services';
@@ -15,12 +16,18 @@ import { useCinemaListPaginatedInfiniteQuery } from '@/services';
 import type { CinemaFilterProps } from './CinemaFilter.types';
 
 export const CinemaFilter = ({ value, onChange }: CinemaFilterProps) => {
+  // UI value
+  const [inputValue, setInputValue] = useState('');
+
+  // API value
   const [search, setSearch] = useState('');
 
-  const debouncedSearch = useDebounce(search, 700);
+  const debouncedSetSearch = useDebounce((val: string) => {
+    setSearch(val);
+  }, SEARCH_DEBOUNCE_DELAY);
 
   const cinemasQuery = useCinemaListPaginatedInfiniteQuery({
-    search: debouncedSearch,
+    search,
   });
 
   const cinemas = cinemasQuery.data?.pages.flatMap((page) => page.results) ?? [];
@@ -31,21 +38,27 @@ export const CinemaFilter = ({ value, onChange }: CinemaFilterProps) => {
     }
   };
 
+  const handleChange = (val: string) => {
+    setInputValue(val);
+    debouncedSetSearch(val);
+  };
+
   return (
     <Combobox
       items={cinemas}
       autoHighlight
       onValueChange={(val: CinemaPaginatedApiResponse | null | undefined) => {
-        if (val) {
-          addCinema(val);
-          setSearch('');
-        }
+        if (!val) return;
+
+        addCinema(val);
+        setInputValue('');
+        setSearch('');
       }}
     >
       <ComboboxInput
         placeholder="Search for cinema"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={inputValue}
+        onChange={(e) => handleChange(e.target.value)}
       />
       <ComboboxContent>
         <ComboboxEmpty>No cinemas found.</ComboboxEmpty>

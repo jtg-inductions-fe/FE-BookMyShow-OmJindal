@@ -29,10 +29,6 @@ export type FilterCheckboxAccordionProps = {
    */
   items: FilterItem[];
   /**
-   * Whether the filter list is currently loading.
-   */
-  isLoading: boolean;
-  /**
    * Currently selected filter item IDs.
    */
   value: number[];
@@ -40,4 +36,14 @@ export type FilterCheckboxAccordionProps = {
    * Callback fired when selected IDs change.
    */
   onChange: (ids: number[]) => void;
+};
+
+/**
+ * Props for the FilterCheckboxAccordion component.
+ */
+export type FilterCheckboxAccordionSkeletonProps = {
+  /**
+   * Title displayed at the top of the accordion skeleton.
+   */
+  title: string;
 };

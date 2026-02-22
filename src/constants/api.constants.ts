@@ -52,4 +52,5 @@ export const API_CONSTANTS = {
       CANCELLED: 'C',
     },
   },
+  DATE_FORMAT: 'yyyy-MM-dd',
 } as const;

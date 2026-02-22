@@ -54,8 +54,7 @@ const cinemaApi = api.injectEndpoints({
     cinemaList: builder.query<CinemaListApiResponse, CinemaListRequest>({
       query: (queryArg) => {
         const params = new URLSearchParams();
-        if (queryArg.cinemaIds?.length)
-          params.append('cinema_ids', String(queryArg.cinemaIds.join(',')));
+        if (queryArg.cinemaIds?.length) params.append('cinema_ids', queryArg.cinemaIds.join(','));
 
         const queryString = params.toString();
         return {

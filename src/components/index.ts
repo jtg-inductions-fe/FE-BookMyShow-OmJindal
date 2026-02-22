@@ -59,4 +59,7 @@ export {
 } from './ComboBox';
 export { DatePicker } from './DatePicker';
 export { ChipGroup, ChipGroupSkeleton } from './ChipGroup';
-export { FilterCheckboxAccordion } from './FilterCheckboxAccordion';
+export {
+  FilterCheckboxAccordion,
+  FilterCheckboxAccordionSkeleton,
+} from './FilterCheckboxAccordion';

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'react-router';
 
+import { API_CONSTANTS } from '@/constants';
 import { isValidDate } from '@/utils';
 
 // Types of filter
@@ -62,7 +63,10 @@ export const useFilters = <
           (newFilters[key] as string[]) = paramValue.split(',');
           break;
         case 'date':
-          (newFilters[key] as string | undefined) = isValidDate(paramValue)
+          (newFilters[key] as string | undefined) = isValidDate(
+            paramValue,
+            API_CONSTANTS.DATE_FORMAT,
+          )
             ? paramValue
             : undefined;
           break;

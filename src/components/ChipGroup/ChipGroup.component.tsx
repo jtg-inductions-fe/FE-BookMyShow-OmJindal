@@ -27,8 +27,8 @@ export const ChipGroup = <T,>({
             key={`${title}-${id}`}
             size={size}
             variant={variant}
-            onClick={() => onAction(id)}
             {...rest}
+            onClick={() => onAction(id)}
           >
             {getLabel(item)}
             {icon && <> {icon}</>}

@@ -85,7 +85,11 @@ export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) =
       <Typography tag="h3" variant="h4">
         Date
       </Typography>
-      <DateFilter value={filters.date} onChange={(date) => updateFilter('date', date)} />
+      <DateFilter
+        value={filters.date}
+        onChange={(date) => updateFilter('date', date)}
+        disabled={{ before: new Date() }}
+      />
       {/* Genre dropdown component */}
       <GenreFilter
         value={filters.genres}

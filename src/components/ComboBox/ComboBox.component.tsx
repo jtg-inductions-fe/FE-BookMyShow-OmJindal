@@ -29,7 +29,7 @@ const ComboboxTrigger = ({ className, children, ...props }: ComboboxPrimitive.Tr
 const ComboboxClear = ({ className, ...props }: ComboboxPrimitive.Clear.Props) => (
   <ComboboxPrimitive.Clear
     data-slot="combobox-clear"
-    className={cn(className)}
+    className={className}
     {...props}
     render={
       <InputGroupButton variant="ghost" size="icon-xs">
