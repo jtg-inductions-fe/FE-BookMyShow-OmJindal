@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
 import { useCinemaDetailQuery } from '@/services';
-import { getIdFromSlug, getNameFromSlug, slugGenerator } from '@/utils';
+import { getIdFromSlug, slugGenerator } from '@/utils';
 
 import type { CinemaDetailFilter } from './Cinema.types';
 import { CinemaDetailSkeleton } from './CinemaDetail.skeleton';
@@ -35,9 +35,8 @@ export const CinemaDetail = () => {
   useEffect(() => {
     if (!data) return;
 
-    const cinemaName = getNameFromSlug(cinemaSlug ?? '');
     const slug = slugGenerator(`${data.name} ${data.city} ${data.id}`);
-    if (slug !== cinemaName) {
+    if (slug !== cinemaSlug) {
       void navigate(
         {
           pathname: `${ROUTES.CINEMA_DETAIL.BASE}${slug}`,
@@ -75,7 +74,7 @@ export const CinemaDetail = () => {
       {/* Description section in mobile view */}
       <section
         className="rounded-2xl p-8 bg-white mx-5 shadow-md md:hidden space-y-1"
-        aria-label="movie description section"
+        aria-label="cinema description section"
       >
         <Typography variant="h2">
           {data.name}, {data.city}
@@ -88,7 +87,7 @@ export const CinemaDetail = () => {
       {/* Filter Section */}
       <section
         className="rounded-2xl p-8 bg-white mx-5 shadow-md space-y-3"
-        aria-label="Filters for movie's cinema"
+        aria-label="Filters for cinema's movies"
       >
         <Typography variant="h2">Select Movie and Show Time</Typography>
         <div className="flex gap-5 md:items-center flex-col sm:flex-row">
@@ -102,28 +101,32 @@ export const CinemaDetail = () => {
       {/* Movie Slot Section */}
       <section aria-label="Available movies and showtimes">
         <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
-          {data.movies.map((movie) => (
-            <li key={movie.movie.id}>
-              <SlotCard
-                imgUrl={movie.movie.poster}
-                title={movie.movie.name}
-                subtitle={movie.movie.duration}
-                icon={<ClockIcon color="grey" />}
-                sections={movie.languages.map((language) => ({
-                  data: {
-                    id: language.language.id,
-                    title: language.language.name,
-                  },
-                  items: language.slots.map((slot) => ({
-                    id: slot.id,
-                    price: slot.price,
-                    startTime: slot.startTime,
-                    to: `${ROUTES.SLOT.BASE}${slot.id}`,
-                  })),
-                }))}
-              />
-            </li>
-          ))}
+          {data.movies.length > 0 ? (
+            data.movies.map((movie) => (
+              <li key={movie.movie.id}>
+                <SlotCard
+                  imgUrl={movie.movie.poster}
+                  title={movie.movie.name}
+                  subtitle={movie.movie.duration}
+                  icon={<ClockIcon color="grey" />}
+                  sections={movie.languages.map((language) => ({
+                    data: {
+                      id: language.language.id,
+                      title: language.language.name,
+                    },
+                    items: language.slots.map((slot) => ({
+                      id: slot.id,
+                      price: slot.price,
+                      startTime: slot.startTime,
+                      to: `${ROUTES.SLOT.BASE}${slot.id}`,
+                    })),
+                  }))}
+                />
+              </li>
+            ))
+          ) : (
+            <Typography>No slot found</Typography>
+          )}
         </ul>
       </section>
     </div>

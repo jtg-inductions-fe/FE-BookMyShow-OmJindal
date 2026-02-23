@@ -10,7 +10,7 @@ import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
 import { useMovieDetailQuery } from '@/services';
-import { formatDurationLabel, getIdFromSlug, getNameFromSlug, slugGenerator } from '@/utils';
+import { formatDurationLabel, getIdFromSlug, slugGenerator } from '@/utils';
 
 import { MovieDetailSkeleton } from './MovieDetail.skeleton';
 import type { MovieDetailFilter } from './MovieDetail.types';
@@ -36,10 +36,9 @@ export const MovieDetail = () => {
   useEffect(() => {
     if (!data) return;
 
-    const movieName = getNameFromSlug(movieSlug ?? '');
     const slug = slugGenerator(`${data.name} ${movieId}`);
 
-    if (slug !== movieName) {
+    if (slug !== movieSlug) {
       void navigate(
         {
           pathname: `${ROUTES.MOVIE_DETAIL.BASE}${slug}`,
@@ -120,28 +119,32 @@ export const MovieDetail = () => {
       {/* Cinema Slot Section */}
       <section aria-label="Available cinemas and showtimes">
         <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
-          {data.cinemas.map((cinema) => (
-            <li key={cinema.cinema.id}>
-              <SlotCard
-                imgUrl={cinema.cinema.image}
-                title={`${cinema.cinema.name}, ${cinema.cinema.city}`}
-                icon={<MapPin color="grey" aria-hidden="true" />}
-                subtitle={cinema.cinema.address}
-                sections={cinema.languages.map((language) => ({
-                  data: {
-                    id: language.language.id,
-                    title: language.language.name,
-                  },
-                  items: language.slots.map((slot) => ({
-                    id: slot.id,
-                    price: slot.price,
-                    startTime: slot.startTime,
-                    to: `${ROUTES.SLOT.BASE}${slot.id}`,
-                  })),
-                }))}
-              />
-            </li>
-          ))}
+          {data.cinemas.length > 0 ? (
+            data.cinemas.map((cinema) => (
+              <li key={cinema.cinema.id}>
+                <SlotCard
+                  imgUrl={cinema.cinema.image}
+                  title={`${cinema.cinema.name}, ${cinema.cinema.city}`}
+                  icon={<MapPin color="grey" aria-hidden="true" />}
+                  subtitle={cinema.cinema.address}
+                  sections={cinema.languages.map((language) => ({
+                    data: {
+                      id: language.language.id,
+                      title: language.language.name,
+                    },
+                    items: language.slots.map((slot) => ({
+                      id: slot.id,
+                      price: slot.price,
+                      startTime: slot.startTime,
+                      to: `${ROUTES.SLOT.BASE}${slot.id}`,
+                    })),
+                  }))}
+                />
+              </li>
+            ))
+          ) : (
+            <Typography>No slot found</Typography>
+          )}
         </ul>
       </section>
     </div>
