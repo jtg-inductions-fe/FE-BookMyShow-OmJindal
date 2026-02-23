@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router';
 
@@ -13,12 +14,20 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
 
   const movies = moviesQuery.data?.pages.flatMap((page) => page.results) ?? [];
 
+  const renderSkeletons = (count: number): ReactNode => (
+    <>
+      {Array.from({ length: count }).map((_, i) => (
+        <li key={`loader-${i}`}>
+          <MovieCardSkeleton />
+        </li>
+      ))}
+    </>
+  );
+
   if (moviesQuery.isLoading) {
     return (
       <div className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <MovieCardSkeleton key={i} />
-        ))}
+        {renderSkeletons(5)}
       </div>
     );
   }
@@ -54,12 +63,7 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
             );
           })}
 
-          {moviesQuery.isFetchingNextPage &&
-            Array.from({ length: 5 }).map((_, i) => (
-              <li key={`loader-${i}`}>
-                <MovieCardSkeleton />
-              </li>
-            ))}
+          {moviesQuery.isFetchingNextPage && renderSkeletons(5)}
         </ul>
       </InfiniteScroll>
     </section>

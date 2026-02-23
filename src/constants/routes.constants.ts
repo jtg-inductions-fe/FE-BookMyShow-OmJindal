@@ -17,6 +17,10 @@ export const ROUTES = {
     PATH_PARAMETERS: ':movieSlug',
   },
   CINEMAS: '/cinemas',
+  CINEMA_DETAIL: {
+    BASE: '/cinemas/',
+    PATH_PARAMETERS: ':cinemaSlug',
+  },
   SLOT: {
     BASE: '/slot/seat-layout/',
     PATH_PARAMETERS: ':slotId',

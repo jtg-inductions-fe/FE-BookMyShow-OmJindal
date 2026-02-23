@@ -11,17 +11,21 @@ export const Booking = () => {
 
   const bookings = data?.pages.flatMap((page) => page.results) ?? [];
 
+  const renderSkeletons = (count: number): ReactNode => (
+    <>
+      {Array.from({ length: count }).map((_, i) => (
+        <li key={`loader-${i}`}>
+          <BookingCardSkeleton />
+        </li>
+      ))}
+    </>
+  );
+
   let bookingGrid: ReactNode = null;
 
   if (isLoading) {
     bookingGrid = (
-      <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <li key={i}>
-            <BookingCardSkeleton />
-          </li>
-        ))}
-      </ul>
+      <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">{renderSkeletons(5)}</ul>
     );
   } else if (bookings.length > 0) {
     bookingGrid = (
@@ -38,12 +42,7 @@ export const Booking = () => {
             </li>
           ))}
 
-          {isFetchingNextPage &&
-            Array.from({ length: 5 }).map((_, i) => (
-              <li key={`loader-${i}`}>
-                <BookingCardSkeleton />
-              </li>
-            ))}
+          {isFetchingNextPage && renderSkeletons(5)}
         </ul>
       </InfiniteScroll>
     );
