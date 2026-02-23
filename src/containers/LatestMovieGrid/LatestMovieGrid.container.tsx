@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router';
 
-import { MovieCard, MovieCardSkeleton, Typography } from '@/components';
+import { EmptyState, MovieCard, MovieCardSkeleton, Typography } from '@/components';
 import { API_DEFAULTS, ROUTES } from '@/constants';
 import { useMovieListInfiniteQuery } from '@/services';
 import { slugGenerator } from '@/utils';
@@ -24,7 +24,12 @@ export const LatestMovieGrid = () => {
       </div>
     );
   } else if (!movies.length) {
-    movieGridContent = <Typography>No movies found</Typography>;
+    movieGridContent = (
+      <EmptyState
+        title="No latest movies"
+        description="There are no recent releases available right now."
+      />
+    );
   } else {
     movieGridContent = (
       <InfiniteScroll

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router';
 
-import { CinemaCard, CinemaCardSkeleton, Typography } from '@/components';
+import { CinemaCard, CinemaCardSkeleton, EmptyState } from '@/components';
 import { ROUTES } from '@/constants';
 import { useCinemaListPaginatedInfiniteQuery } from '@/services';
 import { slugGenerator } from '@/utils';
@@ -34,7 +34,12 @@ export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
   }
 
   if (cinemas.length === 0) {
-    return <Typography>No cinemas found</Typography>;
+    return (
+      <EmptyState
+        title="No cinemas found"
+        description="Try changing filters by selecting a different city"
+      />
+    );
   }
 
   return (

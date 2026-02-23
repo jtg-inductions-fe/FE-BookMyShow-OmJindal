@@ -12,6 +12,7 @@ import type { SearchbarProps } from './Searchbar.types';
 export function Searchbar<T>({
   items,
   value,
+  selectedValue,
   placeholder,
   emptyLabel,
   onChange,
@@ -22,10 +23,12 @@ export function Searchbar<T>({
   return (
     <Combobox
       items={items}
+      value={selectedValue}
+      multiple
       autoHighlight
-      onValueChange={(val: T | null | undefined) => {
-        if (!val) return;
-        onSelect(val);
+      onValueChange={(values: (T | null | undefined)[]) => {
+        const filtered = values.filter((val) => val !== null && val !== undefined);
+        onSelect(filtered);
       }}
     >
       <ComboboxInput

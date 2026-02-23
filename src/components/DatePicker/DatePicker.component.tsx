@@ -6,6 +6,7 @@ import { Calendar } from '@/components/Calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover';
 
 import type { DatePickerProps } from './DatePicker.types';
+import { Typography } from '../Typography';
 
 export const DatePicker = ({
   date,
@@ -16,9 +17,9 @@ export const DatePicker = ({
 }: DatePickerProps) => (
   <Popover>
     <PopoverTrigger asChild>
-      <Button variant="ghost" data-empty={!date} className="border-2 rounded-full">
+      <Button variant="ghost" data-empty={!date} className="border-2 rounded-full space-x-2">
         <CalendarIcon className="text-pink" />
-        {date ? format(date, dateDisplayFormat) : <span>{title}</span>}
+        <Typography tag="span">{date ? format(date, dateDisplayFormat) : title}</Typography>
       </Button>
     </PopoverTrigger>
     <PopoverContent className="w-auto p-0">

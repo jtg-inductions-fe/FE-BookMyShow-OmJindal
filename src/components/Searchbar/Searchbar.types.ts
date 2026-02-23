@@ -8,6 +8,10 @@ export type SearchbarProps<T> = {
    */
   value: string;
   /**
+   * List of selected values
+   */
+  selectedValue: T[];
+  /**
    * Placeholder text displayed when the input is empty.
    */
   placeholder: string;
@@ -22,7 +26,7 @@ export type SearchbarProps<T> = {
   /**
    * Callback triggered when an item is selected.
    */
-  onSelect: (val: T) => void;
+  onSelect: (val: T[]) => void;
   /**
    * Function used to render each item inside the list.
    */

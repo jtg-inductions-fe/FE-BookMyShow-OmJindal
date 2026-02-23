@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ClockIcon, MapPinIcon } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
-import { CinemaDetailCard, SlotCard, Typography } from '@/components';
+import { CinemaDetailCard, EmptyState, SlotCard, Typography } from '@/components';
 import { ROUTES } from '@/constants';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
@@ -53,11 +53,10 @@ export const CinemaDetail = () => {
 
   if (!data)
     return (
-      <div className="flex items-center justify-center text-center w-full">
-        <Typography tag="h1" variant="h3">
-          No cinema found.
-        </Typography>
-      </div>
+      <EmptyState
+        title="No cinema found"
+        description="The cinema may have been removed or the link might be incorrect."
+      />
     );
 
   return (
@@ -127,7 +126,10 @@ export const CinemaDetail = () => {
               </li>
             ))
           ) : (
-            <Typography>No slot found</Typography>
+            <EmptyState
+              title="No slot found"
+              description="Try changing filters by selecting a different date."
+            />
           )}
         </ul>
       </section>

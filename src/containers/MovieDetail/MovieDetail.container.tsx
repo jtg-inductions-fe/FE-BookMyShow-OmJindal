@@ -4,7 +4,7 @@ import { Clock as ClockIcon, EarthIcon, MapPin } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { useNavigate, useParams } from 'react-router';
 
-import { MovieDetailedCard, SlotCard, Typography } from '@/components';
+import { EmptyState, MovieDetailedCard, SlotCard, Typography } from '@/components';
 import { ROUTES } from '@/constants';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
@@ -55,11 +55,10 @@ export const MovieDetail = () => {
 
   if (!data)
     return (
-      <div className="flex items-center justify-center text-center w-full">
-        <Typography tag="h1" variant="h3">
-          No movie found.
-        </Typography>
-      </div>
+      <EmptyState
+        title="No movie found"
+        description="The movie you're looking for may have been removed or the link is incorrect."
+      />
     );
 
   const languageLabel = data.languages.join(', ');
@@ -147,7 +146,10 @@ export const MovieDetail = () => {
               </li>
             ))
           ) : (
-            <Typography>No slot found</Typography>
+            <EmptyState
+              title="No slot found"
+              description="Try changing filters or selecting a different date."
+            />
           )}
         </ul>
       </section>
