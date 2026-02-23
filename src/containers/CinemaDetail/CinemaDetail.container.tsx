@@ -11,7 +11,7 @@ import { useCinemaDetailQuery } from '@/services';
 import { getIdFromSlug, getNameFromSlug, slugGenerator } from '@/utils';
 
 import type { CinemaDetailFilter } from './Cinema.types';
-import { CinemaDetailSkeleton } from './CinemaDetail.skelton';
+import { CinemaDetailSkeleton } from './CinemaDetail.skeleton';
 
 export const CinemaDetail = () => {
   const { cinemaSlug } = useParams();
@@ -24,7 +24,12 @@ export const CinemaDetail = () => {
 
   const cinemaId = getIdFromSlug(cinemaSlug ?? '');
 
-  const { data, isLoading } = useCinemaDetailQuery({ ...filters, cinemaId });
+  const { data, isLoading } = useCinemaDetailQuery(
+    { ...filters, cinemaId },
+    {
+      skip: !cinemaId,
+    },
+  );
 
   // To match the cinema name in the URL as received from backend
   useEffect(() => {
@@ -41,7 +46,7 @@ export const CinemaDetail = () => {
         { replace: true },
       );
     }
-  }, [data, cinemaSlug, location.search, cinemaId, navigate]);
+  }, [data, cinemaSlug, location.search, navigate]);
 
   if (isLoading) {
     return <CinemaDetailSkeleton />;
@@ -73,11 +78,11 @@ export const CinemaDetail = () => {
         aria-label="movie description section"
       >
         <Typography variant="h2">
-          {data?.name}, {data?.city}
+          {data.name}, {data.city}
         </Typography>
         <div className="flex gap-1">
           <MapPinIcon className="text-pink" />
-          <Typography color="secondary">{data?.address}</Typography>
+          <Typography color="secondary">{data.address}</Typography>
         </div>
       </section>
       {/* Filter Section */}
@@ -97,7 +102,7 @@ export const CinemaDetail = () => {
       {/* Movie Slot Section */}
       <section aria-label="Available movies and showtimes">
         <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
-          {data?.movies.map((movie) => (
+          {data.movies.map((movie) => (
             <li key={movie.movie.id}>
               <SlotCard
                 imgUrl={movie.movie.poster}

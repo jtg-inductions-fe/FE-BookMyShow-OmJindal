@@ -1,7 +1,7 @@
 import { Skeleton } from '@/components/Skeleton';
 
 export const CinemaDetailCardSkeleton = () => (
-  <article className="h-full w-full flex flex-row items-center gap-10 p-5 rounded-2x">
+  <article className="h-full w-full flex flex-row items-center gap-10 p-5 rounded-2xl">
     <div className="h-20 w-20 rounded-xl">
       <Skeleton className="h-full w-full rounded-xl" />
     </div>

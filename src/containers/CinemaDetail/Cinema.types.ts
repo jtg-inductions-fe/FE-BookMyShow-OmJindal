@@ -1,5 +1,5 @@
 /**
- * Structure for movie detail filters.
+ * Structure for cinema detail filters.
  */
 export type CinemaDetailFilter = {
   /**

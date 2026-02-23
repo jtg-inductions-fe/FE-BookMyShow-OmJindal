@@ -3,14 +3,14 @@ import { CinemaDetailCardSkeleton, Skeleton, SlotCardSkeleton } from '@/componen
 export const CinemaDetailSkeleton = () => (
   <div className="w-full flex flex-col gap-10 mb-10">
     <section
-      className="bg-primary h-85 md:h-120 flex items-center justify-center"
-      aria-label="movie detail section"
+      className="bg-primary h-30 flex items-center justify-center"
+      aria-label="cinema detail section"
     >
       <CinemaDetailCardSkeleton />
     </section>
     <section
       className="rounded-2xl p-8 bg-white mx-5 shadow-md md:hidden space-y-3"
-      aria-label="movie description section"
+      aria-label="cinema description section"
     >
       <Skeleton className="h-6 w-2/3" />
       <Skeleton className="h-4 w-full" />
@@ -23,16 +23,15 @@ export const CinemaDetailSkeleton = () => (
     </section>
     <section
       className="rounded-2xl p-8 bg-white mx-5 shadow-md space-y-5"
-      aria-label="Filters for movie's cinema"
+      aria-label="Filters for cinema's movies"
     >
       <Skeleton className="h-6 w-64" />
 
       <div className="flex gap-5 md:items-center flex-col sm:flex-row">
         <Skeleton className="w-80 h-10 rounded-lg" />
-        <Skeleton className="w-80 h-10 rounded-lg" />
       </div>
     </section>
-    <section aria-label="Available cinemas and showtimes">
+    <section aria-label="Available movies and showtimes">
       <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
         {Array.from({ length: 2 }).map((_, i) => (
           <SlotCardSkeleton key={'skeleton-' + i} />

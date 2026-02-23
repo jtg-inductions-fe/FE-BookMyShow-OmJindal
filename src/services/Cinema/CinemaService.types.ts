@@ -66,7 +66,7 @@ type CinemaDetailBase<TSlot> = Pick<Cinema, 'id' | 'address' | 'city' | 'image' 
    */
   movies: Array<{
     /**
-     * The structure of the cinema.
+     * The structure of the movie.
      */
     movie: Pick<Movie, 'id' | 'name' | 'poster' | 'duration' | 'genres'>;
     /**

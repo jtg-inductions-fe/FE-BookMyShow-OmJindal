@@ -11,11 +11,11 @@ export const CinemaDetailCard = memo(function CinemaDetailCard({
   icon,
 }: CinemaDetailCardProps) {
   return (
-    <article className="h-full w-full flex flex-row items-center gap-10 p-5 rounded-2x justify-center sm:justify-start">
+    <article className="h-full w-full flex flex-row items-center gap-10 p-5 rounded-2xl justify-center sm:justify-start">
       <div className="h-20 w-20 rounded-xl">
         <img
           src={imgUrl}
-          alt={`${title} poster`}
+          alt={`${title}`}
           className="h-full w-full object-cover rounded-xl"
           loading="lazy"
         />
