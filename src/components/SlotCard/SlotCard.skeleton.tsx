@@ -4,7 +4,7 @@ import type { SlotCardSkeletonProps } from './SlotCard.types';
 
 export const SlotCardSkeleton = ({ children }: SlotCardSkeletonProps) => (
   <article className="flex flex-col md:flex-row gap-10 p-5 bg-white rounded-2xl shadow-md border-grey-border border-2">
-    <div className="w-40 h-40 rounded-xl">
+    <div className="w-25 h-25 md:w-40 md:h-40 rounded-xl">
       <Skeleton className="w-full h-full rounded-xl" />
     </div>
     <div className="space-y-4">

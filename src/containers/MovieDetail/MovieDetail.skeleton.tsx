@@ -36,9 +36,11 @@ export const MovieDetailSkeleton = () => (
     <section aria-label="Available cinemas and showtimes">
       <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
         {Array.from({ length: 2 }).map((_, i) => (
-          <SlotCardSkeleton key={'skeleton-' + i}>
-            <SlotSkeleton />
-          </SlotCardSkeleton>
+          <li key={'skeleton-' + i}>
+            <SlotCardSkeleton>
+              <SlotSkeleton />
+            </SlotCardSkeleton>
+          </li>
         ))}
       </ul>
     </section>

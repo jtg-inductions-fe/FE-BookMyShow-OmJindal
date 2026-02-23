@@ -1,2 +1,2 @@
-export { Slot } from './Slot.container';
+export { SlotContainer } from './Slot.container';
 export { SlotSkeleton } from './Slot.skeleton';

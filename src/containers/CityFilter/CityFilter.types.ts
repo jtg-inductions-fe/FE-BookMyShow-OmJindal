@@ -3,7 +3,7 @@
  */
 export type CityFilterProps = {
   /**
-   * Callback fired whenever the selected city change.
+   * Callback fired whenever the selected city changes.
    */
-  onChange: (city: number) => void;
+  onChange: (cityId: number) => void;
 };

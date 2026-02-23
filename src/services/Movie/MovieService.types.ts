@@ -87,7 +87,7 @@ export type MovieDetailsQuery = {
   /**
    * The unique identifier of the movie.
    */
-  movieId?: string;
+  movieId: string;
   /**
    * The city id to filter the cinemas.
    */

@@ -7,10 +7,10 @@ import { MovieDetailedCard, SlotCard, Typography } from '@/components';
 import { ROUTES } from '@/constants';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
-import { Slot } from '@/containers/Slot';
+import { SlotContainer } from '@/containers/Slot';
 import { useFilters } from '@/hooks';
 import { useMovieDetailQuery } from '@/services';
-import { slugGenerator } from '@/utils';
+import { formatDurationLabel, slugGenerator } from '@/utils';
 
 import { MovieDetailSkeleton } from './MovieDetail.skeleton';
 import type { MovieDetailFilter } from './MovieDetail.types';
@@ -24,7 +24,10 @@ export const MovieDetail = () => {
     date: { type: 'date', value: undefined },
   });
 
-  const { data, isLoading } = useMovieDetailQuery({ ...filters, movieId: movieId });
+  const { data, isLoading } = useMovieDetailQuery(
+    { ...filters, movieId: movieId! },
+    { skip: !movieId },
+  );
 
   // To match the movie name in the URL as received from backend
   useEffect(() => {
@@ -50,7 +53,7 @@ export const MovieDetail = () => {
     );
 
   const languageLabel = data.languages.join(', ');
-  const durationLabel = `${data.duration.slice(0, 2)}h ${data.duration.slice(3, 5)}m`;
+  const durationLabel = formatDurationLabel(data.duration);
 
   return (
     <div className="w-full flex flex-col gap-10 mb-10">
@@ -76,12 +79,12 @@ export const MovieDetail = () => {
         aria-label="movie description section"
       >
         <Typography variant="h2" tag="h1">
-          {data?.name}
+          {data.name}
         </Typography>
-        <Typography color="secondary">{data?.description}</Typography>
+        <Typography color="secondary">{data.description}</Typography>
         <div className="flex flex-row gap-2">
           <ClockIcon color="grey" aria-hidden="true" />
-          <Typography color="secondary">{data?.duration}</Typography>
+          <Typography color="secondary">{durationLabel}</Typography>
         </div>
       </section>
       {/* Filter Section */}
@@ -106,7 +109,7 @@ export const MovieDetail = () => {
       {/* Cinema Slot Section */}
       <section aria-label="Available cinemas and showtimes">
         <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
-          {data?.cinemas.map((cinema) => (
+          {data.cinemas.map((cinema) => (
             <li key={cinema.cinema.id}>
               <SlotCard
                 imgUrl={cinema.cinema.image}
@@ -114,7 +117,7 @@ export const MovieDetail = () => {
                 icon={<MapPin color="grey" aria-hidden="true" />}
                 subtitle={cinema.cinema.address}
               >
-                <Slot languages={cinema.languages} />
+                <SlotContainer languages={cinema.languages} />
               </SlotCard>
             </li>
           ))}
