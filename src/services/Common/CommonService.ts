@@ -43,9 +43,7 @@ const commonApi = api.injectEndpoints({
 
         const queryString = params.toString();
         return {
-          url: queryString
-            ? `${API_URLS.COMMON.CITY_PAGINATED}?${queryString}`
-            : API_URLS.COMMON.CITY_PAGINATED,
+          url: queryString ? `${API_URLS.COMMON.CITIES}?${queryString}` : API_URLS.COMMON.CITIES,
           method: 'GET',
         };
       },
