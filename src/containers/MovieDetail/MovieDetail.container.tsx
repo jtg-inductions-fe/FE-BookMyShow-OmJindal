@@ -105,15 +105,16 @@ export const MovieDetail = () => {
       <section aria-label="Available cinemas and showtimes">
         <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
           {data?.cinemas.map((cinema) => (
-            <SlotCard
-              key={cinema.cinema.id}
-              imgUrl={cinema.cinema.image}
-              title={`${cinema.cinema.name}, ${cinema.cinema.city}`}
-              icon={<MapPin color="grey" aria-hidden="true" />}
-              subtitle={cinema.cinema.address}
-            >
-              <Slot languages={cinema.languages} />
-            </SlotCard>
+            <li key={cinema.cinema.id}>
+              <SlotCard
+                imgUrl={cinema.cinema.image}
+                title={`${cinema.cinema.name}, ${cinema.cinema.city}`}
+                icon={<MapPin color="grey" aria-hidden="true" />}
+                subtitle={cinema.cinema.address}
+              >
+                <Slot languages={cinema.languages} />
+              </SlotCard>
+            </li>
           ))}
         </ul>
       </section>
