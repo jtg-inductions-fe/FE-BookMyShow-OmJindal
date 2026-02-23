@@ -15,3 +15,24 @@ export type PageResponse<T> = {
    */
   previous: string | null;
 };
+
+/**
+ * Base shape for simple lookup entities (id + name pairs).
+ */
+type NamedEntity = {
+  id: number;
+  name: string;
+};
+
+/*
+ * Defines the structure of the language.
+ */
+export type Language = NamedEntity;
+/**
+ * Defines the structure of the genre.
+ */
+export type Genre = NamedEntity;
+/**
+ * Defines the structure of the city.
+ */
+export type City = NamedEntity;

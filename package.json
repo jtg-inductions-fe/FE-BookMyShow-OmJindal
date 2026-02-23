@@ -16,15 +16,18 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "@base-ui/react": "^1.2.0",
     "@reduxjs/toolkit": "^2.11.2",
     "async-mutex": "^0.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.562.0",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
+    "react-day-picker": "^9.13.2",
     "react-dom": "^19.2.0",
     "react-infinite-scroll-component": "^6.1.1",
     "react-redux": "^9.2.0",

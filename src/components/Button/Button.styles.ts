@@ -15,6 +15,7 @@ export const buttonVariants = cva(
         ghost:
           'hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground',
         link: 'text-primary hover:underline',
+        tertiary: 'text-pink hover:bg-pink/20',
         active: 'text-purple font-bold',
         'destructive-soft': 'bg-error/10 hover:bg-error/25 text-destructive',
         success: 'bg-success/20 text-green-700 hover:bg-success/30',

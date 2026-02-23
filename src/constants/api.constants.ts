@@ -14,6 +14,16 @@ export const API_URLS = {
   MOVIE: {
     LIST: '/movies/',
   },
+  CINEMA: {
+    LIST: '/cinemas/list/',
+    LIST_PAGINATED: '/cinemas/',
+  },
+  COMMON: {
+    CITY_PAGINATED: '/cities/',
+    LANGUAGES: '/languages/',
+    GENRES: '/genres/',
+    CITIES: '/cities/list/',
+  },
 } as const;
 
 /**
@@ -42,4 +52,5 @@ export const API_CONSTANTS = {
       CANCELLED: 'C',
     },
   },
+  DATE_FORMAT: 'yyyy-MM-dd',
 } as const;
