@@ -4,6 +4,7 @@ import { Clock as ClockIcon, EarthIcon, MapPin } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
 
 import { MovieDetailedCard, SlotCard, Typography } from '@/components';
+import { ROUTES } from '@/constants';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
 import { Slot } from '@/containers/Slot';
@@ -18,7 +19,7 @@ export const MovieDetail = () => {
   const { movieName, movieId } = useParams();
   const navigate = useNavigate();
 
-  const { filters, setFilters } = useFilters<MovieDetailFilter>({
+  const { filters, updateFilter } = useFilters<MovieDetailFilter>({
     city: { type: 'number', value: undefined },
     date: { type: 'date', value: undefined },
   });
@@ -31,7 +32,7 @@ export const MovieDetail = () => {
 
     const slug = slugGenerator(data.name);
     if (slug !== movieName) {
-      void navigate(`/movies/${slug}/${movieId}`, { replace: true });
+      void navigate(`${ROUTES.MOVIE_DETAIL.BASE}${slug}/${movieId}`, { replace: true });
     }
   }, [data, movieName, movieId, navigate]);
 
@@ -39,20 +40,17 @@ export const MovieDetail = () => {
     return <MovieDetailSkeleton />;
   }
 
-  if (!data) return null;
+  if (!data)
+    return (
+      <div className="flex items-center justify-center text-center w-full">
+        <Typography tag="h1" variant="h3">
+          No movie found.
+        </Typography>
+      </div>
+    );
 
   const languageLabel = data.languages.join(', ');
   const durationLabel = `${data.duration.slice(0, 2)}h ${data.duration.slice(3, 5)}m`;
-
-  const updateFilter = (
-    key: keyof MovieDetailFilter,
-    value: MovieDetailFilter[keyof MovieDetailFilter],
-  ) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
 
   return (
     <div className="w-full flex flex-col gap-10 mb-10">
@@ -97,7 +95,11 @@ export const MovieDetail = () => {
             <CityFilter onChange={(cityId) => updateFilter('city', cityId)} />
           </div>
           <div className="md:w-80">
-            <DateFilter value={filters.date} onChange={(v) => updateFilter('date', v)} />
+            <DateFilter
+              value={filters.date}
+              onChange={(v) => updateFilter('date', v)}
+              disabled={{ before: new Date() }}
+            />
           </div>
         </div>
       </section>

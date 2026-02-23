@@ -1,13 +1,6 @@
 import { useState } from 'react';
 
-import {
-  Combobox,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxList,
-} from '@/components';
+import { Searchbar } from '@/components';
 import { SEARCH_DEBOUNCE_DELAY } from '@/constants';
 import { useDebounce } from '@/hooks';
 import type { CityApiResponse } from '@/services';
@@ -40,32 +33,19 @@ export const CityFilter = ({ onChange }: CityFilterProps) => {
   };
 
   return (
-    <Combobox
+    <Searchbar<CityApiResponse>
       items={cities}
-      autoHighlight
-      onValueChange={(val: CityApiResponse | null | undefined) => {
-        if (!val) return;
-
+      value={inputValue}
+      placeholder="Search for city"
+      emptyLabel="No city found"
+      onChange={handleChange}
+      onSelect={(val) => {
         addCity(val);
         setInputValue(val.name);
         setSearch('');
       }}
-    >
-      <ComboboxInput
-        placeholder="Search for city"
-        value={inputValue}
-        onChange={(e) => handleChange(e.target.value)}
-      />
-      <ComboboxContent>
-        <ComboboxEmpty>No city found.</ComboboxEmpty>
-        <ComboboxList>
-          {(city: CityApiResponse) => (
-            <ComboboxItem key={city.id} value={city}>
-              {city.name}
-            </ComboboxItem>
-          )}
-        </ComboboxList>
-      </ComboboxContent>
-    </Combobox>
+      getKey={(city) => city.id}
+      renderItem={(city) => <>{city.name}</>}
+    />
   );
 };
