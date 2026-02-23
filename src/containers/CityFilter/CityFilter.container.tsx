@@ -23,7 +23,7 @@ export const CityFilter = ({ onChange }: CityFilterProps) => {
 
   const cities = cityQuery.data?.pages.flatMap((p) => p.results) ?? [];
 
-  const addCity = (city: CityApiResponse) => {
+  const setCity = (city: CityApiResponse) => {
     onChange(city.id);
   };
 
@@ -40,7 +40,7 @@ export const CityFilter = ({ onChange }: CityFilterProps) => {
       emptyLabel="No city found"
       onChange={handleChange}
       onSelect={(val) => {
-        addCity(val);
+        setCity(val);
         setInputValue(val.name);
         setSearch('');
       }}
