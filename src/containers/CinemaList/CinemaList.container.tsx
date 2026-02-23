@@ -4,7 +4,7 @@ import { CinemaListGrid } from '@/containers/CinemaListGrid';
 import { useFilters } from '@/hooks';
 
 export const CinemaList = () => {
-  const { filters, setFilters } = useFilters<CinemaListFilterType>({
+  const { filters, updateFilter } = useFilters<CinemaListFilterType>({
     cities: { type: 'number[]', value: [] },
   });
 
@@ -14,7 +14,7 @@ export const CinemaList = () => {
         <Typography variant="h2" tag="h1">
           Cinemas
         </Typography>
-        <CinemaListFilter filters={filters} setFilters={setFilters} />
+        <CinemaListFilter filters={filters} updateFilter={updateFilter} />
       </div>
       <CinemaListGrid filters={filters} />
     </div>

@@ -1,5 +1,3 @@
-import type { Dispatch, SetStateAction } from 'react';
-
 export type CinemaListFilter = {
   /**
    *  Array of city IDs to filter cinemas.
@@ -11,6 +9,12 @@ export type CinemaListFilter = {
  * Props for CinemaList Filter component
  */
 export type CinemaListFilterProps = {
+  /**
+   * Current filter values applied to the cinema list.
+   */
   filters: CinemaListFilter;
-  setFilters: Dispatch<SetStateAction<CinemaListFilter>>;
+  /**
+   * Callback used to update the filter.
+   */
+  updateFilter: <K extends keyof CinemaListFilter>(key: K, value: CinemaListFilter[K]) => void;
 };

@@ -38,8 +38,8 @@ export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
       >
         <ul className="my-2 md:mx-10 grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10">
           {cinemas.map((cinema) => {
-            const slug = slugGenerator(`${cinema.name} ${cinema.city}`);
-            const to = `${ROUTES.CINEMA_DETAIL.BASE}${slug}/${cinema.id}`;
+            const slug = slugGenerator(`${cinema.name} ${cinema.city} ${cinema.id}`);
+            const to = `${ROUTES.CINEMA_DETAIL.BASE}${slug}`;
             return (
               <li key={cinema.id}>
                 <Link to={to}>
