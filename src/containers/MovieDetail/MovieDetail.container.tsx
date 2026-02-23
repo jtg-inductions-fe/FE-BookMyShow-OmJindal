@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router';
 import { MovieDetailedCard, SlotCard, Typography } from '@/components';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
+import { Slot } from '@/containers/Slot';
 import { useFilters } from '@/hooks';
 import { useMovieDetailQuery } from '@/services';
 import { slugGenerator } from '@/utils';
@@ -24,6 +25,7 @@ export const MovieDetail = () => {
 
   const { data, isLoading } = useMovieDetailQuery({ ...filters, movieId: movieId });
 
+  // To match the movie name in the URL as received from backend
   useEffect(() => {
     if (!data) return;
 
@@ -86,15 +88,15 @@ export const MovieDetail = () => {
       </section>
       {/* Filter Section */}
       <section
-        className="rounded-2xl p-8 bg-white mx-5 shadow-md space-y-3"
+        className="rounded-2xl p-4 md:p-8 bg-white mx-5 shadow-md space-y-5"
         aria-label="Filters for movie's cinema"
       >
         <Typography tag="h2">Select Cinema and Show Time</Typography>
         <div className="flex gap-5 md:items-center flex-col sm:flex-row">
-          <div className="w-80">
-            <CityFilter onChange={(v) => updateFilter('city', v)} />
+          <div className="md:w-80">
+            <CityFilter onChange={(cityId) => updateFilter('city', cityId)} />
           </div>
-          <div className="w-80">
+          <div className="md:w-80">
             <DateFilter value={filters.date} onChange={(v) => updateFilter('date', v)} />
           </div>
         </div>
@@ -109,17 +111,9 @@ export const MovieDetail = () => {
               title={`${cinema.cinema.name}, ${cinema.cinema.city}`}
               icon={<MapPin color="grey" aria-hidden="true" />}
               subtitle={cinema.cinema.address}
-              group={{
-                label: 'Showtimes',
-                sections: cinema.languages.map((language) => ({
-                  data: {
-                    id: language.language.id,
-                    title: language.language.name,
-                  },
-                  items: language.slots,
-                })),
-              }}
-            />
+            >
+              <Slot languages={cinema.languages} />
+            </SlotCard>
           ))}
         </ul>
       </section>

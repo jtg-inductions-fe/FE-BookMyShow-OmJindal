@@ -47,7 +47,7 @@ export const CityFilter = ({ onChange }: CityFilterProps) => {
         if (!val) return;
 
         addCity(val);
-        setInputValue('');
+        setInputValue(val.name);
         setSearch('');
       }}
     >
