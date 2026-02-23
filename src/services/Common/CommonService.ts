@@ -66,8 +66,12 @@ const commonApi = api.injectEndpoints({
         }
         const params = new URLSearchParams();
         if (queryArg?.search) params.append('search', queryArg.search);
+
+        const queryString = params.toString();
         return {
-          url: `${API_URLS.COMMON.CITY_PAGINATED}?${params.toString()}`,
+          url: queryString
+            ? `${API_URLS.COMMON.CITY_PAGINATED}?${queryString}`
+            : API_URLS.COMMON.CITY_PAGINATED,
           method: 'GET',
         };
       },
