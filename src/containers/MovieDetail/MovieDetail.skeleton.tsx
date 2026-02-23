@@ -1,5 +1,4 @@
 import { MovieDetailedCardSkeleton, Skeleton, SlotCardSkeleton } from '@/components';
-import { SlotSkeleton } from '@/containers/Slot';
 
 export const MovieDetailSkeleton = () => (
   <div className="w-full flex flex-col gap-10 mb-10">
@@ -37,9 +36,7 @@ export const MovieDetailSkeleton = () => (
       <ul className="space-y-10 mx-5 md:mx-10 lg:mx-20">
         {Array.from({ length: 2 }).map((_, i) => (
           <li key={'skeleton-' + i}>
-            <SlotCardSkeleton>
-              <SlotSkeleton />
-            </SlotCardSkeleton>
+            <SlotCardSkeleton />
           </li>
         ))}
       </ul>

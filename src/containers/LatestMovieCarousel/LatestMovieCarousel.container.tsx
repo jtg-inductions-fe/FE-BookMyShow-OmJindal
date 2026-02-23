@@ -43,7 +43,7 @@ export const LatestMovieCarousel = () => {
     );
   } else {
     carouselContent = movies.slice(0, 5).map((movie) => {
-      const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(movie.name)}/${movie.id}`;
+      const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(`${movie.name} ${movie.id}`)}`;
       const languageLabel = movie.languages.join(', ');
       const durationLabel = formatDurationLabel(movie.duration);
       return (

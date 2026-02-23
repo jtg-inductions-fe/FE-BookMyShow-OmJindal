@@ -1,31 +1,34 @@
 import { useEffect } from 'react';
 
 import { Clock as ClockIcon, EarthIcon, MapPin } from 'lucide-react';
+import { useLocation } from 'react-router';
 import { useNavigate, useParams } from 'react-router';
 
 import { MovieDetailedCard, SlotCard, Typography } from '@/components';
 import { ROUTES } from '@/constants';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
-import { SlotContainer } from '@/containers/Slot';
 import { useFilters } from '@/hooks';
 import { useMovieDetailQuery } from '@/services';
-import { formatDurationLabel, slugGenerator } from '@/utils';
+import { formatDurationLabel, getIdFromSlug, getNameFromSlug, slugGenerator } from '@/utils';
 
 import { MovieDetailSkeleton } from './MovieDetail.skeleton';
 import type { MovieDetailFilter } from './MovieDetail.types';
 
 export const MovieDetail = () => {
-  const { movieName, movieId } = useParams();
+  const { movieSlug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { filters, updateFilter } = useFilters<MovieDetailFilter>({
-    city: { type: 'number', value: undefined },
-    date: { type: 'date', value: undefined },
+    city: { type: 'number' },
+    date: { type: 'date' },
   });
 
+  const movieId = getIdFromSlug(movieSlug ?? '');
+
   const { data, isLoading } = useMovieDetailQuery(
-    { ...filters, movieId: movieId! },
+    { ...filters, movieId: getIdFromSlug(movieId) },
     { skip: !movieId },
   );
 
@@ -33,11 +36,19 @@ export const MovieDetail = () => {
   useEffect(() => {
     if (!data) return;
 
-    const slug = slugGenerator(data.name);
+    const movieName = getNameFromSlug(movieSlug ?? '');
+    const slug = slugGenerator(`${data.name} ${movieId}`);
+
     if (slug !== movieName) {
-      void navigate(`${ROUTES.MOVIE_DETAIL.BASE}${slug}/${movieId}`, { replace: true });
+      void navigate(
+        {
+          pathname: `${ROUTES.MOVIE_DETAIL.BASE}${slug}`,
+          search: location.search,
+        },
+        { replace: true },
+      );
     }
-  }, [data, movieName, movieId, navigate]);
+  }, [data, movieSlug, movieId, navigate, location.search]);
 
   if (isLoading) {
     return <MovieDetailSkeleton />;
@@ -116,9 +127,19 @@ export const MovieDetail = () => {
                 title={`${cinema.cinema.name}, ${cinema.cinema.city}`}
                 icon={<MapPin color="grey" aria-hidden="true" />}
                 subtitle={cinema.cinema.address}
-              >
-                <SlotContainer languages={cinema.languages} />
-              </SlotCard>
+                sections={cinema.languages.map((language) => ({
+                  data: {
+                    id: language.language.id,
+                    title: language.language.name,
+                  },
+                  items: language.slots.map((slot) => ({
+                    id: slot.id,
+                    price: slot.price,
+                    startTime: slot.startTime,
+                    to: `${ROUTES.SLOT.BASE}${slot.id}`,
+                  })),
+                }))}
+              />
             </li>
           ))}
         </ul>

@@ -14,7 +14,7 @@ export const ROUTES = {
   MOVIES: '/movies',
   MOVIE_DETAIL: {
     BASE: '/movies/',
-    PATH_PARAMETERS: ':movieName/:movieId',
+    PATH_PARAMETERS: ':movieSlug',
   },
   CINEMAS: '/cinemas',
   SLOT: {

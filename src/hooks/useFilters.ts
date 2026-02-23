@@ -11,7 +11,7 @@ type FilterType = 'string' | 'number' | 'string[]' | 'number[]' | 'date';
 // Config object containing initial filters along with their types
 type FilterConfig<T> = {
   [K in keyof T]: {
-    value: T[K];
+    value?: T[K];
     type: FilterType;
   };
 };
@@ -33,7 +33,7 @@ export const useFilters = <
 
     // Creating initial filter object
     const initialFilters = entries.reduce((acc, [k, v]) => {
-      acc[k] = v.value;
+      acc[k] = v?.value as T[keyof T];
       return acc;
     }, {} as T);
 

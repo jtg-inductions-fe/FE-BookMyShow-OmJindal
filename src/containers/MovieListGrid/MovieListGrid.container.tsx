@@ -37,7 +37,7 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
       >
         <ul className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {movies.map((movie) => {
-            const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(movie.name)}/${movie.id}`;
+            const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(`${movie.name} ${movie.id}`)}`;
             const genreLabel = movie.genres.join(', ');
             const languageLabel = movie.languages.join(', ');
             return (

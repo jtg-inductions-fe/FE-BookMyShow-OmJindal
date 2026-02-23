@@ -35,7 +35,7 @@ export const LatestMovieGrid = () => {
       >
         <div className="p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
           {movies.map((movie) => {
-            const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(movie.name)}/${movie.id}`;
+            const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(`${movie.name} ${movie.id}`)}`;
             const genreLabel = movie.genres.join(', ');
             const languageLabel = movie.languages.join(', ');
             return (
