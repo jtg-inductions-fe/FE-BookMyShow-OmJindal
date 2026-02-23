@@ -28,7 +28,7 @@ export const MovieDetail = () => {
   const movieId = getIdFromSlug(movieSlug ?? '');
 
   const { data, isLoading } = useMovieDetailQuery(
-    { ...filters, movieId: getIdFromSlug(movieId) },
+    { ...filters, movieId: movieId },
     { skip: !movieId },
   );
 
