@@ -103,5 +103,20 @@ export const useFilters = <
     );
   }, [filters, setSearchParams]);
 
-  return { filters, setFilters };
+  // Function used to update a single value of the filters.
+  const updateFilter = <K extends keyof T>(key: K, value: T[K]) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  // Function used to clear all the filters.
+  const clearFilter = () => {
+    const entries = Object.entries(config) as [keyof T, FilterConfig<T>[keyof T]][];
+    const resetFilters = Object.fromEntries(entries.map(([k, v]) => [k, v.value])) as unknown as T;
+    setFilters(resetFilters);
+  };
+
+  return { filters, setFilters, updateFilter, clearFilter };
 };

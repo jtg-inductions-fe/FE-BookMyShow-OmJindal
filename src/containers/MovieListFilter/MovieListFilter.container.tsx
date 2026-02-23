@@ -7,9 +7,9 @@ import { GenreFilter } from '@/containers/GenreFilter';
 import { LanguageFilter } from '@/containers/LanguageFilter';
 import { useCinemaListQuery } from '@/services';
 
-import type { MovieListFilterProps, MovieListFilterType } from './MovieListFilter.types';
+import type { MovieListFilterProps } from './MovieListFilter.types';
 
-export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) => {
+export const MovieListFilter = ({ filters, updateFilter, clearFilter }: MovieListFilterProps) => {
   const selectedCinemasQuery = useCinemaListQuery(
     { cinemaIds: filters.cinemas },
     {
@@ -18,25 +18,6 @@ export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) =
   );
 
   const selectedCinemas = selectedCinemasQuery.data ?? [];
-
-  const updateFilter = <K extends keyof MovieListFilterType>(
-    key: K,
-    value: MovieListFilterType[K],
-  ) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleClearFilter = () => {
-    setFilters({
-      genres: [],
-      languages: [],
-      cinemas: [],
-      date: undefined,
-    });
-  };
 
   return (
     <section
@@ -48,7 +29,7 @@ export const MovieListFilter = ({ filters, setFilters }: MovieListFilterProps) =
           Filters
         </Typography>
         {/* Button to clear all the filters */}
-        <Button variant="tertiary" size="sm" onClick={handleClearFilter}>
+        <Button variant="tertiary" size="sm" onClick={clearFilter}>
           Clear All
         </Button>
       </div>

@@ -6,7 +6,7 @@ import { MovieListGrid } from '@/containers/MovieListGrid';
 import { useFilters } from '@/hooks';
 
 export const MovieList = () => {
-  const { filters, setFilters } = useFilters<MovieListFilterType>({
+  const { filters, updateFilter, clearFilter } = useFilters<MovieListFilterType>({
     cinemas: { type: 'number[]', value: [] },
     genres: { type: 'number[]', value: [] },
     languages: { type: 'number[]', value: [] },
@@ -29,7 +29,11 @@ export const MovieList = () => {
               </Button>
             </PopoverTrigger>
             <PopoverContent side="bottom" align="end" className="w-80 rounded-2xl p-0">
-              <MovieListFilter filters={filters} setFilters={setFilters} />
+              <MovieListFilter
+                filters={filters}
+                updateFilter={updateFilter}
+                clearFilter={clearFilter}
+              />
             </PopoverContent>
           </Popover>
         </div>
@@ -37,7 +41,11 @@ export const MovieList = () => {
       <div className="flex flex-col md:flex-row gap-5 lg:gap-10 w-full">
         {/* Display Filter in desktop view */}
         <div className="hidden md:block">
-          <MovieListFilter filters={filters} setFilters={setFilters} />
+          <MovieListFilter
+            filters={filters}
+            updateFilter={updateFilter}
+            clearFilter={clearFilter}
+          />
         </div>
         {/* Movie List Grid */}
         <MovieListGrid filters={filters} />

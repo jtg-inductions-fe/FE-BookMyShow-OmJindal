@@ -63,3 +63,4 @@ export {
   FilterCheckboxAccordion,
   FilterCheckboxAccordionSkeleton,
 } from './FilterCheckboxAccordion';
+export { Searchbar } from './Searchbar';

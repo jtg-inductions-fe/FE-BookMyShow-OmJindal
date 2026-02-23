@@ -1,13 +1,6 @@
 import { useState } from 'react';
 
-import {
-  Combobox,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxList,
-} from '@/components';
+import { Searchbar } from '@/components';
 import { SEARCH_DEBOUNCE_DELAY } from '@/constants';
 import { useDebounce } from '@/hooks';
 import type { CinemaPaginatedApiResponse } from '@/services';
@@ -44,32 +37,23 @@ export const CinemaFilter = ({ value, onChange }: CinemaFilterProps) => {
   };
 
   return (
-    <Combobox
+    <Searchbar<CinemaPaginatedApiResponse>
       items={cinemas}
-      autoHighlight
-      onValueChange={(val: CinemaPaginatedApiResponse | null | undefined) => {
-        if (!val) return;
-
+      value={inputValue}
+      placeholder="Search for cinema"
+      onChange={handleChange}
+      emptyLabel="No cinema found."
+      onSelect={(val) => {
         addCinema(val);
         setInputValue('');
         setSearch('');
       }}
-    >
-      <ComboboxInput
-        placeholder="Search for cinema"
-        value={inputValue}
-        onChange={(e) => handleChange(e.target.value)}
-      />
-      <ComboboxContent>
-        <ComboboxEmpty>No cinemas found.</ComboboxEmpty>
-        <ComboboxList>
-          {(cinema: CinemaPaginatedApiResponse) => (
-            <ComboboxItem key={cinema.id} value={cinema}>
-              {cinema.name}, {cinema.city}
-            </ComboboxItem>
-          )}
-        </ComboboxList>
-      </ComboboxContent>
-    </Combobox>
+      getKey={(cinema) => cinema.id}
+      renderItem={(cinema) => (
+        <>
+          {cinema.name}, {cinema.city}
+        </>
+      )}
+    />
   );
 };
