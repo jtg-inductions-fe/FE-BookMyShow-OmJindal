@@ -8,6 +8,7 @@ import {
   ComboboxItem,
   ComboboxList,
 } from '@/components';
+import { SEARCH_DEBOUNCE_DELAY } from '@/constants';
 import { useDebounce } from '@/hooks';
 import type { CityApiResponse } from '@/services';
 import { useCityListPaginatedInfiniteQuery } from '@/services';
@@ -15,11 +16,17 @@ import { useCityListPaginatedInfiniteQuery } from '@/services';
 import type { CityFilterProps } from './MultipleCityFilter.types';
 
 export const MultipleCityFilter = ({ value, onChange }: CityFilterProps) => {
+  // UI value
+  const [inputValue, setInputValue] = useState('');
+
+  // API value
   const [search, setSearch] = useState('');
 
-  const debouncedSearch = useDebounce(search, 700);
+  const debouncedSetSearch = useDebounce((val: string) => {
+    setSearch(val);
+  }, SEARCH_DEBOUNCE_DELAY);
 
-  const cityQuery = useCityListPaginatedInfiniteQuery({ search: debouncedSearch });
+  const cityQuery = useCityListPaginatedInfiniteQuery({ search });
 
   const cities = cityQuery.data?.pages.flatMap((p) => p.results) ?? [];
 
@@ -29,21 +36,27 @@ export const MultipleCityFilter = ({ value, onChange }: CityFilterProps) => {
     }
   };
 
+  const handleChange = (val: string) => {
+    setInputValue(val);
+    debouncedSetSearch(val);
+  };
+
   return (
     <Combobox
       items={cities}
       autoHighlight
       onValueChange={(val: CityApiResponse | null | undefined) => {
-        if (val) {
-          addCity(val);
-          setSearch('');
-        }
+        if (!val) return;
+
+        addCity(val);
+        setInputValue('');
+        setSearch('');
       }}
     >
       <ComboboxInput
         placeholder="Search for city"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={inputValue}
+        onChange={(e) => handleChange(e.target.value)}
       />
       <ComboboxContent>
         <ComboboxEmpty>No city found.</ComboboxEmpty>

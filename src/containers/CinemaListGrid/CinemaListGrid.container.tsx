@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router';
 
 import { CinemaCard, CinemaCardSkeleton, Typography } from '@/components';
+import { ROUTES } from '@/constants';
 import { useCinemaListPaginatedInfiniteQuery } from '@/services';
 import { slugGenerator } from '@/utils';
 
@@ -38,7 +39,7 @@ export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
         <ul className="my-2 md:mx-10 grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10">
           {cinemas.map((cinema) => {
             const slug = slugGenerator(`${cinema.name} ${cinema.city}`);
-            const to = `/cinemas/${slug}/${cinema.id}`;
+            const to = `${ROUTES.CINEMA_DETAIL.BASE}${slug}/${cinema.id}`;
             return (
               <li key={cinema.id}>
                 <Link to={to}>
