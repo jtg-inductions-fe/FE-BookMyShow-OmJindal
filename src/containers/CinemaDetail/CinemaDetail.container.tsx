@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 
 import { ClockIcon, MapPinIcon } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 
 import { CinemaDetailCard, SlotCard, Typography } from '@/components';
 import { ROUTES } from '@/constants';

@@ -76,7 +76,7 @@ type CinemaDetailBase<TSlot> = Pick<Cinema, 'id' | 'address' | 'city' | 'image' 
       /**
        * The structure of the language.
        */
-      language: Language;
+      language: Pick<Language, 'id' | 'name'>;
       /**
        * Array of slots.
        */
