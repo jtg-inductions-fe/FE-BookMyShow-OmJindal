@@ -1,7 +1,11 @@
-import { API_CONSTANTS, API_URLS } from '@/constants';
+import { API_CONSTANTS, API_TAGS, API_URLS } from '@/constants';
 import { api } from '@/services/Api';
 
-import type { BookingApiPaginatedResponse, BookingPaginatedResponse } from './BookingService.types';
+import type {
+  BookingApiPaginatedResponse,
+  BookingPaginatedResponse,
+  CreateBookingRequest,
+} from './BookingService.types';
 
 /**
  * Booking related API endpoints.
@@ -44,6 +48,7 @@ const bookingApi = api.injectEndpoints({
         initialPageParam: null,
         getNextPageParam: (lastPage) => lastPage.next,
       },
+      providesTags: [API_TAGS.BOOKING],
     }),
     /**
      * Cancels an existing booking by its ID.
@@ -74,7 +79,22 @@ const bookingApi = api.injectEndpoints({
         }
       },
     }),
+    /**
+     * API endpoint to create booking of authenticated user.
+     */
+    createBooking: builder.mutation<void, CreateBookingRequest>({
+      query: (data) => ({
+        url: API_URLS.BOOKING.BOOKING,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: [API_TAGS.BOOKING, API_TAGS.SLOT],
+    }),
   }),
 });
 
-export const { useBookingHistoryInfiniteQuery, useCancelBookingMutation } = bookingApi;
+export const {
+  useBookingHistoryInfiniteQuery,
+  useCancelBookingMutation,
+  useCreateBookingMutation,
+} = bookingApi;

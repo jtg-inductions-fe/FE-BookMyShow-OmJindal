@@ -24,6 +24,9 @@ export const API_URLS = {
     GENRES: '/genres/',
     CITIES: '/cities/list/',
   },
+  SLOT: {
+    SLOT: '/slots/',
+  },
 } as const;
 
 /**
@@ -40,6 +43,8 @@ export const API_DEFAULTS = {
  */
 export const API_TAGS = {
   PROFILE: 'Profile',
+  BOOKING: 'Booking',
+  SLOT: 'Slot',
 } as const;
 
 /**
@@ -50,6 +55,12 @@ export const API_CONSTANTS = {
     STATUS: {
       BOOKED: 'B',
       CANCELLED: 'C',
+    },
+  },
+  SEAT: {
+    STATUS: {
+      BOOKED: 'B',
+      AVAILABLE: 'A',
     },
   },
   DATE_FORMAT: 'yyyy-MM-dd',

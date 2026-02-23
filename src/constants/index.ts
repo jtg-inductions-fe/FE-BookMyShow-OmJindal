@@ -8,4 +8,5 @@ export {
   ASCII_CODE_A,
   CAROUSEL_AUTOPLAY_DELAY,
   SEARCH_DEBOUNCE_DELAY,
+  POLLING_INTERVAL,
 } from './app.constants';

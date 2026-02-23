@@ -55,3 +55,17 @@ export type BookingResponse = Pick<
  * Paginated response of booking history endpoint.
  */
 export type BookingPaginatedResponse = PageResponse<BookingResponse>;
+
+/**
+ * Request body for create booking API.
+ */
+export type CreateBookingRequest = {
+  /**
+   * The id of the slot.
+   */
+  slot: number;
+  /**
+   * The seats selected for booking.
+   */
+  seats: number[];
+};

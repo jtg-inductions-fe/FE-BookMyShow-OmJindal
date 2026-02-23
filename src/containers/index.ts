@@ -11,3 +11,4 @@ export { MovieList } from './MovieList';
 export { MovieDetail } from './MovieDetail';
 export { CinemaList } from './CinemaList';
 export { CinemaDetail } from './CinemaDetail';
+export { SeatBooking } from './SeatBooking';
