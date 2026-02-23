@@ -17,12 +17,13 @@ export const Typography = ({
   variant = tag,
   color = 'primary',
   children,
+  lineClamp,
   ...props
 }: TypographyProps) => {
   const Component = tag;
 
   return (
-    <Component className={TypographyVariants({ color, variant })} {...props}>
+    <Component className={TypographyVariants({ color, variant, lineClamp })} {...props}>
       {children}
     </Component>
   );

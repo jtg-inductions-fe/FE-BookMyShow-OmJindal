@@ -65,6 +65,7 @@ export const SeatBooking = () => {
       prev.includes(seatId) ? prev.filter((id) => id !== seatId) : [...prev, seatId],
     );
   };
+  const durationLabel = `${dateFormatter(data.startTime)} at ${timeFormatter(data.startTime)}`;
 
   return (
     <div className="w-full p-5 sm:p-10 space-y-5">
@@ -76,20 +77,22 @@ export const SeatBooking = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Film className="text-purple" />
-            <Typography tag="span">{data.movie}</Typography>
+            <Typography tag="span" title={data.movie} lineClamp={1}>
+              {data.movie}
+            </Typography>
           </div>
 
           <div className="flex items-center gap-2">
             <MapPinIcon className="text-pink" />
-            <Typography>
+            <Typography title={data.cinema.name} lineClamp={1}>
               {data.cinema.name}, {data.cinema.city}
             </Typography>
           </div>
 
           <div className="flex items-center gap-2">
             <Calendar className="text-pink" />
-            <Typography>
-              {dateFormatter(data.startTime)} at {timeFormatter(data.startTime)}
+            <Typography title={durationLabel} lineClamp={1}>
+              {durationLabel}
             </Typography>
           </div>
         </div>

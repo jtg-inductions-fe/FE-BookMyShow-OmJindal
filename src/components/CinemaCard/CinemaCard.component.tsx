@@ -20,12 +20,14 @@ export const CinemaCard = memo(function CinemaCard({
           loading="lazy"
         />
       </div>
-      <Typography variant="h3" tag="h2">
+      <Typography variant="h3" tag="h2" title={title} lineClamp={1}>
         {title}
       </Typography>
       <div className="flex gap-1">
         {icon}
-        <Typography color="secondary">{subtitle}</Typography>
+        <Typography color="secondary" title={subtitle} lineClamp={2}>
+          {subtitle}
+        </Typography>
       </div>
     </article>
   );

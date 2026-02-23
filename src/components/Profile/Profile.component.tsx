@@ -23,14 +23,14 @@ export const Profile = ({
 
     <div className="space-y-1">
       {name && (
-        <Typography tag="p" variant="h4">
+        <Typography tag="p" variant="h4" title={name} lineClamp={1}>
           {name}
         </Typography>
       )}
       {email && (
         <div className="flex gap-1 text-secondary">
           <Mail className="h-5 w-5" />
-          <Typography tag="p" variant="small" color="secondary">
+          <Typography tag="p" variant="small" color="secondary" title={email} lineClamp={1}>
             {email}
           </Typography>
         </div>
@@ -38,7 +38,7 @@ export const Profile = ({
       {phoneNumber && (
         <div className="flex gap-1 text-secondary">
           <Phone className="h-5 w-5" />
-          <Typography tag="p" variant="small" color="secondary">
+          <Typography tag="p" variant="small" color="secondary" title={phoneNumber} lineClamp={1}>
             {phoneNumber}
           </Typography>
         </div>

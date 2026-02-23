@@ -16,7 +16,7 @@ export const FilterCheckboxAccordionSkeleton = ({
   <Accordion type="single" collapsible>
     <AccordionItem value="loader">
       <AccordionTrigger>
-        <Typography tag="h3" variant="h4">
+        <Typography tag="h3" variant="h4" title={title} lineClamp={1}>
           {title}
         </Typography>
       </AccordionTrigger>

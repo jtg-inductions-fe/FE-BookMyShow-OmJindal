@@ -23,11 +23,15 @@ export const MovieCard = memo(function MovieCard({
         </div>
       )}
       <div className="p-3">
-        <Typography variant="h3" tag="h2">
+        <Typography variant="h3" tag="h2" title={title} lineClamp={1}>
           {title}
         </Typography>
-        <Typography color="secondary">{primaryLabel}</Typography>
-        <Typography color="secondary">{secondaryLabel}</Typography>
+        <Typography color="secondary" title={primaryLabel} lineClamp={2}>
+          {primaryLabel}
+        </Typography>
+        <Typography color="secondary" title={secondaryLabel} lineClamp={2}>
+          {secondaryLabel}
+        </Typography>
       </div>
     </article>
   );

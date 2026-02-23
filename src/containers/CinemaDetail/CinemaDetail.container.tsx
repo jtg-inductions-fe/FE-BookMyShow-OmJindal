@@ -76,12 +76,14 @@ export const CinemaDetail = () => {
         className="rounded-2xl p-8 bg-white mx-5 shadow-md md:hidden space-y-1"
         aria-label="cinema description section"
       >
-        <Typography variant="h2">
+        <Typography variant="h2" title={data.name} lineClamp={1}>
           {data.name}, {data.city}
         </Typography>
         <div className="flex gap-1">
           <MapPinIcon className="text-pink" />
-          <Typography color="secondary">{data.address}</Typography>
+          <Typography color="secondary" title={data.address} lineClamp={2}>
+            {data.address}
+          </Typography>
         </div>
       </section>
       {/* Filter Section */}

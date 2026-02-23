@@ -25,7 +25,7 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
         </div>
       )}
       <div className="hidden md:block space-y-5">
-        <Typography variant="h2" tag="h1" color="default">
+        <Typography variant="h2" tag="h1" color="default" title={title} lineClamp={1}>
           {title}
         </Typography>
         {tags.length > 0 && (
@@ -47,12 +47,18 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
             {info.map((item, index) => (
               <div className="flex flex-row gap-2" key={`${item.label}-${index}`}>
                 {item.icon}
-                <Typography color="default">{item.label}</Typography>
+                <Typography color="default" title={item.label} lineClamp={1}>
+                  {item.label}
+                </Typography>
               </div>
             ))}
           </div>
         )}
-        {description && <Typography color="default">{description}</Typography>}
+        {description && (
+          <Typography color="default" title={description} lineClamp={2}>
+            {description}
+          </Typography>
+        )}
       </div>
     </article>
   );

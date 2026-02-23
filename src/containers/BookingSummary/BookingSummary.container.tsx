@@ -79,6 +79,8 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
     setShowFailModal(false);
   };
 
+  const dateTimeLabel = `${dateFormatter(data.startTime)} at ${timeFormatter(data.startTime)}`;
+
   return (
     <>
       <section
@@ -89,7 +91,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
           <Typography variant="h6" color="secondary">
             Selected seats:
           </Typography>
-          <Typography variant="h6" color="primary">
+          <Typography variant="h6" color="primary" title={formattedSelectedSeats} lineClamp={2}>
             {formattedSelectedSeats}
           </Typography>
         </div>
@@ -98,7 +100,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
           <Typography variant="h6" color="secondary">
             Total Amount:
           </Typography>
-          <Typography variant="h6" color="primary">
+          <Typography variant="h6" color="primary" title={String(totalAmount)} lineClamp={1}>
             {amountFormatter(totalAmount)}
           </Typography>
         </div>
@@ -130,7 +132,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Cinema
               </Typography>
-              <Typography variant="h6" tag="p">
+              <Typography variant="h6" tag="p" title={data.cinema.name} lineClamp={1}>
                 {data.cinema.name}
               </Typography>
             </div>
@@ -138,8 +140,8 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Date &amp; Time
               </Typography>
-              <Typography variant="h6" tag="p">
-                {dateFormatter(data.startTime)} at {timeFormatter(data.startTime)}
+              <Typography variant="h6" tag="p" title={dateTimeLabel} lineClamp={1}>
+                {dateTimeLabel}
               </Typography>
             </div>
             <div>
@@ -154,7 +156,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Amount
               </Typography>
-              <Typography variant="h6" tag="p">
+              <Typography variant="h6" tag="p" title={String(booking?.amount)} lineClamp={1}>
                 {amountFormatter(booking?.amount ?? 0)}
               </Typography>
             </div>

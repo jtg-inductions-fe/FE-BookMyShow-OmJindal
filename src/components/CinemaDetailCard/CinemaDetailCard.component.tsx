@@ -13,12 +13,14 @@ export const CinemaDetailCard = ({ imgUrl, title, subtitle, icon }: CinemaDetail
       />
     </div>
     <div className="hidden xs:block">
-      <Typography variant="h2" tag="h1" color="default">
+      <Typography variant="h2" tag="h1" color="default" title={title} lineClamp={1}>
         {title}
       </Typography>
       <div className="flex gap-1">
         {icon}
-        <Typography color="default">{subtitle}</Typography>
+        <Typography color="default" title={subtitle} lineClamp={2}>
+          {subtitle}
+        </Typography>
       </div>
     </div>
   </article>

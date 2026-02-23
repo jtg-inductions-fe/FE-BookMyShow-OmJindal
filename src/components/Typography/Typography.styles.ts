@@ -23,6 +23,10 @@ export const TypographyVariants = cva('font-inter', {
       small: 'text-sm font-medium',
       a: 'text-base font-semibold hover:underline',
     },
+    lineClamp: {
+      1: 'line-clamp-1',
+      2: 'line-clamp-2',
+    },
   },
   defaultVariants: {
     color: 'primary',
