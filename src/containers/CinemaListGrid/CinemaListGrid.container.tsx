@@ -1,4 +1,5 @@
 import { MapPin } from 'lucide-react';
+import type { ReactNode } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router';
 
@@ -14,12 +15,20 @@ export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
 
   const cinemas = cinemasQuery.data?.pages.flatMap((p) => p.results) ?? [];
 
+  const renderSkeletons = (count: number): ReactNode => (
+    <>
+      {Array.from({ length: count }).map((_, i) => (
+        <li key={`loader-${i}`}>
+          <CinemaCardSkeleton />
+        </li>
+      ))}
+    </>
+  );
+
   if (cinemasQuery.isLoading) {
     return (
       <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <CinemaCardSkeleton key={i} />
-        ))}
+        {renderSkeletons(5)}
       </div>
     );
   }
@@ -54,8 +63,7 @@ export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
             );
           })}
 
-          {cinemasQuery.isFetchingNextPage &&
-            Array.from({ length: 5 }).map((_, i) => <CinemaCardSkeleton key={`loader-${i}`} />)}
+          {cinemasQuery.isFetchingNextPage && renderSkeletons(5)}
         </ul>
       </InfiniteScroll>
     </div>
