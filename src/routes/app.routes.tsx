@@ -19,6 +19,7 @@ const MovieListPage = lazy(() => import('@/pages/MovieList.page'));
 const MovieDetailPage = lazy(() => import('@/pages/MovieDetail.page'));
 const CinemaListPage = lazy(() => import('@/pages/CinemaList.page'));
 const CinemaDetailPage = lazy(() => import('@/pages/CinemaDetail.page'));
+const SeatBookingPage = lazy(() => import('@/pages/SeatBooking.page'));
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
         children: [
           { path: ROUTES.PROFILE, Component: ProfilePage },
           { path: ROUTES.EDIT_PROFILE, Component: EditProfilePage },
+          { path: `${ROUTES.SLOT.BASE}${ROUTES.SLOT.PATH_PARAMETERS}`, Component: SeatBookingPage },
         ],
       },
       { path: ROUTES.NOT_FOUND, Component: NotFoundPage },

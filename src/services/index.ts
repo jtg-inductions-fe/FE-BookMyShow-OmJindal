@@ -9,7 +9,11 @@ export {
   type ProfileResponse,
   type EditProfileRequest,
 } from './Auth';
-export { useBookingHistoryInfiniteQuery, useCancelBookingMutation } from './Booking';
+export {
+  useBookingHistoryInfiniteQuery,
+  useCancelBookingMutation,
+  useCreateBookingMutation,
+} from './Booking';
 export { useMovieListInfiniteQuery, useMovieDetailQuery } from './Movie';
 export {
   useCityListPaginatedInfiniteQuery,
@@ -24,3 +28,4 @@ export {
   useCinemaDetailQuery,
   type CinemaPaginatedApiResponse,
 } from './Cinema';
+export { useSlotQuery, type SeatStatus, type SlotResponse } from './Slot';
