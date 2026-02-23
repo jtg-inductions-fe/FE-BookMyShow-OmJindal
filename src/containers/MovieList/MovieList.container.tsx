@@ -10,7 +10,7 @@ export const MovieList = () => {
     cinemas: { type: 'number[]', value: [] },
     genres: { type: 'number[]', value: [] },
     languages: { type: 'number[]', value: [] },
-    date: { type: 'date', value: undefined },
+    date: { type: 'date' },
   });
 
   return (

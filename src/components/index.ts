@@ -64,3 +64,4 @@ export {
   FilterCheckboxAccordionSkeleton,
 } from './FilterCheckboxAccordion';
 export { Searchbar } from './Searchbar';
+export { SlotCard, SlotCardSkeleton } from './SlotCard';
