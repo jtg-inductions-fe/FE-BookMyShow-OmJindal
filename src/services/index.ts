@@ -21,5 +21,6 @@ export {
 export {
   useCinemaListPaginatedInfiniteQuery,
   useCinemaListQuery,
+  useCinemaDetailQuery,
   type CinemaPaginatedApiResponse,
 } from './Cinema';

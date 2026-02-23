@@ -18,6 +18,7 @@ const EditProfilePage = lazy(() => import('@/pages/EditProfile.page'));
 const MovieListPage = lazy(() => import('@/pages/MovieList.page'));
 const MovieDetailPage = lazy(() => import('@/pages/MovieDetail.page'));
 const CinemaListPage = lazy(() => import('@/pages/CinemaList.page'));
+const CinemaDetailPage = lazy(() => import('@/pages/CinemaDetail.page'));
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +32,10 @@ export const router = createBrowserRouter([
         path: `${ROUTES.MOVIE_DETAIL.BASE}${ROUTES.MOVIE_DETAIL.PATH_PARAMETERS}`,
         Component: MovieDetailPage,
       },
-
+      {
+        path: `${ROUTES.CINEMA_DETAIL.BASE}${ROUTES.CINEMA_DETAIL.PATH_PARAMETERS}`,
+        Component: CinemaDetailPage,
+      },
       { path: ROUTES.CINEMAS, Component: CinemaListPage },
       {
         element: <GuestRoute />,
