@@ -32,9 +32,10 @@ export const useFilters = <
     const entries = Object.entries(config) as [keyof T, FilterConfig<T>[keyof T]][];
 
     // Creating initial filter object
-    const initialFilters = Object.fromEntries(
-      entries.map(([k, v]) => [k, v.value]),
-    ) as unknown as T;
+    const initialFilters = entries.reduce((acc, [k, v]) => {
+      acc[k] = v.value;
+      return acc;
+    }, {} as T);
 
     const newFilters = { ...initialFilters };
 
