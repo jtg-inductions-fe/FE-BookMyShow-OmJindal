@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
+import { X } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-import { Button, SuccessModal, Typography } from '@/components';
+import { Button, ConfirmationModal, SuccessModal, Typography } from '@/components';
 import { ROUTES } from '@/constants';
 import { useCreateBookingMutation } from '@/services';
 import { amountFormatter, dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
@@ -12,42 +13,35 @@ import type { BookingSummaryProps } from './BookingSummary.types';
 export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryProps) => {
   const navigate = useNavigate();
 
+  const [booking, setBooking] = useState<{
+    seats: number[];
+    amount: number;
+  } | null>(null);
+
   // State for controlling booking success modal visibility
-  const [showModal, setShowModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showFailModal, setShowFailModal] = useState(false);
 
   const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
 
-  const openModal = () => {
-    setShowModal(true);
-  };
+  const map = new Map<number, (typeof data.seats)[number]>();
 
-  const seatMap = useMemo(() => {
-    const map = new Map<number, (typeof data.seats)[number]>();
-    for (const seat of data.seats) {
-      map.set(seat.id, seat);
-    }
-    return map;
-  }, [data]);
+  data.seats.forEach((seat) => {
+    map.set(seat.id, seat);
+  });
 
-  const formattedSelectedSeats = useMemo(
-    () =>
-      selectedSeats
-        .map((seatId) => {
-          const seat = seatMap.get(seatId);
-          if (!seat) return null;
+  const formattedSelectedSeats = selectedSeats
+    .map((seatId) => {
+      const seat = map.get(seatId);
+      if (!seat) return null;
 
-          const rowLabel = seatRowFormatter(seat.rowNumber);
-          return `${rowLabel}${seat.seatNumber}`;
-        })
-        .filter(Boolean)
-        .join(', '),
-    [selectedSeats, seatMap],
-  );
+      const rowLabel = seatRowFormatter(seat.rowNumber);
+      return `${rowLabel}${seat.seatNumber}`;
+    })
+    .filter(Boolean)
+    .join(', ');
 
-  const totalAmount = useMemo(
-    () => selectedSeats.length * data.price,
-    [selectedSeats.length, data.price],
-  );
+  const totalAmount = selectedSeats.length * data.price;
 
   const handleBookTicket = () => {
     if (!slotId) return;
@@ -55,12 +49,34 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
     createBooking({
       slot: Number(slotId),
       seats: selectedSeats,
-    }).then(
-      () => {
-        openModal();
-      },
-      () => {},
-    );
+    })
+      .unwrap()
+      .then(() => {
+        openSuccessModal();
+        setBooking({
+          seats: [...selectedSeats],
+          amount: totalAmount,
+        });
+      })
+      .catch(() => {
+        openFailModal();
+      });
+  };
+
+  const openSuccessModal = () => {
+    setShowSuccessModal(true);
+  };
+
+  const handleFailModalChange = () => {
+    setShowFailModal((prev) => !prev);
+  };
+
+  const openFailModal = () => {
+    setShowSuccessModal(true);
+  };
+
+  const closeFailModal = () => {
+    setShowFailModal(false);
   };
 
   return (
@@ -95,7 +111,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
       </section>
       {/* Success Modal */}
       <SuccessModal
-        open={showModal}
+        open={showSuccessModal}
         title="Booking Confirmed!"
         description="Your tickets have been booked successfully"
         primaryLabel="Booking History"
@@ -120,7 +136,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
             </div>
             <div>
               <Typography color="secondary" variant="h6">
-                Date & Time
+                Date &amp; Time
               </Typography>
               <Typography variant="h6" tag="p">
                 {dateFormatter(data.startTime)} at {timeFormatter(data.startTime)}
@@ -131,7 +147,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
                 Total seats
               </Typography>
               <Typography variant="h6" tag="p">
-                {selectedSeats.length}
+                {booking?.seats.length}
               </Typography>
             </div>
             <div>
@@ -139,12 +155,25 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
                 Amount
               </Typography>
               <Typography variant="h6" tag="p">
-                {amountFormatter(totalAmount)}
+                {amountFormatter(booking?.amount ?? 0)}
               </Typography>
             </div>
           </div>
         </div>
       </SuccessModal>
+      <ConfirmationModal
+        open={showFailModal}
+        onOpenChange={handleFailModalChange}
+        icon={<X />}
+        title="Booking Failed!"
+        description="Something went wrong! We are unable to confirm your booking"
+        cancelLabel="Try again"
+        actionLabel="Go Home"
+        onCancel={closeFailModal}
+        onAction={() => {
+          void navigate(ROUTES.HOME, { replace: true });
+        }}
+      />
     </>
   );
 };

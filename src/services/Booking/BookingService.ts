@@ -78,6 +78,7 @@ const bookingApi = api.injectEndpoints({
           patchResult.undo();
         }
       },
+      invalidatesTags: [API_TAGS.SLOT],
     }),
     /**
      * API endpoint to create booking of authenticated user.

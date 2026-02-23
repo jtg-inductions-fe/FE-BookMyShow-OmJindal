@@ -40,6 +40,8 @@ export default defineConfig([
       'react/react-in-jsx-scope': 'off',
       'no-console': 'error',
       'no-shadow': 'error',
+      'jsx-a11y/no-noninteractive-element-interactions': ['warn'],
+      'jsx-a11y/click-events-have-key-events': ['warn'],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'simple-import-sort/imports': [
         'error',

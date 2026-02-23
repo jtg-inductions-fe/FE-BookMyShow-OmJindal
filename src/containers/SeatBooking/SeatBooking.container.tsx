@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Calendar, Film, MapPinIcon } from 'lucide-react';
 import { useParams } from 'react-router';
@@ -35,33 +35,6 @@ export const SeatBooking = () => {
     setter();
   }, [data]);
 
-  // Seat grid generator
-  const seatGrid = useMemo(() => {
-    if (!data) return [];
-
-    const grid: ({ id: number; status: SeatStatus } | null)[][] = Array.from(
-      { length: data.cinema.rows },
-      () => Array.from({ length: data.cinema.seatsPerRow }, () => null),
-    );
-
-    for (const seat of data.seats) {
-      const row = seat.rowNumber - 1;
-      const col = seat.seatNumber - 1;
-
-      if (row >= 0 && row < grid.length && col >= 0 && col < grid[0].length) {
-        grid[row][col] = { id: seat.id, status: seat.status };
-      }
-    }
-
-    return grid;
-  }, [data]);
-
-  const handleSeatSelect = (seatId: number) => {
-    setSelectedSeats((prev) =>
-      prev.includes(seatId) ? prev.filter((id) => id !== seatId) : [...prev, seatId],
-    );
-  };
-
   if (isLoading) return <SeatBookingSkeleton />;
 
   if (!data)
@@ -72,6 +45,26 @@ export const SeatBooking = () => {
         </Typography>
       </div>
     );
+
+  const seatGrid: ({ id: number; status: SeatStatus } | null)[][] = Array.from(
+    { length: data.cinema.rows },
+    () => Array.from({ length: data.cinema.seatsPerRow }, () => null),
+  );
+
+  for (const seat of data.seats) {
+    const row = seat.rowNumber - 1;
+    const col = seat.seatNumber - 1;
+
+    if (row >= 0 && row < seatGrid.length && col >= 0 && col < seatGrid[0].length) {
+      seatGrid[row][col] = { id: seat.id, status: seat.status };
+    }
+  }
+
+  const handleSeatSelect = (seatId: number) => {
+    setSelectedSeats((prev) =>
+      prev.includes(seatId) ? prev.filter((id) => id !== seatId) : [...prev, seatId],
+    );
+  };
 
   return (
     <div className="w-full p-5 sm:p-10 space-y-5">
