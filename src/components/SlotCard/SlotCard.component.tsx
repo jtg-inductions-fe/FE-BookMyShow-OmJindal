@@ -17,13 +17,13 @@ export const SlotCard = ({ imgUrl, title, subtitle, icon, sections }: SlotCardPr
     </div>
 
     <div className="space-y-2">
-      <Typography tag="h2" title={title} lineClamp={1}>
+      <Typography tag="h2" title={title} lineClamp={2}>
         {title}
       </Typography>
 
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-1 items-center">
         {icon}
-        <Typography variant="h4" color="secondary" tag="p" title={subtitle} lineClamp={2}>
+        <Typography variant="h5" color="secondary" tag="p" title={subtitle} lineClamp={2}>
           {subtitle}
         </Typography>
       </div>
@@ -31,7 +31,7 @@ export const SlotCard = ({ imgUrl, title, subtitle, icon, sections }: SlotCardPr
       <ul>
         {sections.map((section) => (
           <li className="space-y-2" key={`group-${section.data.id}`}>
-            <Typography color="secondary" title={section.data.title} lineClamp={1}>
+            <Typography color="secondary" title={section.data.title} lineClamp={2}>
               {section.data.title}
             </Typography>
             <ul className="flex flex-row gap-3">
@@ -45,7 +45,7 @@ export const SlotCard = ({ imgUrl, title, subtitle, icon, sections }: SlotCardPr
                       tag="span"
                       variant="h6"
                       title={timeFormatter(item.startTime)}
-                      lineClamp={1}
+                      lineClamp={2}
                     >
                       {timeFormatter(item.startTime)}
                     </Typography>
@@ -53,7 +53,7 @@ export const SlotCard = ({ imgUrl, title, subtitle, icon, sections }: SlotCardPr
                       tag="span"
                       color="secondary"
                       title={String(item.price)}
-                      lineClamp={1}
+                      lineClamp={2}
                     >
                       {amountFormatter(item.price)}
                     </Typography>

@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 import { SeatGrid, Typography } from '@/components';
 import { API_CONSTANTS, POLLING_INTERVAL } from '@/constants';
 import { BookingSummary } from '@/containers/BookingSummary';
-import { type SeatStatus, useSlotQuery } from '@/services';
+import { type SeatStatus, useCreateBookingMutation, useSlotQuery } from '@/services';
 import { dateFormatter, timeFormatter } from '@/utils';
 
 import { SeatBookingSkeleton } from './SeatBooking.skeleton';
@@ -18,6 +18,8 @@ export const SeatBooking = () => {
     pollingInterval: POLLING_INTERVAL,
     skip: !slotId,
   });
+
+  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
 
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
 
@@ -65,6 +67,7 @@ export const SeatBooking = () => {
       prev.includes(seatId) ? prev.filter((id) => id !== seatId) : [...prev, seatId],
     );
   };
+
   const durationLabel = `${dateFormatter(data.startTime)} at ${timeFormatter(data.startTime)}`;
 
   return (
@@ -77,21 +80,21 @@ export const SeatBooking = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Film className="text-purple" />
-            <Typography tag="span" title={data.movie} lineClamp={1}>
+            <Typography tag="span" title={data.movie} lineClamp={2}>
               {data.movie}
             </Typography>
           </div>
 
           <div className="flex items-center gap-2">
             <MapPinIcon className="text-pink" />
-            <Typography title={data.cinema.name} lineClamp={1}>
+            <Typography title={data.cinema.name} lineClamp={2}>
               {data.cinema.name}, {data.cinema.city}
             </Typography>
           </div>
 
           <div className="flex items-center gap-2">
             <Calendar className="text-pink" />
-            <Typography title={durationLabel} lineClamp={1}>
+            <Typography title={durationLabel} lineClamp={2}>
               {durationLabel}
             </Typography>
           </div>
@@ -115,9 +118,20 @@ export const SeatBooking = () => {
         </div>
       </div>
 
-      <SeatGrid grid={seatGrid} selectedSeats={selectedSeats} onSelect={handleSeatSelect} />
+      <SeatGrid
+        grid={seatGrid}
+        selectedSeats={selectedSeats}
+        onSelect={handleSeatSelect}
+        disabled={isBooking}
+      />
 
-      <BookingSummary selectedSeats={selectedSeats} data={data} slotId={slotId} />
+      <BookingSummary
+        selectedSeats={selectedSeats}
+        data={data}
+        slotId={slotId}
+        createBooking={createBooking}
+        isBooking={isBooking}
+      />
     </div>
   );
 };

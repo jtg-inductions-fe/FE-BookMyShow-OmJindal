@@ -24,7 +24,7 @@ export const BookingCard = ({
 
       <div className="flex-1 p-4">
         <div className="flex items-start justify-between">
-          <Typography variant="h3" tag="span" lineClamp={1} title={title}>
+          <Typography variant="h3" tag="span" lineClamp={2} title={title}>
             {title}
           </Typography>
           {badgeText && <Chip variant={badgeVariant}>{badgeText}</Chip>}
@@ -45,7 +45,7 @@ export const BookingCard = ({
                   tag="span"
                   color="secondary"
                   title={item.label}
-                  lineClamp={1}
+                  lineClamp={2}
                 >
                   {item.label}
                 </Typography>

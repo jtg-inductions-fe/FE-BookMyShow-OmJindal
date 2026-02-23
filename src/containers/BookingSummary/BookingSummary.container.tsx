@@ -5,12 +5,17 @@ import { useNavigate } from 'react-router';
 
 import { Button, ConfirmationModal, SuccessModal, Typography } from '@/components';
 import { ROUTES } from '@/constants';
-import { useCreateBookingMutation } from '@/services';
 import { amountFormatter, dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
 
 import type { BookingSummaryProps } from './BookingSummary.types';
 
-export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryProps) => {
+export const BookingSummary = ({
+  selectedSeats,
+  data,
+  slotId,
+  createBooking,
+  isBooking,
+}: BookingSummaryProps) => {
   const navigate = useNavigate();
 
   const [booking, setBooking] = useState<{
@@ -21,8 +26,6 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
   // State for controlling booking success modal visibility
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailModal, setShowFailModal] = useState(false);
-
-  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
 
   const map = new Map<number, (typeof data.seats)[number]>();
 
@@ -72,7 +75,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
   };
 
   const openFailModal = () => {
-    setShowSuccessModal(true);
+    setShowFailModal(true);
   };
 
   const closeFailModal = () => {
@@ -100,7 +103,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
           <Typography variant="h6" color="secondary">
             Total Amount:
           </Typography>
-          <Typography variant="h6" color="primary" title={String(totalAmount)} lineClamp={1}>
+          <Typography variant="h6" color="primary" title={String(totalAmount)} lineClamp={2}>
             {amountFormatter(totalAmount)}
           </Typography>
         </div>
@@ -132,7 +135,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Cinema
               </Typography>
-              <Typography variant="h6" tag="p" title={data.cinema.name} lineClamp={1}>
+              <Typography variant="h6" tag="p" title={data.cinema.name} lineClamp={2}>
                 {data.cinema.name}
               </Typography>
             </div>
@@ -140,7 +143,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Date &amp; Time
               </Typography>
-              <Typography variant="h6" tag="p" title={dateTimeLabel} lineClamp={1}>
+              <Typography variant="h6" tag="p" title={dateTimeLabel} lineClamp={2}>
                 {dateTimeLabel}
               </Typography>
             </div>
@@ -156,7 +159,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Amount
               </Typography>
-              <Typography variant="h6" tag="p" title={String(booking?.amount)} lineClamp={1}>
+              <Typography variant="h6" tag="p" title={String(booking?.amount)} lineClamp={2}>
                 {amountFormatter(booking?.amount ?? 0)}
               </Typography>
             </div>

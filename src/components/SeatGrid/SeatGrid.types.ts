@@ -19,4 +19,8 @@ export type SeatGridProps = {
    * Callback triggered when a seat is clicked.
    */
   onSelect: (id: number) => void;
+  /**
+   * To disable the seat grid
+   */
+  disabled?: boolean;
 };

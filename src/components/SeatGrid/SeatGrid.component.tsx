@@ -5,13 +5,13 @@ import { seatRowFormatter } from '@/utils';
 import { SEAT_STYLE_CONFIG } from './SeatGrid.config';
 import type { SeatGridProps } from './SeatGrid.types';
 
-export const SeatGrid = ({ grid, selectedSeats, onSelect }: SeatGridProps) => {
+export const SeatGrid = ({ grid, selectedSeats, onSelect, disabled }: SeatGridProps) => {
   const selectedSet = new Set(selectedSeats);
 
   const handleGridClick = (e: React.MouseEvent<HTMLUListElement>) => {
     const target = e.target as HTMLElement;
 
-    const seatEl = target.parentElement;
+    const seatEl = target.closest('[data-seat-id]') as HTMLElement;
     if (!seatEl) return;
 
     const seatId = Number(seatEl.dataset.seatId);
@@ -21,14 +21,16 @@ export const SeatGrid = ({ grid, selectedSeats, onSelect }: SeatGridProps) => {
   };
 
   const handleGridKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
-    if (e.code === 'Space' || e.code === 'Enter') {
-      const target = e.target as HTMLElement;
+    if (e.code !== 'Space' && e.code !== 'Enter') return;
 
-      const seatId = Number(target.dataset.seatId);
-      if (!seatId) return;
+    const target = e.target as HTMLElement;
+    const seatEl = target.closest('[data-seat-id]') as HTMLElement;
+    if (!seatEl) return;
 
-      onSelect(seatId);
-    }
+    const seatId = Number(seatEl.dataset.seatId);
+    if (!seatId) return;
+
+    onSelect(seatId);
   };
 
   return (
@@ -39,7 +41,9 @@ export const SeatGrid = ({ grid, selectedSeats, onSelect }: SeatGridProps) => {
     >
       {grid.map((seatArr, i) => (
         <li key={i} className="flex gap-2">
-          <Typography variant="h6">{seatRowFormatter(i + 1)}</Typography>
+          <div className="w-10">
+            <Typography variant="h6">{seatRowFormatter(i + 1)}</Typography>
+          </div>
 
           <ul className="flex gap-2">
             {seatArr.map((seat, j) => {
@@ -52,7 +56,7 @@ export const SeatGrid = ({ grid, selectedSeats, onSelect }: SeatGridProps) => {
               return (
                 <li key={seat.id}>
                   <Button
-                    disabled={config.isDisabled}
+                    disabled={config.isDisabled || disabled}
                     className={`${SEAT_STYLE_CONFIG.base} ${config.className}`}
                     data-seat-id={seat.id}
                     size="icon"

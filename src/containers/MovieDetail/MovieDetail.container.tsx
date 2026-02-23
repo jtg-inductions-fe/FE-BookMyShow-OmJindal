@@ -87,7 +87,7 @@ export const MovieDetail = () => {
         className="rounded-2xl p-8 bg-white mx-5 shadow-md md:hidden space-y-1"
         aria-label="movie description section"
       >
-        <Typography variant="h2" tag="h1" title={data.name} lineClamp={1}>
+        <Typography variant="h2" tag="h1" title={data.name} lineClamp={2}>
           {data.name}
         </Typography>
         <Typography color="secondary" title={data.description} lineClamp={2}>
@@ -95,7 +95,7 @@ export const MovieDetail = () => {
         </Typography>
         <div className="flex flex-row gap-2">
           <ClockIcon color="grey" aria-hidden="true" />
-          <Typography color="secondary" title={durationLabel} lineClamp={1}>
+          <Typography color="secondary" title={durationLabel} lineClamp={2}>
             {durationLabel}
           </Typography>
         </div>

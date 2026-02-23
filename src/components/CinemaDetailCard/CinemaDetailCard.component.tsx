@@ -13,7 +13,7 @@ export const CinemaDetailCard = ({ imgUrl, title, subtitle, icon }: CinemaDetail
       />
     </div>
     <div className="hidden xs:block">
-      <Typography variant="h2" tag="h1" color="default" title={title} lineClamp={1}>
+      <Typography variant="h2" tag="h1" color="default" title={title} lineClamp={2}>
         {title}
       </Typography>
       <div className="flex gap-1">
