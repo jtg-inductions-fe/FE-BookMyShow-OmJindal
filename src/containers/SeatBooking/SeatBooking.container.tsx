@@ -1,15 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Calendar, Film, MapPinIcon } from 'lucide-react';
 import { useParams } from 'react-router';
 
 import { SeatGrid, Typography } from '@/components';
-import { POLLING_INTERVAL } from '@/constants';
+import { API_CONSTANTS, POLLING_INTERVAL } from '@/constants';
+import { BookingSummary } from '@/containers/BookingSummary';
 import { type SeatStatus, useSlotQuery } from '@/services';
 import { dateFormatter, timeFormatter } from '@/utils';
 
 import { SeatBookingSkeleton } from './SeatBooking.skeleton';
-import { BookingSummary } from '../BookingSummary';
 
 export const SeatBooking = () => {
   const { slotId } = useParams();
@@ -20,6 +20,20 @@ export const SeatBooking = () => {
   });
 
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+
+  // To update the selected seat when latest seat data is fetched.
+  useEffect(() => {
+    if (!data) return;
+
+    const setter = () => {
+      const availableIds = new Set(
+        data.seats.filter((s) => s.status === API_CONSTANTS.SEAT.STATUS.AVAILABLE).map((s) => s.id),
+      );
+      setSelectedSeats((prev) => prev.filter((id) => availableIds.has(id)));
+    };
+
+    setter();
+  }, [data]);
 
   // Seat grid generator
   const seatGrid = useMemo(() => {
@@ -34,7 +48,7 @@ export const SeatBooking = () => {
       const row = seat.rowNumber - 1;
       const col = seat.seatNumber - 1;
 
-      if (grid[row][col] !== undefined) {
+      if (row >= 0 && row < grid.length && col >= 0 && col < grid[0].length) {
         grid[row][col] = { id: seat.id, status: seat.status };
       }
     }

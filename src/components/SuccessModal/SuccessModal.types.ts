@@ -8,7 +8,7 @@ export type SuccessModalProps = {
   /**
    * The title of the modal.
    */
-  title?: string;
+  title: string;
   /**
    * The description of the modal.
    */

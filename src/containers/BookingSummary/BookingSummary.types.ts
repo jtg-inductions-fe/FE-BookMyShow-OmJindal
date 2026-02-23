@@ -1,4 +1,4 @@
-import type { SlotResponse } from '@/services/Slot/SlotService.types';
+import type { SlotResponse } from '@/services';
 
 /**
  * Props for the BookingSummary component.

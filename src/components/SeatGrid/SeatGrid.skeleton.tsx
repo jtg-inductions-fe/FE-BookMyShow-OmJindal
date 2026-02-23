@@ -1,4 +1,4 @@
-import { Skeleton } from '../Skeleton';
+import { Skeleton } from '@/components/Skeleton';
 
 export const SeatGridSkeleton = () => (
   <div className="flex flex-col gap-2 items-center max-h-80 sm:max-h-120 overflow-hidden">

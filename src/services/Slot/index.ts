@@ -1,2 +1,2 @@
 export { useSlotQuery } from './SlotService';
-export type { SeatStatus } from './SlotService.types';
+export type { SeatStatus, SlotResponse } from './SlotService.types';

@@ -1,5 +1,3 @@
-import { API_CONSTANTS } from '@/constants';
-
 import type { SeatStatus } from './SeatGrid.types';
 
 /**
@@ -30,7 +28,7 @@ export const SEAT_STYLE_CONFIG = {
    * Helper to resolve seat state.
    */
   resolveState: (status: SeatStatus, isSelected: boolean) => {
-    if (status === API_CONSTANTS.BOOKING.STATUS.BOOKED) return 'sold';
+    if (status === 'B') return 'sold';
     if (isSelected) return 'selected';
     return 'available';
   },

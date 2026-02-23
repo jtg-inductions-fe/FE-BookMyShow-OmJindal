@@ -12,7 +12,7 @@ import type { BookingSummaryProps } from './BookingSummary.types';
 export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryProps) => {
   const navigate = useNavigate();
 
-  // State for controlling logout confirmation modal visibility
+  // State for controlling booking success modal visibility
   const [showModal, setShowModal] = useState(false);
 
   const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
@@ -139,7 +139,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
                 Amount
               </Typography>
               <Typography variant="h6" tag="p">
-                {totalAmount}
+                {amountFormatter(totalAmount)}
               </Typography>
             </div>
           </div>

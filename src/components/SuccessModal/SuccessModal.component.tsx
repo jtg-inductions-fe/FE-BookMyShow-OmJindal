@@ -25,7 +25,7 @@ export const SuccessModal = ({
           <div className="flex items-center justify-center text-success rounded-full bg-success/20 size-25">
             <Check className="h-10 w-10" />
           </div>
-          {title && <DialogTitle>{title}</DialogTitle>}
+          <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </div>
         {children}

@@ -28,4 +28,4 @@ export {
   useCinemaDetailQuery,
   type CinemaPaginatedApiResponse,
 } from './Cinema';
-export { useSlotQuery, type SeatStatus } from './Slot';
+export { useSlotQuery, type SeatStatus, type SlotResponse } from './Slot';
