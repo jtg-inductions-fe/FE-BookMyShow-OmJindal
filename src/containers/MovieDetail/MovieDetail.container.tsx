@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 
+import { format } from 'date-fns';
 import { Clock as ClockIcon, EarthIcon, MapPin } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { useNavigate, useParams } from 'react-router';
 
 import { EmptyState, MovieDetailedCard, SlotCard, Typography } from '@/components';
-import { ROUTES } from '@/constants';
+import { API_CONSTANTS, ROUTES } from '@/constants';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
@@ -22,7 +23,7 @@ export const MovieDetail = () => {
 
   const { filters, updateFilter } = useFilters<MovieDetailFilter>({
     city: { type: 'number' },
-    date: { type: 'date' },
+    date: { type: 'date', value: format(new Date(), API_CONSTANTS.DATE_FORMAT) },
   });
 
   const movieId = getIdFromSlug(movieSlug ?? '');

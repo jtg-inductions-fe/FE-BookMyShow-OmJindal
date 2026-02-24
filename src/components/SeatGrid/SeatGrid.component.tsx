@@ -20,16 +20,16 @@ export const SeatGrid = ({ grid, selectedSeats, onSelect, disabled }: SeatGridPr
   };
 
   const handleGridKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
-    if (e.code !== 'Space' && e.code !== 'Enter') return;
+    if (e.code === 'Space' || e.code === 'Enter') {
+      const target = e.target as HTMLElement;
 
-    const target = e.target as HTMLElement;
-    const seatEl = target.closest('[data-seat-id]') as HTMLElement;
-    if (!seatEl) return;
+      const seatId = Number(target.dataset.seatId);
+      if (!seatId) return;
 
-    const seatId = Number(seatEl.dataset.seatId);
-    if (!seatId) return;
+      onSelect(seatId);
 
-    onSelect(seatId);
+      e.preventDefault();
+    }
   };
 
   return (

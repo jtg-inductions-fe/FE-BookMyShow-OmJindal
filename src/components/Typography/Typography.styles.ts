@@ -20,7 +20,7 @@ export const TypographyVariants = cva('font-inter', {
       h6: 'text-base font-semibold',
       p: 'text-base',
       span: 'text-base',
-      small: 'text-sm font-medium',
+      small: 'text-sm',
       a: 'text-base font-semibold hover:underline',
     },
     lineClamp: {

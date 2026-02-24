@@ -70,10 +70,6 @@ export const BookingSummary = ({
     setShowSuccessModal(true);
   };
 
-  const handleFailModalChange = () => {
-    setShowFailModal((prev) => !prev);
-  };
-
   const openFailModal = () => {
     setShowFailModal(true);
   };
@@ -173,7 +169,6 @@ export const BookingSummary = ({
       </SuccessModal>
       <ConfirmationModal
         open={showFailModal}
-        onOpenChange={handleFailModalChange}
         icon={<X />}
         title="Booking Failed!"
         description="Something went wrong! We are unable to confirm your booking"

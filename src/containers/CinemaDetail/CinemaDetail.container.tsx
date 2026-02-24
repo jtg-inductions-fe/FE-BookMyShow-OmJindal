@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 
+import { format } from 'date-fns';
 import { ClockIcon, MapPinIcon } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
 import { CinemaDetailCard, EmptyState, SlotCard, Typography } from '@/components';
-import { ROUTES } from '@/constants';
+import { API_CONSTANTS, ROUTES } from '@/constants';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
 import { useCinemaDetailQuery } from '@/services';
@@ -19,7 +20,7 @@ export const CinemaDetail = () => {
   const location = useLocation();
 
   const { filters, updateFilter } = useFilters<CinemaDetailFilter>({
-    date: { type: 'date' },
+    date: { type: 'date', value: format(new Date(), API_CONSTANTS.DATE_FORMAT) },
   });
 
   const cinemaId = getIdFromSlug(cinemaSlug ?? '');
