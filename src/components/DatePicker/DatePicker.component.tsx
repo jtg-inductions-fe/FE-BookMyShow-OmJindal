@@ -17,15 +17,19 @@ export const DatePicker = ({
 }: DatePickerProps) => (
   <Popover>
     <PopoverTrigger asChild>
-      <Button variant="ghost" data-empty={!date} className="border-2 rounded-full space-x-2">
-        <CalendarIcon className="text-pink" />
+      <Button
+        variant="ghost"
+        data-empty={!date}
+        className="border-2 rounded-full space-x-2 px-7 justify-between"
+      >
         {date ? (
           <Typography tag="span">{format(date, dateDisplayFormat)}</Typography>
         ) : (
-          <Typography tag="span" color="secondary" variant="small">
+          <Typography tag="span" color="placeholder" variant="small">
             {title}
           </Typography>
         )}
+        <CalendarIcon className="text-pink" />
       </Button>
     </PopoverTrigger>
     <PopoverContent className="w-auto p-0">

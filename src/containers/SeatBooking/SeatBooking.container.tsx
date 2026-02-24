@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Calendar, Film, MapPinIcon } from 'lucide-react';
+import { Calendar, MapPinIcon } from 'lucide-react';
 import { useParams } from 'react-router';
 
 import { SeatGrid, Typography } from '@/components';
@@ -74,20 +74,13 @@ export const SeatBooking = () => {
   const durationLabel = `${dateFormatter(data.startTime)} at ${timeFormatter(data.startTime)}`;
 
   return (
-    <div className="w-full p-5 sm:p-10 space-y-5">
+    <div className="w-full p-5 sm:p-5 space-y-5">
       <section className="bg-white p-5 rounded-2xl space-y-2 shadow-md">
         <Typography variant="h2" tag="h1">
-          Select your seats
+          {data.movie}
         </Typography>
 
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Film className="text-purple" />
-            <Typography tag="span" title={data.movie} lineClamp={2}>
-              {data.movie}
-            </Typography>
-          </div>
-
+        <div className="flex md:items-center gap-3 flex-col md:flex-row">
           <div className="flex items-center gap-2">
             <MapPinIcon className="text-pink" />
             <Typography title={`${data.cinema.name}, ${data.cinema.city}`} lineClamp={2}>
