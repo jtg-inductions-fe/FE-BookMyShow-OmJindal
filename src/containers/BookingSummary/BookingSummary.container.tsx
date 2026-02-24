@@ -159,7 +159,12 @@ export const BookingSummary = ({
               <Typography color="secondary" variant="h6">
                 Amount
               </Typography>
-              <Typography variant="h6" tag="p" title={String(booking?.amount)} lineClamp={2}>
+              <Typography
+                variant="h6"
+                tag="p"
+                title={amountFormatter(booking?.amount ?? 0)}
+                lineClamp={2}
+              >
                 {amountFormatter(booking?.amount ?? 0)}
               </Typography>
             </div>

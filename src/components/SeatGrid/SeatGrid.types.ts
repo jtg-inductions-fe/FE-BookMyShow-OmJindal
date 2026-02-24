@@ -10,7 +10,25 @@ export type SeatGridProps = {
   /**
    * A 2D matrix representing the cinema seating layout.
    */
-  grid: ({ id: number; status: SeatStatus } | null)[][];
+  grid: Array<{
+    /**
+     * The label of the row.
+     */
+    label: string;
+    /**
+     * The data in each row.
+     */
+    data: Array<{
+      /**
+       * Unique identifier of the seat.
+       */
+      id: number;
+      /**
+       * The status of the seat.
+       */
+      status: SeatStatus;
+    } | null>;
+  }>;
   /**
    * Array of currently selected seat IDs.
    */

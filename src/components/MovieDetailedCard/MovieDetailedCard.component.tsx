@@ -55,7 +55,7 @@ export const MovieDetailedCard = memo(function MovieDetailedCard({
           </div>
         )}
         {description && (
-          <Typography color="default" title={description} lineClamp={2}>
+          <Typography color="default" title={description} lineClamp={3}>
             {description}
           </Typography>
         )}

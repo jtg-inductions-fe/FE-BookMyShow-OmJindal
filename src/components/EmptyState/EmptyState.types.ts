@@ -4,7 +4,7 @@ export type EmptyStateProps = {
    */
   title: string;
   /**
-   * The secription of the empty state.
+   * The decription of the empty state.
    */
   description: string;
 };

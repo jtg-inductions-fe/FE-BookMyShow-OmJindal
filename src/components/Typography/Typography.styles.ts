@@ -26,6 +26,7 @@ export const TypographyVariants = cva('font-inter', {
     lineClamp: {
       1: 'line-clamp-1',
       2: 'line-clamp-2',
+      3: 'line-clamp-3',
     },
   },
   defaultVariants: {

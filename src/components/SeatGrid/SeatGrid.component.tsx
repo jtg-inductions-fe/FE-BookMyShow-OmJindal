@@ -1,6 +1,5 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
-import { seatRowFormatter } from '@/utils';
 
 import { SEAT_STYLE_CONFIG } from './SeatGrid.config';
 import type { SeatGridProps } from './SeatGrid.types';
@@ -42,11 +41,11 @@ export const SeatGrid = ({ grid, selectedSeats, onSelect, disabled }: SeatGridPr
       {grid.map((seatArr, i) => (
         <li key={i} className="flex gap-2">
           <div className="w-10">
-            <Typography variant="h6">{seatRowFormatter(i + 1)}</Typography>
+            <Typography variant="h6">{seatArr.label}</Typography>
           </div>
 
           <ul className="flex gap-2">
-            {seatArr.map((seat, j) => {
+            {seatArr.data.map((seat, j) => {
               if (!seat) return <div key={j} className="h-7 w-7" />;
 
               const isSelected = selectedSet.has(seat.id);

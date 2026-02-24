@@ -35,31 +35,25 @@ export const SlotCard = ({ imgUrl, title, subtitle, icon, sections }: SlotCardPr
               {section.data.title}
             </Typography>
             <ul className="flex flex-row gap-3">
-              {section.items.map((item) => (
-                <li key={`item-${item.id}`}>
-                  <Link
-                    to={item.to}
-                    className="min-w-25 flex flex-col gap-1 items-center p-2 border-2 border-grey-border rounded-lg hover:bg-purple/20 hover:border-purple"
-                  >
-                    <Typography
-                      tag="span"
-                      variant="h6"
-                      title={timeFormatter(item.startTime)}
-                      lineClamp={2}
+              {section.items.map((item) => {
+                const timeLabel = timeFormatter(item.startTime);
+                const amountLabel = amountFormatter(item.price);
+                return (
+                  <li key={`item-${item.id}`}>
+                    <Link
+                      to={item.to}
+                      className="min-w-25 flex flex-col gap-1 items-center p-2 border-2 border-grey-border rounded-lg hover:bg-purple/20 hover:border-purple"
                     >
-                      {timeFormatter(item.startTime)}
-                    </Typography>
-                    <Typography
-                      tag="span"
-                      color="secondary"
-                      title={String(item.price)}
-                      lineClamp={2}
-                    >
-                      {amountFormatter(item.price)}
-                    </Typography>
-                  </Link>
-                </li>
-              ))}
+                      <Typography tag="span" variant="h6" title={timeLabel} lineClamp={2}>
+                        {timeLabel}
+                      </Typography>
+                      <Typography tag="span" color="secondary" title={amountLabel} lineClamp={2}>
+                        {amountLabel}
+                      </Typography>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </li>
         ))}

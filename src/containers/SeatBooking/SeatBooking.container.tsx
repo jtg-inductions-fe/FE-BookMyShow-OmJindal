@@ -7,7 +7,7 @@ import { SeatGrid, Typography } from '@/components';
 import { API_CONSTANTS, POLLING_INTERVAL } from '@/constants';
 import { BookingSummary } from '@/containers/BookingSummary';
 import { type SeatStatus, useCreateBookingMutation, useSlotQuery } from '@/services';
-import { dateFormatter, timeFormatter } from '@/utils';
+import { dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
 
 import { SeatBookingSkeleton } from './SeatBooking.skeleton';
 
@@ -48,17 +48,20 @@ export const SeatBooking = () => {
       </div>
     );
 
-  const seatGrid: ({ id: number; status: SeatStatus } | null)[][] = Array.from(
-    { length: data.cinema.rows },
-    () => Array.from({ length: data.cinema.seatsPerRow }, () => null),
-  );
+  const seatGrid: Array<{
+    label: string;
+    data: Array<{ id: number; status: SeatStatus } | null>;
+  }> = Array.from({ length: data.cinema.rows }).map((_, index) => ({
+    label: seatRowFormatter(index + 1),
+    data: Array.from({ length: data.cinema.seatsPerRow }, () => null),
+  }));
 
   for (const seat of data.seats) {
     const row = seat.rowNumber - 1;
     const col = seat.seatNumber - 1;
 
-    if (row >= 0 && row < seatGrid.length && col >= 0 && col < seatGrid[0].length) {
-      seatGrid[row][col] = { id: seat.id, status: seat.status };
+    if (row >= 0 && row < seatGrid.length && col >= 0 && col < seatGrid[0].data.length) {
+      seatGrid[row].data[col] = { id: seat.id, status: seat.status };
     }
   }
 
@@ -87,7 +90,7 @@ export const SeatBooking = () => {
 
           <div className="flex items-center gap-2">
             <MapPinIcon className="text-pink" />
-            <Typography title={data.cinema.name} lineClamp={2}>
+            <Typography title={`${data.cinema.name}, ${data.cinema.city}`} lineClamp={2}>
               {data.cinema.name}, {data.cinema.city}
             </Typography>
           </div>

@@ -4,9 +4,9 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { Calendar } from '@/components/Calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover';
+import { Typography } from '@/components/Typography';
 
 import type { DatePickerProps } from './DatePicker.types';
-import { Typography } from '../Typography';
 
 export const DatePicker = ({
   date,
