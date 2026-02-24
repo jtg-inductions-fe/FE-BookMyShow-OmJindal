@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { BookingCardSkeleton, Typography } from '@/components';
+import { BookingCardSkeleton, EmptyState, Typography } from '@/components';
 import { BookingCardContainer } from '@/containers/BookingCard';
 import { useBookingHistoryInfiniteQuery } from '@/services';
 
@@ -47,7 +47,12 @@ export const Booking = () => {
       </InfiniteScroll>
     );
   } else {
-    bookingGrid = <Typography color="secondary">No bookings found</Typography>;
+    bookingGrid = (
+      <EmptyState
+        title="No bookings found"
+        description="Please book a movie to see the bookings."
+      />
+    );
   }
 
   return (

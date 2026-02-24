@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import { Calendar, Film, MapPinIcon } from 'lucide-react';
+import { Calendar, MapPinIcon } from 'lucide-react';
 import { useParams } from 'react-router';
 
 import { SeatGrid, Typography } from '@/components';
 import { API_CONSTANTS, POLLING_INTERVAL } from '@/constants';
 import { BookingSummary } from '@/containers/BookingSummary';
-import { type SeatStatus, useSlotQuery } from '@/services';
-import { dateFormatter, timeFormatter } from '@/utils';
+import { type SeatStatus, useCreateBookingMutation, useSlotQuery } from '@/services';
+import { dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
 
 import { SeatBookingSkeleton } from './SeatBooking.skeleton';
 
@@ -18,6 +18,8 @@ export const SeatBooking = () => {
     pollingInterval: POLLING_INTERVAL,
     skip: !slotId,
   });
+
+  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
 
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
 
@@ -46,17 +48,20 @@ export const SeatBooking = () => {
       </div>
     );
 
-  const seatGrid: ({ id: number; status: SeatStatus } | null)[][] = Array.from(
-    { length: data.cinema.rows },
-    () => Array.from({ length: data.cinema.seatsPerRow }, () => null),
-  );
+  const seatGrid: Array<{
+    label: string;
+    data: Array<{ id: number; status: SeatStatus } | null>;
+  }> = Array.from({ length: data.cinema.rows }).map((_, index) => ({
+    label: seatRowFormatter(index + 1),
+    data: Array.from({ length: data.cinema.seatsPerRow }, () => null),
+  }));
 
   for (const seat of data.seats) {
     const row = seat.rowNumber - 1;
     const col = seat.seatNumber - 1;
 
-    if (row >= 0 && row < seatGrid.length && col >= 0 && col < seatGrid[0].length) {
-      seatGrid[row][col] = { id: seat.id, status: seat.status };
+    if (row >= 0 && row < seatGrid.length && col >= 0 && col < seatGrid[0].data.length) {
+      seatGrid[row].data[col] = { id: seat.id, status: seat.status };
     }
   }
 
@@ -66,30 +71,27 @@ export const SeatBooking = () => {
     );
   };
 
+  const durationLabel = `${dateFormatter(data.startTime)} at ${timeFormatter(data.startTime)}`;
+
   return (
-    <div className="w-full p-5 sm:p-10 space-y-5">
+    <div className="w-full p-5 sm:p-5 space-y-5">
       <section className="bg-white p-5 rounded-2xl space-y-2 shadow-md">
         <Typography variant="h2" tag="h1">
-          Select your seats
+          {data.movie}
         </Typography>
 
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Film className="text-purple" />
-            <Typography tag="span">{data.movie}</Typography>
-          </div>
-
+        <div className="flex md:items-center gap-3 flex-col md:flex-row">
           <div className="flex items-center gap-2">
             <MapPinIcon className="text-pink" />
-            <Typography>
+            <Typography title={`${data.cinema.name}, ${data.cinema.city}`} lineClamp={2}>
               {data.cinema.name}, {data.cinema.city}
             </Typography>
           </div>
 
           <div className="flex items-center gap-2">
             <Calendar className="text-pink" />
-            <Typography>
-              {dateFormatter(data.startTime)} at {timeFormatter(data.startTime)}
+            <Typography title={durationLabel} lineClamp={2}>
+              {durationLabel}
             </Typography>
           </div>
         </div>
@@ -112,9 +114,20 @@ export const SeatBooking = () => {
         </div>
       </div>
 
-      <SeatGrid grid={seatGrid} selectedSeats={selectedSeats} onSelect={handleSeatSelect} />
+      <SeatGrid
+        grid={seatGrid}
+        selectedSeats={selectedSeats}
+        onSelect={handleSeatSelect}
+        disabled={isBooking}
+      />
 
-      <BookingSummary selectedSeats={selectedSeats} data={data} slotId={slotId} />
+      <BookingSummary
+        selectedSeats={selectedSeats}
+        data={data}
+        slotId={slotId}
+        createBooking={createBooking}
+        isBooking={isBooking}
+      />
     </div>
   );
 };

@@ -24,22 +24,32 @@ export const BookingCard = ({
 
       <div className="flex-1 p-4">
         <div className="flex items-start justify-between">
-          <Typography variant="h3" tag="span">
+          <Typography variant="h3" tag="span" lineClamp={2} title={title}>
             {title}
           </Typography>
           {badgeText && <Chip variant={badgeVariant}>{badgeText}</Chip>}
         </div>
 
-        {description && <Typography color="secondary">{description}</Typography>}
+        {description && (
+          <Typography color="secondary" lineClamp={2} title={description}>
+            {description}
+          </Typography>
+        )}
 
         {info && info.length > 0 && (
           <div className="mt-3 space-y-3 text-sm">
             {info.map((item, index) => (
               <div key={`${item.label}-${index}`}>
-                <Typography variant="small" tag="span" color="secondary">
+                <Typography
+                  variant="small"
+                  tag="span"
+                  color="secondary"
+                  title={item.label}
+                  lineClamp={2}
+                >
                   {item.label}
                 </Typography>
-                <Typography color="primary" tag="p" variant="h6">
+                <Typography color="primary" tag="p" variant="h6" title={item.value} lineClamp={2}>
                   {item.value}
                 </Typography>
               </div>

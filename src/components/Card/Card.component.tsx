@@ -11,7 +11,7 @@ export const Card = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     data-slot="card"
     className={cn(
-      'bg-white text-primary flex flex-col gap-5 rounded-xl border shadow-md p-10 mx-auto my-10 h-fit lg:min-w-md',
+      'bg-white text-primary flex flex-col gap-5 rounded-xl border shadow-md p-5 md:p-10 mx-auto my-10 h-fit lg:min-w-md',
       className,
     )}
     {...props}

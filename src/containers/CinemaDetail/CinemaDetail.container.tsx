@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 
+import { format } from 'date-fns';
 import { ClockIcon, MapPinIcon } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
-import { CinemaDetailCard, SlotCard, Typography } from '@/components';
-import { ROUTES } from '@/constants';
+import { CinemaDetailCard, EmptyState, SlotCard, Typography } from '@/components';
+import { API_CONSTANTS, ROUTES } from '@/constants';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
 import { useCinemaDetailQuery } from '@/services';
@@ -19,7 +20,7 @@ export const CinemaDetail = () => {
   const location = useLocation();
 
   const { filters, updateFilter } = useFilters<CinemaDetailFilter>({
-    date: { type: 'date' },
+    date: { type: 'date', value: format(new Date(), API_CONSTANTS.DATE_FORMAT) },
   });
 
   const cinemaId = getIdFromSlug(cinemaSlug ?? '');
@@ -53,11 +54,10 @@ export const CinemaDetail = () => {
 
   if (!data)
     return (
-      <div className="flex items-center justify-center text-center w-full">
-        <Typography tag="h1" variant="h3">
-          No cinema found.
-        </Typography>
-      </div>
+      <EmptyState
+        title="No cinema found"
+        description="The cinema may have been removed or the link might be incorrect."
+      />
     );
 
   return (
@@ -76,12 +76,14 @@ export const CinemaDetail = () => {
         className="rounded-2xl p-8 bg-white mx-5 shadow-md md:hidden space-y-1"
         aria-label="cinema description section"
       >
-        <Typography variant="h2">
+        <Typography variant="h2" title={`${data.name}, ${data.city}`} lineClamp={2}>
           {data.name}, {data.city}
         </Typography>
         <div className="flex gap-1">
           <MapPinIcon className="text-pink" />
-          <Typography color="secondary">{data.address}</Typography>
+          <Typography color="secondary" title={data.address} lineClamp={2}>
+            {data.address}
+          </Typography>
         </div>
       </section>
       {/* Filter Section */}
@@ -125,7 +127,10 @@ export const CinemaDetail = () => {
               </li>
             ))
           ) : (
-            <Typography>No slot found</Typography>
+            <EmptyState
+              title="No slot found"
+              description="Try changing filters by selecting a different date."
+            />
           )}
         </ul>
       </section>

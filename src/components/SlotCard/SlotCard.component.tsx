@@ -17,11 +17,13 @@ export const SlotCard = ({ imgUrl, title, subtitle, icon, sections }: SlotCardPr
     </div>
 
     <div className="space-y-2">
-      <Typography tag="h2">{title}</Typography>
+      <Typography tag="h2" title={title} lineClamp={2}>
+        {title}
+      </Typography>
 
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-1 items-center">
         {icon}
-        <Typography variant="h4" color="secondary" tag="p">
+        <Typography variant="h5" color="secondary" tag="p" title={subtitle} lineClamp={2}>
           {subtitle}
         </Typography>
       </div>
@@ -29,23 +31,29 @@ export const SlotCard = ({ imgUrl, title, subtitle, icon, sections }: SlotCardPr
       <ul>
         {sections.map((section) => (
           <li className="space-y-2" key={`group-${section.data.id}`}>
-            <Typography color="secondary">{section.data.title}</Typography>
+            <Typography color="secondary" title={section.data.title} lineClamp={2}>
+              {section.data.title}
+            </Typography>
             <ul className="flex flex-row gap-3">
-              {section.items.map((item) => (
-                <li key={`item-${item.id}`}>
-                  <Link
-                    to={item.to}
-                    className="min-w-25 flex flex-col gap-1 items-center p-2 border-2 border-grey-border rounded-lg hover:bg-purple/20 hover:border-purple"
-                  >
-                    <Typography tag="span" variant="h6">
-                      {timeFormatter(item.startTime)}
-                    </Typography>
-                    <Typography tag="span" color="secondary">
-                      {amountFormatter(item.price)}
-                    </Typography>
-                  </Link>
-                </li>
-              ))}
+              {section.items.map((item) => {
+                const timeLabel = timeFormatter(item.startTime);
+                const amountLabel = amountFormatter(item.price);
+                return (
+                  <li key={`item-${item.id}`}>
+                    <Link
+                      to={item.to}
+                      className="min-w-25 flex flex-col gap-1 items-center p-2 border-2 border-grey-border rounded-lg hover:bg-purple/20 hover:border-purple"
+                    >
+                      <Typography tag="span" variant="h6" title={timeLabel} lineClamp={2}>
+                        {timeLabel}
+                      </Typography>
+                      <Typography tag="span" color="secondary" title={amountLabel} lineClamp={2}>
+                        {amountLabel}
+                      </Typography>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </li>
         ))}

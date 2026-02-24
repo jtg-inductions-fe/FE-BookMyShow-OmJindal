@@ -11,7 +11,7 @@ export const MovieCard = memo(function MovieCard({
   secondaryLabel,
 }: MovieCardProps) {
   return (
-    <article className="h-full w-full border-2 border-border-grey rounded-xl hover:-translate-y-2 hover:border-black/75 transition-all duration-200 ease-in-out">
+    <article className="bg-white h-full w-full border-2 border-border-grey rounded-xl hover:-translate-y-2 hover:border-black/75 transition-all duration-200 ease-in-out">
       {poster && (
         <div className="w-full h-50 rounded-t-xl">
           <img
@@ -23,11 +23,15 @@ export const MovieCard = memo(function MovieCard({
         </div>
       )}
       <div className="p-3">
-        <Typography variant="h3" tag="h2">
+        <Typography variant="h3" tag="h2" title={title} lineClamp={2}>
           {title}
         </Typography>
-        <Typography color="secondary">{primaryLabel}</Typography>
-        <Typography color="secondary">{secondaryLabel}</Typography>
+        <Typography color="secondary" title={primaryLabel} lineClamp={2}>
+          {primaryLabel}
+        </Typography>
+        <Typography color="secondary" title={secondaryLabel} lineClamp={2}>
+          {secondaryLabel}
+        </Typography>
       </div>
     </article>
   );

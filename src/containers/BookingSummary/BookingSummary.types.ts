@@ -1,4 +1,9 @@
-import type { SlotResponse } from '@/services';
+import type { SlotResponse, useCreateBookingMutation } from '@/services';
+
+/**
+ * Create booking trigger mutation.
+ */
+type CreateBookingTrigger = ReturnType<typeof useCreateBookingMutation>[0];
 
 /**
  * Props for the BookingSummary component.
@@ -16,4 +21,12 @@ export type BookingSummaryProps = {
    *  Slot response data returned from the Slot API.
    */
   data: SlotResponse;
+  /**
+   * RTK Query mutation trigger function.
+   */
+  createBooking: CreateBookingTrigger;
+  /**
+   * Loading state of booking mutation.
+   */
+  isBooking: boolean;
 };

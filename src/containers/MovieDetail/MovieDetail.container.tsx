@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 
+import { format } from 'date-fns';
 import { Clock as ClockIcon, EarthIcon, MapPin } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { useNavigate, useParams } from 'react-router';
 
-import { MovieDetailedCard, SlotCard, Typography } from '@/components';
-import { ROUTES } from '@/constants';
+import { EmptyState, MovieDetailedCard, SlotCard, Typography } from '@/components';
+import { API_CONSTANTS, ROUTES } from '@/constants';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
@@ -22,7 +23,7 @@ export const MovieDetail = () => {
 
   const { filters, updateFilter } = useFilters<MovieDetailFilter>({
     city: { type: 'number' },
-    date: { type: 'date' },
+    date: { type: 'date', value: format(new Date(), API_CONSTANTS.DATE_FORMAT) },
   });
 
   const movieId = getIdFromSlug(movieSlug ?? '');
@@ -55,11 +56,10 @@ export const MovieDetail = () => {
 
   if (!data)
     return (
-      <div className="flex items-center justify-center text-center w-full">
-        <Typography tag="h1" variant="h3">
-          No movie found.
-        </Typography>
-      </div>
+      <EmptyState
+        title="No movie found"
+        description="The movie you're looking for may have been removed or the link is incorrect."
+      />
     );
 
   const languageLabel = data.languages.join(', ');
@@ -88,13 +88,17 @@ export const MovieDetail = () => {
         className="rounded-2xl p-8 bg-white mx-5 shadow-md md:hidden space-y-1"
         aria-label="movie description section"
       >
-        <Typography variant="h2" tag="h1">
+        <Typography variant="h2" tag="h1" title={data.name} lineClamp={2}>
           {data.name}
         </Typography>
-        <Typography color="secondary">{data.description}</Typography>
+        <Typography color="secondary" title={data.description} lineClamp={2}>
+          {data.description}
+        </Typography>
         <div className="flex flex-row gap-2">
           <ClockIcon color="grey" aria-hidden="true" />
-          <Typography color="secondary">{durationLabel}</Typography>
+          <Typography color="secondary" title={durationLabel} lineClamp={2}>
+            {durationLabel}
+          </Typography>
         </div>
       </section>
       {/* Filter Section */}
@@ -143,7 +147,10 @@ export const MovieDetail = () => {
               </li>
             ))
           ) : (
-            <Typography>No slot found</Typography>
+            <EmptyState
+              title="No slot found"
+              description="Try changing filters or selecting a different date."
+            />
           )}
         </ul>
       </section>

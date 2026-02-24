@@ -10,6 +10,7 @@ export const TypographyVariants = cva('font-inter', {
       primary: 'text-primary',
       secondary: 'text-secondary',
       tertiary: 'text-pink',
+      placeholder: 'text-secondary/75',
     },
     variant: {
       h1: 'text-3xl font-bold lg:text-5xl ',
@@ -20,8 +21,16 @@ export const TypographyVariants = cva('font-inter', {
       h6: 'text-base font-semibold',
       p: 'text-base',
       span: 'text-base',
-      small: 'text-sm font-medium',
+      small: 'text-sm',
       a: 'text-base font-semibold hover:underline',
+    },
+    lineClamp: {
+      1: 'line-clamp-1',
+      2: 'line-clamp-2',
+      3: 'line-clamp-3',
+    },
+    truncate: {
+      1: 'truncate',
     },
   },
   defaultVariants: {

@@ -69,7 +69,7 @@ export const useFilters = <
             API_CONSTANTS.DATE_FORMAT,
           )
             ? paramValue
-            : undefined;
+            : (initialFilters.date as string | undefined);
           break;
       }
     });

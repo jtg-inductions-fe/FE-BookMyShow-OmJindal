@@ -69,3 +69,4 @@ export { CinemaCard, CinemaCardSkeleton } from './CinemaCard';
 export { CinemaDetailCard, CinemaDetailCardSkeleton } from './CinemaDetailCard';
 export { SuccessModal } from './SuccessModal';
 export { SeatGrid, SeatGridSkeleton } from './SeatGrid';
+export { EmptyState } from './EmptyState';

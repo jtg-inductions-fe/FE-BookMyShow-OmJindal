@@ -4,6 +4,7 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { Calendar } from '@/components/Calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover';
+import { Typography } from '@/components/Typography';
 
 import type { DatePickerProps } from './DatePicker.types';
 
@@ -16,9 +17,19 @@ export const DatePicker = ({
 }: DatePickerProps) => (
   <Popover>
     <PopoverTrigger asChild>
-      <Button variant="ghost" data-empty={!date} className="border-2 rounded-full">
+      <Button
+        variant="ghost"
+        data-empty={!date}
+        className="border-2 rounded-full space-x-2 px-7 justify-between"
+      >
+        {date ? (
+          <Typography tag="span">{format(date, dateDisplayFormat)}</Typography>
+        ) : (
+          <Typography tag="span" color="placeholder" variant="small">
+            {title}
+          </Typography>
+        )}
         <CalendarIcon className="text-pink" />
-        {date ? format(date, dateDisplayFormat) : <span>{title}</span>}
       </Button>
     </PopoverTrigger>
     <PopoverContent className="w-auto p-0">

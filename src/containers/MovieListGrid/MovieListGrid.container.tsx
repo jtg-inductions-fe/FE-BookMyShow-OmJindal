@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router';
 
-import { MovieCard, MovieCardSkeleton, Typography } from '@/components';
+import { EmptyState, MovieCard, MovieCardSkeleton } from '@/components';
 import { ROUTES } from '@/constants';
 import { useMovieListInfiniteQuery } from '@/services';
 import { slugGenerator } from '@/utils';
@@ -33,7 +33,12 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
   }
 
   if (movies.length === 0) {
-    return <Typography tag="p">No movies found</Typography>;
+    return (
+      <EmptyState
+        title="No movies found"
+        description="Try changing filters or selecting a different date."
+      />
+    );
   }
 
   return (

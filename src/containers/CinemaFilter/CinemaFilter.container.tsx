@@ -25,10 +25,11 @@ export const CinemaFilter = ({ value, onChange }: CinemaFilterProps) => {
 
   const cinemas = cinemasQuery.data?.pages.flatMap((page) => page.results) ?? [];
 
-  const addCinema = (cinema: CinemaPaginatedApiResponse) => {
-    if (!value.includes(cinema.id)) {
-      onChange([...value, cinema.id]);
-    }
+  const selectedCinemas = cinemas.filter((c) => value.includes(c.id));
+
+  const setCinema = (selected: CinemaPaginatedApiResponse[]) => {
+    const newIds = selected.map((c) => c.id);
+    onChange(newIds);
   };
 
   const handleChange = (val: string) => {
@@ -39,12 +40,13 @@ export const CinemaFilter = ({ value, onChange }: CinemaFilterProps) => {
   return (
     <Searchbar<CinemaPaginatedApiResponse>
       items={cinemas}
+      selectedValue={selectedCinemas}
       value={inputValue}
       placeholder="Search for cinema"
       onChange={handleChange}
       emptyLabel="No cinema found."
       onSelect={(val) => {
-        addCinema(val);
+        setCinema(val);
         setInputValue('');
         setSearch('');
       }}

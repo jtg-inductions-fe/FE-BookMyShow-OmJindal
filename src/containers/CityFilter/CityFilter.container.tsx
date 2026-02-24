@@ -23,10 +23,6 @@ export const CityFilter = ({ onChange }: CityFilterProps) => {
 
   const cities = cityQuery.data?.pages.flatMap((p) => p.results) ?? [];
 
-  const setCity = (city: CityApiResponse) => {
-    onChange(city.id);
-  };
-
   const handleChange = (val: string) => {
     setInputValue(val);
     debouncedSetSearch(val);
@@ -36,12 +32,16 @@ export const CityFilter = ({ onChange }: CityFilterProps) => {
     <Searchbar<CityApiResponse>
       items={cities}
       value={inputValue}
+      selectedValue={[]}
       placeholder="Search for city"
       emptyLabel="No city found"
       onChange={handleChange}
-      onSelect={(val) => {
-        setCity(val);
-        setInputValue(val.name);
+      onSelect={(vals) => {
+        const city = vals[0];
+        if (!city) return;
+
+        onChange(city.id);
+        setInputValue(city.name);
         setSearch('');
       }}
       getKey={(city) => city.id}

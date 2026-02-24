@@ -15,30 +15,30 @@ export const Profile = ({
   profilePicture,
   size = 'default',
 }: ProfileProps) => (
-  <div className="flex flex-row gap-4 items-center">
+  <div className="flex flex-row gap-4 items-center max-w-100">
     <Avatar size={size}>
       <AvatarImage src={profilePicture} alt="User avatar" />
       <AvatarFallback>{name[0]?.toUpperCase()}</AvatarFallback>
     </Avatar>
 
-    <div className="space-y-1">
+    <div className="space-y-1 min-w-0">
       {name && (
-        <Typography tag="p" variant="h4">
+        <Typography tag="p" variant="h4" title={name} truncate={1}>
           {name}
         </Typography>
       )}
       {email && (
         <div className="flex gap-1 text-secondary">
-          <Mail className="h-5 w-5" />
-          <Typography tag="p" variant="small" color="secondary">
+          <Mail className="min-w-5" />
+          <Typography tag="p" variant="small" color="secondary" title={email} truncate={1}>
             {email}
           </Typography>
         </div>
       )}
       {phoneNumber && (
         <div className="flex gap-1 text-secondary">
-          <Phone className="h-5 w-5" />
-          <Typography tag="p" variant="small" color="secondary">
+          <Phone className="min-w-5" />
+          <Typography tag="p" variant="small" color="secondary" title={phoneNumber} truncate={1}>
             {phoneNumber}
           </Typography>
         </div>

@@ -5,12 +5,17 @@ import { useNavigate } from 'react-router';
 
 import { Button, ConfirmationModal, SuccessModal, Typography } from '@/components';
 import { ROUTES } from '@/constants';
-import { useCreateBookingMutation } from '@/services';
 import { amountFormatter, dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
 
 import type { BookingSummaryProps } from './BookingSummary.types';
 
-export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryProps) => {
+export const BookingSummary = ({
+  selectedSeats,
+  data,
+  slotId,
+  createBooking,
+  isBooking,
+}: BookingSummaryProps) => {
   const navigate = useNavigate();
 
   const [booking, setBooking] = useState<{
@@ -21,8 +26,6 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
   // State for controlling booking success modal visibility
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailModal, setShowFailModal] = useState(false);
-
-  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
 
   const map = new Map<number, (typeof data.seats)[number]>();
 
@@ -67,17 +70,15 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
     setShowSuccessModal(true);
   };
 
-  const handleFailModalChange = () => {
-    setShowFailModal((prev) => !prev);
-  };
-
   const openFailModal = () => {
-    setShowSuccessModal(true);
+    setShowFailModal(true);
   };
 
   const closeFailModal = () => {
     setShowFailModal(false);
   };
+
+  const dateTimeLabel = `${dateFormatter(data.startTime)} at ${timeFormatter(data.startTime)}`;
 
   return (
     <>
@@ -89,7 +90,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
           <Typography variant="h6" color="secondary">
             Selected seats:
           </Typography>
-          <Typography variant="h6" color="primary">
+          <Typography variant="h6" color="primary" title={formattedSelectedSeats} lineClamp={2}>
             {formattedSelectedSeats}
           </Typography>
         </div>
@@ -98,7 +99,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
           <Typography variant="h6" color="secondary">
             Total Amount:
           </Typography>
-          <Typography variant="h6" color="primary">
+          <Typography variant="h6" color="primary" title={String(totalAmount)} lineClamp={2}>
             {amountFormatter(totalAmount)}
           </Typography>
         </div>
@@ -130,7 +131,7 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Cinema
               </Typography>
-              <Typography variant="h6" tag="p">
+              <Typography variant="h6" tag="p" title={data.cinema.name} lineClamp={2}>
                 {data.cinema.name}
               </Typography>
             </div>
@@ -138,8 +139,8 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Date &amp; Time
               </Typography>
-              <Typography variant="h6" tag="p">
-                {dateFormatter(data.startTime)} at {timeFormatter(data.startTime)}
+              <Typography variant="h6" tag="p" title={dateTimeLabel} lineClamp={2}>
+                {dateTimeLabel}
               </Typography>
             </div>
             <div>
@@ -154,7 +155,12 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
               <Typography color="secondary" variant="h6">
                 Amount
               </Typography>
-              <Typography variant="h6" tag="p">
+              <Typography
+                variant="h6"
+                tag="p"
+                title={amountFormatter(booking?.amount ?? 0)}
+                lineClamp={2}
+              >
                 {amountFormatter(booking?.amount ?? 0)}
               </Typography>
             </div>
@@ -163,7 +169,6 @@ export const BookingSummary = ({ selectedSeats, data, slotId }: BookingSummaryPr
       </SuccessModal>
       <ConfirmationModal
         open={showFailModal}
-        onOpenChange={handleFailModalChange}
         icon={<X />}
         title="Booking Failed!"
         description="Something went wrong! We are unable to confirm your booking"

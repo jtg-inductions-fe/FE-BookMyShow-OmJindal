@@ -23,11 +23,7 @@ export const MultipleCityFilter = ({ value, onChange }: CityFilterProps) => {
 
   const cities = cityQuery.data?.pages.flatMap((p) => p.results) ?? [];
 
-  const addCity = (city: CityApiResponse) => {
-    if (!value.includes(city.id)) {
-      onChange([...value, city.id]);
-    }
-  };
+  const selectedCities = cities.filter((c) => value.includes(c.id));
 
   const handleChange = (val: string) => {
     setInputValue(val);
@@ -38,12 +34,15 @@ export const MultipleCityFilter = ({ value, onChange }: CityFilterProps) => {
     <Searchbar<CityApiResponse>
       items={cities}
       value={inputValue}
+      selectedValue={selectedCities}
       placeholder="Search for city"
       emptyLabel="No city found"
       onChange={handleChange}
-      onSelect={(val) => {
-        addCity(val);
-        setInputValue(val.name);
+      onSelect={(vals) => {
+        const ids = vals.map((c) => c.id);
+        onChange(ids);
+
+        setInputValue('');
         setSearch('');
       }}
       getKey={(city) => city.id}
