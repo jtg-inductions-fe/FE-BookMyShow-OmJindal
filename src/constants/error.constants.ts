@@ -33,4 +33,5 @@ export const ERROR_MESSAGES = {
     'VITE_API_BASE_URL is not defined. Please check your environment variables.',
   FETCH_ERROR: 'Cannot reach server. Please try again after some time.',
   SERVER_ERROR: 'Something went wrong on our end. Please try again later.',
+  CANCELLATION_ERROR: 'This booking is no longer eligible for cancellation.',
 } as const;

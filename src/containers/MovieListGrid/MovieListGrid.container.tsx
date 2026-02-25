@@ -26,9 +26,9 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
 
   if (moviesQuery.isLoading) {
     return (
-      <div className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <ul className="m-2 gap-10 grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 list-none">
         {renderSkeletons(5)}
-      </div>
+      </ul>
     );
   }
 
@@ -56,7 +56,7 @@ export const MovieListGrid = ({ filters }: MovieListGridProps) => {
             const languageLabel = movie.languages.join(', ');
             return (
               <li key={movie.id}>
-                <Link to={to}>
+                <Link to={to} className="h-full block rounded-xl">
                   <MovieCard
                     title={movie.name}
                     poster={movie.poster}

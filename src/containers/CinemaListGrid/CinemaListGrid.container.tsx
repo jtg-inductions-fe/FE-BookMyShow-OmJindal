@@ -27,9 +27,9 @@ export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
 
   if (cinemasQuery.isLoading) {
     return (
-      <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10">
+      <ul className="list-none w-full grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-10">
         {renderSkeletons(5)}
-      </div>
+      </ul>
     );
   }
 
@@ -56,7 +56,7 @@ export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
             const to = `${ROUTES.CINEMA_DETAIL.BASE}${slug}`;
             return (
               <li key={cinema.id}>
-                <Link to={to}>
+                <Link to={to} className="h-full block rounded-xl">
                   <CinemaCard
                     imgUrl={cinema.image}
                     icon={<MapPin className="text-pink" />}

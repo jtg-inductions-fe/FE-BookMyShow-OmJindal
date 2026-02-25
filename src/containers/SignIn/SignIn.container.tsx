@@ -86,6 +86,7 @@ export const SignIn = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
+    setErrors((prev) => ({ ...prev, [event.target.name]: [], detail: undefined }));
   };
 
   return (
@@ -120,7 +121,7 @@ export const SignIn = () => {
                 type="email"
                 disabled={isLoading}
                 autoComplete="email"
-                aria-invalid={Boolean(errors.detail) || Boolean(errors.email)}
+                aria-invalid={Boolean(errors.detail) || Boolean(errors.email?.length)}
               />
               {errors.email && errors.email.length > 0 ? (
                 errors.email.map((emailError) => (
@@ -145,7 +146,7 @@ export const SignIn = () => {
                   type={showPassword ? 'text' : 'password'}
                   disabled={isLoading}
                   autoComplete="current-password"
-                  aria-invalid={Boolean(errors.detail) || Boolean(errors.password)}
+                  aria-invalid={Boolean(errors.detail) || Boolean(errors.password?.length)}
                 />
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton

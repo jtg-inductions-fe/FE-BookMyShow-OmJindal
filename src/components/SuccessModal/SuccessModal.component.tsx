@@ -20,22 +20,24 @@ export const SuccessModal = ({
 }: SuccessModalProps) => (
   <Dialog open={open}>
     <DialogContent showCloseButton={false}>
-      <div className="flex flex-col items-center gap-5 rounded-lg text-center text-balance p-4 sm:p-8 max-h-125 overflow-y-auto md:max-h-175">
-        <div className="flex max-w-lg flex-col items-center gap-3 text-center">
-          <div className="flex items-center justify-center text-success rounded-full bg-success/20 size-25">
-            <Check className="h-10 w-10" />
+      <div className="p-4">
+        <div className="flex flex-col items-center gap-5 rounded-lg text-center text-balance p-4 sm:p-8 max-h-125 overflow-y-auto md:max-h-175">
+          <div className="flex max-w-lg flex-col items-center gap-3 text-center">
+            <div className="flex items-center justify-center text-success rounded-full bg-success/20 size-25">
+              <Check className="h-10 w-10" />
+            </div>
+            <DialogTitle>{title}</DialogTitle>
+            {description && <DialogDescription>{description}</DialogDescription>}
           </div>
-          <DialogTitle>{title}</DialogTitle>
-          {description && <DialogDescription>{description}</DialogDescription>}
-        </div>
-        {children}
-        <div className="flex flex-col justify-center sm:flex-row w-full min-w-0 items-center gap-4 *:w-full sm:*:w-1/2">
-          {primaryLabel && <Button onClick={onPrimary}>{primaryLabel}</Button>}
-          {secondaryLabel && (
-            <Button variant="secondary" onClick={onSecondary}>
-              {secondaryLabel}
-            </Button>
-          )}
+          {children}
+          <div className="flex flex-col justify-center sm:flex-row w-full min-w-0 items-center gap-4 *:w-full sm:*:w-1/2">
+            {primaryLabel && <Button onClick={onPrimary}>{primaryLabel}</Button>}
+            {secondaryLabel && (
+              <Button variant="secondary" onClick={onSecondary}>
+                {secondaryLabel}
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </DialogContent>

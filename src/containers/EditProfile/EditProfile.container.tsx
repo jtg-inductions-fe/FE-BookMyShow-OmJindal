@@ -198,6 +198,7 @@ export const EditProfile = () => {
         ...prev,
         phoneNumber: number,
       }));
+      setErrors((prev) => ({ ...prev, phoneNumber: [] }));
       return;
     }
 
@@ -205,6 +206,7 @@ export const EditProfile = () => {
       ...prev,
       [name]: value,
     }));
+    setErrors((prev) => ({ ...prev, [name]: [] }));
   };
 
   const handleClick = () => void navigate(to);
