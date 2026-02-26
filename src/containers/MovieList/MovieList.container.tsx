@@ -8,8 +8,8 @@ import { useFilters } from '@/hooks';
 export const MovieList = () => {
   const { filters, updateFilter, clearFilter } = useFilters<MovieListFilterType>({
     cinemas: { type: 'number[]', value: [] },
-    genres: { type: 'number[]', value: [] },
-    languages: { type: 'number[]', value: [] },
+    genres: { type: 'string[]', value: [] },
+    languages: { type: 'string[]', value: [] },
     date: { type: 'date' },
   });
 

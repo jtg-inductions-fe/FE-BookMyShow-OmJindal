@@ -4,13 +4,34 @@ import { Link } from 'react-router';
 
 import { EmptyState, MovieCard, MovieCardSkeleton } from '@/components';
 import { ROUTES } from '@/constants';
-import { useMovieListInfiniteQuery } from '@/services';
+import { useGenreListQuery, useLanguageListQuery, useMovieListInfiniteQuery } from '@/services';
 import { slugGenerator } from '@/utils';
 
 import type { MovieListGridProps } from './MovieListGrid.types';
 
 export const MovieListGrid = ({ filters }: MovieListGridProps) => {
-  const moviesQuery = useMovieListInfiniteQuery(filters);
+  const languageQuery = useLanguageListQuery();
+  const genreQuery = useGenreListQuery();
+
+  const languageIds = languageQuery.data
+    ?.filter((lang) => filters.languages.includes(lang.name))
+    .map((lang) => lang.id);
+
+  const genreIds = genreQuery.data
+    ?.filter((genre) => filters.genres.includes(genre.name))
+    .map((lang) => lang.id);
+
+  const moviesQuery = useMovieListInfiniteQuery(
+    {
+      date: filters.date,
+      cinemas: filters.cinemas,
+      languages: languageIds,
+      genres: genreIds,
+    },
+    {
+      skip: languageQuery.isLoading || genreQuery.isLoading,
+    },
+  );
 
   const movies = moviesQuery.data?.pages.flatMap((page) => page.results) ?? [];
 

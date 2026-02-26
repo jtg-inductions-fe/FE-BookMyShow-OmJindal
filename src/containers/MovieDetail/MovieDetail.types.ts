@@ -5,7 +5,7 @@ export type MovieDetailFilter = {
   /**
    * The city id to filter the cinemas.
    */
-  city?: number;
+  city?: string;
   /**
    * The date string to filter the slots.
    */

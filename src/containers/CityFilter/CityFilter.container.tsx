@@ -8,9 +8,9 @@ import { useCityListPaginatedInfiniteQuery } from '@/services';
 
 import type { CityFilterProps } from './CityFilter.types';
 
-export const CityFilter = ({ onChange }: CityFilterProps) => {
+export const CityFilter = ({ value, onChange }: CityFilterProps) => {
   // UI value
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value?.name || '');
 
   // API value
   const [search, setSearch] = useState('');
@@ -40,7 +40,7 @@ export const CityFilter = ({ onChange }: CityFilterProps) => {
         const city = vals[0];
         if (!city) return;
 
-        onChange(city.id);
+        onChange(city.name);
         setInputValue(city.name);
         setSearch('');
       }}

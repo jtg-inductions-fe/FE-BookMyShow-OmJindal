@@ -10,7 +10,7 @@ import { API_CONSTANTS, ROUTES } from '@/constants';
 import { CityFilter } from '@/containers/CityFilter';
 import { DateFilter } from '@/containers/DateFilter';
 import { useFilters } from '@/hooks';
-import { useMovieDetailQuery } from '@/services';
+import { useCityListQuery, useMovieDetailQuery } from '@/services';
 import { formatDurationLabel, getIdFromSlug, slugGenerator } from '@/utils';
 
 import { MovieDetailSkeleton } from './MovieDetail.skeleton';
@@ -22,14 +22,16 @@ export const MovieDetail = () => {
   const location = useLocation();
 
   const { filters, updateFilter } = useFilters<MovieDetailFilter>({
-    city: { type: 'number' },
+    city: { type: 'string' },
     date: { type: 'date', value: format(new Date(), API_CONSTANTS.DATE_FORMAT) },
   });
 
   const movieId = getIdFromSlug(movieSlug ?? '');
 
+  const cityQuery = useCityListQuery({ cityNames: [filters.city!] }, { skip: !filters.city });
+
   const { data, isLoading } = useMovieDetailQuery(
-    { ...filters, movieId: movieId },
+    { movieId: movieId, city: cityQuery.data?.at(0)?.id, date: filters.date },
     { skip: !movieId },
   );
 
@@ -109,7 +111,10 @@ export const MovieDetail = () => {
         <Typography tag="h2">Select Cinema and Show Time</Typography>
         <div className="flex gap-5 md:items-center flex-col sm:flex-row">
           <div className="md:w-80">
-            <CityFilter onChange={(cityId) => updateFilter('city', cityId)} />
+            <CityFilter
+              value={cityQuery.data?.at(0)}
+              onChange={(cityName) => updateFilter('city', cityName)}
+            />
           </div>
           <div className="md:w-80">
             <DateFilter

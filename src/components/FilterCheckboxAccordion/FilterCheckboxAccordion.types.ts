@@ -31,11 +31,11 @@ export type FilterCheckboxAccordionProps = {
   /**
    * Currently selected filter item IDs.
    */
-  value: number[];
+  value: string[];
   /**
    * Callback fired when selected IDs change.
    */
-  onChange: (ids: number[]) => void;
+  onChange: (ids: string[]) => void;
 };
 
 /**

@@ -5,13 +5,26 @@ import { Link } from 'react-router';
 
 import { CinemaCard, CinemaCardSkeleton, EmptyState } from '@/components';
 import { ROUTES } from '@/constants';
-import { useCinemaListPaginatedInfiniteQuery } from '@/services';
+import { useCinemaListPaginatedInfiniteQuery, useCityListQuery } from '@/services';
 import { slugGenerator } from '@/utils';
 
 import type { CinemaListGridProps } from './CinemaListGrid.types';
 
 export const CinemaListGrid = ({ filters }: CinemaListGridProps) => {
-  const cinemasQuery = useCinemaListPaginatedInfiniteQuery(filters);
+  const selectedCityQuery = useCityListQuery(
+    { cityNames: filters.cities },
+    {
+      skip: !filters.cities.length,
+    },
+  );
+
+  const selectedCities = filters.cities.length ? (selectedCityQuery.data ?? []) : [];
+
+  const selectedCityIds = selectedCities.map((city) => city.id);
+
+  const cinemasQuery = useCinemaListPaginatedInfiniteQuery({
+    cities: selectedCityIds,
+  });
 
   const cinemas = cinemasQuery.data?.pages.flatMap((p) => p.results) ?? [];
 

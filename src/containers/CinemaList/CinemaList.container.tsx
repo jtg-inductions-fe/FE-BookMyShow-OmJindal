@@ -5,7 +5,7 @@ import { useFilters } from '@/hooks';
 
 export const CinemaList = () => {
   const { filters, updateFilter } = useFilters<CinemaListFilterType>({
-    cities: { type: 'number[]', value: [] },
+    cities: { type: 'string[]', value: [] },
   });
 
   return (

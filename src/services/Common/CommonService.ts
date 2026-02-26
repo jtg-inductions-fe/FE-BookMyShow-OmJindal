@@ -39,7 +39,7 @@ const commonApi = api.injectEndpoints({
     cityList: builder.query<CityListResponse, CityListRequest>({
       query: (queryArg) => {
         const params = new URLSearchParams();
-        if (queryArg.cityIds?.length) params.append('city_ids', queryArg.cityIds.join(','));
+        if (queryArg.cityNames?.length) params.append('city_names', queryArg.cityNames.join(','));
 
         const queryString = params.toString();
         return {

@@ -5,9 +5,9 @@ export type CityFilterProps = {
   /**
    * The currently selected city IDs.
    */
-  value: number[];
+  value: string[];
   /**
    * Callback fired whenever the selected city change.
    */
-  onChange: (cities: number[]) => void;
+  onChange: (cities: string[]) => void;
 };
