@@ -1,8 +1,10 @@
 import { memo, useState } from 'react';
 
 import { Trash as TrashIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { BookingCard, ConfirmationModal } from '@/components';
+import { ERROR_MESSAGES } from '@/constants';
 import { useCancelBookingMutation } from '@/services';
 import { dateFormatter, seatRowFormatter, timeFormatter } from '@/utils';
 
@@ -24,7 +26,11 @@ export const BookingCardContainer = memo(function BookingCardContainer({
   const [cancelBooking, { isLoading: isCancelling }] = useCancelBookingMutation();
 
   const handleCancel = () => {
-    void cancelBooking(id);
+    cancelBooking(id)
+      .unwrap()
+      .catch(() => {
+        toast.error(ERROR_MESSAGES.CANCELLATION_ERROR, { position: 'top-center' });
+      });
   };
 
   const openModal = () => {

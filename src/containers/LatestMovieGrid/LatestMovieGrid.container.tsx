@@ -19,9 +19,9 @@ export const LatestMovieGrid = () => {
 
   if (isLoading) {
     movieGridContent = (
-      <div className="p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
+      <ul className="list-none p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
         {movieGridSkeleton}
-      </div>
+      </ul>
     );
   } else if (!movies.length) {
     movieGridContent = (
@@ -38,24 +38,26 @@ export const LatestMovieGrid = () => {
         hasMore={hasNextPage}
         loader={null}
       >
-        <div className="p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
+        <ul className="p-2 grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
           {movies.map((movie) => {
             const to = `${ROUTES.MOVIE_DETAIL.BASE}${slugGenerator(`${movie.name} ${movie.id}`)}`;
             const genreLabel = movie.genres.join(', ');
             const languageLabel = movie.languages.join(', ');
             return (
-              <Link to={to} key={movie.id}>
-                <MovieCard
-                  title={movie.name}
-                  poster={movie.poster}
-                  primaryLabel={genreLabel}
-                  secondaryLabel={languageLabel}
-                />
-              </Link>
+              <li key={movie.id}>
+                <Link to={to} className="h-full block rounded-xl">
+                  <MovieCard
+                    title={movie.name}
+                    poster={movie.poster}
+                    primaryLabel={genreLabel}
+                    secondaryLabel={languageLabel}
+                  />
+                </Link>
+              </li>
             );
           })}
           {isFetchingNextPage && movieGridSkeleton}
-        </div>
+        </ul>
       </InfiniteScroll>
     );
   }

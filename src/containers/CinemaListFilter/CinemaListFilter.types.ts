@@ -2,7 +2,7 @@ export type CinemaListFilter = {
   /**
    *  Array of city IDs to filter cinemas.
    */
-  cities: number[];
+  cities: string[];
 };
 
 /**

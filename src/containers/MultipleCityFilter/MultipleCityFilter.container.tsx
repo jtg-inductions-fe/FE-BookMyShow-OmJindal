@@ -23,7 +23,7 @@ export const MultipleCityFilter = ({ value, onChange }: CityFilterProps) => {
 
   const cities = cityQuery.data?.pages.flatMap((p) => p.results) ?? [];
 
-  const selectedCities = cities.filter((c) => value.includes(c.id));
+  const selectedCities = cities.filter((c) => value.includes(c.name));
 
   const handleChange = (val: string) => {
     setInputValue(val);
@@ -39,8 +39,8 @@ export const MultipleCityFilter = ({ value, onChange }: CityFilterProps) => {
       emptyLabel="No city found"
       onChange={handleChange}
       onSelect={(vals) => {
-        const ids = vals.map((c) => c.id);
-        onChange(ids);
+        const names = vals.map((c) => c.name);
+        onChange(names);
 
         setInputValue('');
         setSearch('');

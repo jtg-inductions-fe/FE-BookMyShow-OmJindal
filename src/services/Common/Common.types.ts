@@ -50,7 +50,7 @@ export type CityListRequest = {
   /**
    *  Array of city IDs to filter cities.
    */
-  cityIds?: number[];
+  cityNames?: string[];
 };
 
 /**

@@ -5,9 +5,9 @@ export type LanguageFilterProps = {
   /**
    * The currently selected language IDs.
    */
-  value: number[];
+  value: string[];
   /**
    * Callback fired whenever the selected languages change.
    */
-  onChange: (languages: number[]) => void;
+  onChange: (languages: string[]) => void;
 };

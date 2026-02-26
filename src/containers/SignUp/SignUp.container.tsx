@@ -106,6 +106,7 @@ export const SignUp = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
+    setErrors((prev) => ({ ...prev, [event.target.name]: [] }));
   };
 
   return (
@@ -139,7 +140,7 @@ export const SignUp = () => {
                 value={form.name}
                 disabled={isLoading}
                 autoComplete="name"
-                aria-invalid={Boolean(errors.name)}
+                aria-invalid={Boolean(errors.name?.length)}
               />
               {errors.name && errors.name.length > 0 ? (
                 errors.name.map((nameError) => <FieldError key={nameError}>{nameError}</FieldError>)
@@ -161,7 +162,7 @@ export const SignUp = () => {
                 type="email"
                 disabled={isLoading}
                 autoComplete="email"
-                aria-invalid={Boolean(errors.email)}
+                aria-invalid={Boolean(errors.email?.length)}
               />
               {errors.email && errors.email.length > 0 ? (
                 errors.email.map((emailError) => (
@@ -186,7 +187,7 @@ export const SignUp = () => {
                   type={showPassword ? 'text' : 'password'}
                   disabled={isLoading}
                   autoComplete="new-password"
-                  aria-invalid={Boolean(errors.password)}
+                  aria-invalid={Boolean(errors.password?.length)}
                 />
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
@@ -221,7 +222,7 @@ export const SignUp = () => {
                   type={showConfirmPassword ? 'text' : 'password'}
                   disabled={isLoading}
                   autoComplete="new-password"
-                  aria-invalid={Boolean(errors.confirmPassword)}
+                  aria-invalid={Boolean(errors.confirmPassword?.length)}
                 />
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton

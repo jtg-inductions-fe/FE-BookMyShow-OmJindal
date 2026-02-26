@@ -5,9 +5,9 @@ export type GenreFilterProps = {
   /**
    * The currently selected genre IDs.
    */
-  value: number[];
+  value: string[];
   /**
    * Callback fired whenever the selected genres change.
    */
-  onChange: (genres: number[]) => void;
+  onChange: (genres: string[]) => void;
 };

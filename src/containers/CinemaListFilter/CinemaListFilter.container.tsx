@@ -8,13 +8,13 @@ import type { CinemaListFilterProps } from './CinemaListFilter.types';
 
 export const CinemaListFilter = ({ filters, updateFilter }: CinemaListFilterProps) => {
   const selectedCityQuery = useCityListQuery(
-    { cityIds: filters.cities },
+    { cityNames: filters.cities },
     {
       skip: !filters.cities.length,
     },
   );
 
-  const selectedCities = selectedCityQuery.data ?? [];
+  const selectedCities = filters.cities.length ? (selectedCityQuery.data ?? []) : [];
 
   return (
     <>
@@ -31,16 +31,17 @@ export const CinemaListFilter = ({ filters, updateFilter }: CinemaListFilterProp
           <ChipGroupSkeleton />
         ) : (
           <ChipGroup
-            ids={filters.cities}
+            ids={selectedCities.map((city) => city.id)}
             data={selectedCities}
             getId={(city) => city.id}
             getLabel={(city) => city.name}
-            onAction={(id) =>
+            onAction={(id) => {
+              const selectedCity = selectedCities.find((city) => city.id === id);
               updateFilter(
                 'cities',
-                filters.cities.filter((cityId) => cityId !== id),
-              )
-            }
+                filters.cities.filter((cityName) => cityName !== selectedCity?.name),
+              );
+            }}
             icon={<X />}
             title="city"
           />

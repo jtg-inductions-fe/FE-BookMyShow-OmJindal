@@ -9,11 +9,11 @@ export type MovieListFilterType = {
   /**
    * The genres of the movie.
    */
-  genres: number[];
+  genres: string[];
   /**
    * The languages of the movie.
    */
-  languages: number[];
+  languages: string[];
   /**
    * The cinemas in which the movie is being screened.
    */

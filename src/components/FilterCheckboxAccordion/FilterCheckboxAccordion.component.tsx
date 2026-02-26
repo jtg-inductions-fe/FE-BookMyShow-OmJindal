@@ -16,8 +16,8 @@ export const FilterCheckboxAccordion = ({
   value,
   onChange,
 }: FilterCheckboxAccordionProps) => {
-  const toggle = (id: number, checked: boolean) =>
-    onChange(checked ? [...value, id] : value.filter((valueId) => valueId !== id));
+  const toggle = (name: string, checked: boolean) =>
+    onChange(checked ? [...value, name] : value.filter((valueName) => valueName !== name));
 
   return (
     <Accordion type="single" collapsible>
@@ -33,8 +33,8 @@ export const FilterCheckboxAccordion = ({
               <Field key={item.id} orientation="horizontal">
                 <Checkbox
                   id={`${accordionValue}-${item.id}`}
-                  checked={value.includes(item.id)}
-                  onCheckedChange={(checked) => toggle(item.id, !!checked)}
+                  checked={value.includes(item.name)}
+                  onCheckedChange={(checked) => toggle(item.name, !!checked)}
                 />
                 <FieldLabel htmlFor={`${accordionValue}-${item.id}`}>{item.name}</FieldLabel>
               </Field>
